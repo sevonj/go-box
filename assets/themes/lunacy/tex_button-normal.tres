@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3 uid="uid://coykyuxrkgla6"]
+
+[ext_resource type="Texture2D" uid="uid://dhqqnb4nyo1kx" path="res://assets/themes/lunacy/tex_ui_theme_lunacy_atlas.png" id="1_lhay5"]
+
+[resource]
+atlas = ExtResource("1_lhay5")
+region = Rect2(128, 32, 32, 32)

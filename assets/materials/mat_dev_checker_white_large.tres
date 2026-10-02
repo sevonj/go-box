@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ivdupre0rna"]
+
+[ext_resource type="Shader" uid="uid://d0uqbsaujdg1m" path="res://assets/materials/shad_common.gdshader" id="1_uufls"]
+[ext_resource type="Texture2D" uid="uid://bb0oardg4qskt" path="res://assets/materials/tex_dev_checker_white_large.png" id="2_uufls"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_uufls")
+shader_parameter/albedo = ExtResource("2_uufls")

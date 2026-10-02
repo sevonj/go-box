@@ -1,0 +1,6 @@
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://betr5gibgr6qt"]
+
+[ext_resource type="Texture2D" uid="uid://57rhnd0e83gf" path="res://assets/themes/lunacy/tex_taskbar.tres" id="1_td1rj"]
+
+[resource]
+texture = ExtResource("1_td1rj")

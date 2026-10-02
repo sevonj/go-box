@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dmktntltwsrjb"]
+
+[ext_resource type="Script" uid="uid://1uymsq43tajl" path="res://src/PhysProp.cs" id="1_rjcj5"]
+[ext_resource type="PackedScene" uid="uid://clrjrktdi0j5u" path="res://assets/models/prop_hog/mdl_prop_hog.blend" id="2_nx453"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dn8d0"]
+radius = 0.108342886
+
+[node name="PropHogball" type="RigidBody3D" unique_id=271362198 node_paths=PackedStringArray("Model")]
+mass = 0.4
+script = ExtResource("1_rjcj5")
+Model = NodePath("Model/Sphere")
+metadata/_custom_type_script = "uid://1uymsq43tajl"
+
+[node name="Model" parent="." unique_id=113378802 instance=ExtResource("2_nx453")]
+
+[node name="WorldColl" type="CollisionShape3D" parent="." unique_id=1145835427]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.009648349, 0)
+shape = SubResource("SphereShape3D_dn8d0")
+
+[editable path="Model"]

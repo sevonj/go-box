@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://v18kfq27ag0y"]
+
+[ext_resource type="Texture2D" uid="uid://btbkdmofuisbm" path="res://assets/themes/lunacy/tex_button-disabled.tres" id="1_f2ty2"]
+
+[resource]
+texture = ExtResource("1_f2ty2")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0

@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://ckxi641rha0fk"]
+
+[ext_resource type="Script" uid="uid://cimtr6wwfo5kh" path="res://src/UiPictureFrame.cs" id="1_0bs2d"]
+[ext_resource type="StyleBox" uid="uid://bx3gq44ee118i" path="res://assets/themes/common/new_style_box_flat.tres" id="1_5km7w"]
+[ext_resource type="Texture2D" uid="uid://d0gd44fxqlf80" path="res://assets/icons/icon_image_missing.svg" id="2_0bs2d"]
+
+[node name="UiPictureFrame" type="AspectRatioContainer" unique_id=1905686383 node_paths=PackedStringArray("_textureRect", "_placeholder", "_bgColorRect")]
+offset_right = 44.0
+offset_bottom = 44.0
+ratio = 1.3333
+script = ExtResource("1_0bs2d")
+_textureRect = NodePath("pic_frame_margin/pic_margin/TextureRect")
+_placeholder = NodePath("pic_frame_margin/pic_margin/Placeholder")
+_bgColorRect = NodePath("pic_frame_margin/pic_margin/BgColorRect")
+metadata/_custom_type_script = "uid://cimtr6wwfo5kh"
+
+[node name="pic_frame_margin" type="MarginContainer" parent="." unique_id=1472335636]
+layout_mode = 2
+
+[node name="pic_frame" type="Panel" parent="pic_frame_margin" unique_id=616210745]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("1_5km7w")
+
+[node name="pic_margin" type="MarginContainer" parent="pic_frame_margin" unique_id=1452497964]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="BgColorRect" type="ColorRect" parent="pic_frame_margin/pic_margin" unique_id=1322662214]
+layout_mode = 2
+color = Color(0.47788018, 0.47788012, 0.47788012, 1)
+
+[node name="Placeholder" type="TextureRect" parent="pic_frame_margin/pic_margin" unique_id=35194094]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("2_0bs2d")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="TextureRect" type="TextureRect" parent="pic_frame_margin/pic_margin" unique_id=1545219127]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6

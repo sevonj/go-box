@@ -1,0 +1,16 @@
+<Project Sdk="Godot.NET.Sdk/4.7.2">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>GoBox</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="src\debug\DebugDraw.cs.uid" />
+    <Content Include="src\debug\DebugMenu.cs.uid" />
+    <Content Include="src\debug\DebugMenu_Common.cs.uid" />
+    <Content Include="src\debug\DebugMenu_Draw.cs.uid" />
+    <Content Include="src\debug\DebugTrajectoryVisualizer.cs.uid" />
+  </ItemGroup>
+</Project>

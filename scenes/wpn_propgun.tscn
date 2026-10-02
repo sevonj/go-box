@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dm2vt2kclf3tx"]
+
+[ext_resource type="Script" uid="uid://dj58cqhia3aeh" path="res://src/WpnPropgun.cs" id="1_eos1n"]
+[ext_resource type="PackedScene" uid="uid://d0co0d2sg0t1o" path="res://scenes/prop_tv.tscn" id="2_2mxu1"]
+[ext_resource type="PackedScene" uid="uid://clqegl6xksecr" path="res://assets/models/wpn_propgun/wpn_toolklobb.blend" id="3_k6fvh"]
+
+[node name="WpnPropgun" type="Node3D" unique_id=848150616 node_paths=PackedStringArray("_propSpawnMarker")]
+script = ExtResource("1_eos1n")
+PropPrefab = ExtResource("2_2mxu1")
+_propSpawnMarker = NodePath("PropSpawnMarker")
+metadata/_custom_type_script = "uid://dj58cqhia3aeh"
+
+[node name="PropSpawnMarker" type="Marker3D" parent="." unique_id=1763375510]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="ViewModel" parent="." unique_id=449726162 instance=ExtResource("3_k6fvh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.31961167, -0.32260394, -0.7603674)

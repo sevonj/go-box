@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bub5e0ggs436r"]
+
+[ext_resource type="Script" uid="uid://b1ddx6aw7s6vb" path="res://src/Player.cs" id="1_micdo"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dn8d0"]
+radius = 0.3
+
+[node name="Player" type="RigidBody3D" unique_id=2001998674 node_paths=PackedStringArray("_eyePosMarker", "_worldColl")]
+script = ExtResource("1_micdo")
+_eyePosMarker = NodePath("EyePosMarker")
+_worldColl = NodePath("WorldColl")
+metadata/_custom_type_script = "uid://b1ddx6aw7s6vb"
+
+[node name="WorldColl" type="CollisionShape3D" parent="." unique_id=29497342]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_dn8d0")
+
+[node name="EyePosMarker" type="Marker3D" parent="." unique_id=1406898709]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)

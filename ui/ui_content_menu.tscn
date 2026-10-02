@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://b04fsa5g32xcc"]
+
+[ext_resource type="Script" uid="uid://cbb3mt06pfeuc" path="res://src/UiContentMenu.cs" id="1_nhe6i"]
+[ext_resource type="PackedScene" uid="uid://n1i0ut62urnr" path="res://ui/ui_prop_select.tscn" id="2_08hqp"]
+[ext_resource type="PackedScene" uid="uid://bna7a62a4tp2b" path="res://ui/ui_map_select.tscn" id="3_ifas0"]
+[ext_resource type="StyleBox" uid="uid://betr5gibgr6qt" path="res://assets/themes/lunacy/stylebox_taskbar.tres" id="4_ifas0"]
+
+[node name="UiContentMenu" type="Control" unique_id=1935657201 node_paths=PackedStringArray("_propWindow", "_mapWindow", "_propWindowToggle", "_mapWindowToggle")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nhe6i")
+_propWindow = NodePath("PropWindow")
+_mapWindow = NodePath("MapWindow")
+_propWindowToggle = NodePath("Taskbar/HBoxContainer/PropWindowToggle")
+_mapWindowToggle = NodePath("Taskbar/HBoxContainer/MapWindowToggle")
+metadata/_custom_type_script = "uid://cbb3mt06pfeuc"
+
+[node name="bg" type="ColorRect" parent="." unique_id=1737245879]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.49803922)
+
+[node name="PropWindow" type="Window" parent="." unique_id=1800254660]
+oversampling_override = 1.0
+title = "Prop Browser"
+position = Vector2i(100, 100)
+size = Vector2i(640, 480)
+min_size = Vector2i(384, 384)
+
+[node name="PropSelect" parent="PropWindow" unique_id=2109946215 instance=ExtResource("2_08hqp")]
+
+[node name="MapWindow" type="Window" parent="." unique_id=1504573876]
+oversampling_override = 1.0
+title = "Stage Browser"
+position = Vector2i(200, 200)
+size = Vector2i(640, 480)
+min_size = Vector2i(384, 384)
+
+[node name="UiMapSelect" parent="MapWindow" unique_id=1333378372 instance=ExtResource("3_ifas0")]
+
+[node name="Taskbar" type="PanelContainer" parent="." unique_id=1844489050]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("4_ifas0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Taskbar" unique_id=1198589529]
+layout_mode = 2
+
+[node name="PropWindowToggle" type="Button" parent="Taskbar/HBoxContainer" unique_id=2081754840]
+layout_mode = 2
+text = "Props"
+
+[node name="MapWindowToggle" type="Button" parent="Taskbar/HBoxContainer" unique_id=1274114779]
+layout_mode = 2
+text = "Stages"

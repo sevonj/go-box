@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dpdtbrqax43l6"]
+
+[ext_resource type="Script" uid="uid://dyn2ubl1expkl" path="res://src/UiMainMenu.cs" id="1_ekxnf"]
+[ext_resource type="PackedScene" uid="uid://bna7a62a4tp2b" path="res://ui/ui_map_select.tscn" id="1_l6cm7"]
+
+[node name="MainMenu" type="Control" unique_id=754244934]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ekxnf")
+metadata/_custom_type_script = "uid://dyn2ubl1expkl"
+
+[node name="Window" type="Window" parent="." unique_id=399420485]
+oversampling_override = 1.0
+title = "Stage Browser"
+position = Vector2i(0, 36)
+size = Vector2i(666, 480)
+
+[node name="UiMapSelect" parent="Window" unique_id=1427467537 instance=ExtResource("1_l6cm7")]

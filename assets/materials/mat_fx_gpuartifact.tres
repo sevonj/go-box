@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://lr7f67h14kk6"]
+
+[ext_resource type="Shader" uid="uid://ci4qaeib6p4jd" path="res://assets/materials/shad_fx_gpuartifact.gdshader" id="1_if1lm"]
+[ext_resource type="Texture2D" uid="uid://cti1m02tbyk8j" path="res://assets/models/prop_boombox/boombox_1k_boombox_diff_1k.jpg" id="2_58xhk"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_if1lm")
+shader_parameter/albedo = ExtResource("2_58xhk")
+shader_parameter/modulate = Color(0.48178947, 0.48178947, 0.48178947, 1)

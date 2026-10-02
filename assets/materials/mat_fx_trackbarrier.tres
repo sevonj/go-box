@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cyey2o5u24m00"]
+
+[ext_resource type="Shader" uid="uid://boi0hgkfruhxn" path="res://assets/materials/shad_fx_trackbarrier.gdshader" id="1_ckvul"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ckvul")
+shader_parameter/fg_color = Color(1.5824032, 1.0935103, 0.6046174, 1)
+shader_parameter/bg_color = Color(1, 0.78, 0.56, 0.32941177)

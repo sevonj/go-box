@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://ccchoorqtu1hd"]
+
+[ext_resource type="Script" uid="uid://djful7vi46dm5" path="res://src/WpnCorruptor.cs" id="1_ympjx"]
+[ext_resource type="PackedScene" uid="uid://clqegl6xksecr" path="res://assets/models/wpn_propgun/wpn_toolklobb.blend" id="3_431am"]
+[ext_resource type="Material" uid="uid://lr7f67h14kk6" path="res://assets/materials/mat_fx_gpuartifact.tres" id="4_431am"]
+
+[node name="WpnCorruptor" type="Node3D" unique_id=341058220]
+script = ExtResource("1_ympjx")
+metadata/_custom_type_script = "uid://djful7vi46dm5"
+
+[node name="ViewModel" parent="." unique_id=449726162 instance=ExtResource("3_431am")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.31961167, -0.32260394, -0.7603674)
+
+[node name="Cube" parent="ViewModel" index="0" unique_id=54702625]
+surface_material_override/0 = ExtResource("4_431am")
+
+[editable path="ViewModel"]

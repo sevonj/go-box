@@ -1,0 +1,4 @@
+*
+!.gitignore
+!.gdignore
+!go_box/**

@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://ctkoe0cn6kt0o"]
+
+[ext_resource type="Script" uid="uid://gn7l5qgjfwix" path="res://src/World.cs" id="1_ksrfk"]
+[ext_resource type="PackedScene" uid="uid://7vkfppji05is" path="res://assets/env/env_bliss.tscn" id="2_qrudu"]
+[ext_resource type="PackedScene" uid="uid://cbow4igwwxog2" path="res://content/go_box/maps/bliss/map_bliss.glb" id="3_qnxex"]
+[ext_resource type="Script" uid="uid://bc6vhd3d1hch6" path="res://src/InfoPlayerStart.cs" id="4_ksrfk"]
+[ext_resource type="PackedScene" uid="uid://d0co0d2sg0t1o" path="res://scenes/prop_tv.tscn" id="6_gypc2"]
+[ext_resource type="Script" uid="uid://7nd7vwdt2kqg" path="res://src/FuncBoostArea.cs" id="6_qnxex"]
+[ext_resource type="PackedScene" uid="uid://dmktntltwsrjb" path="res://scenes/prop_hogball.tscn" id="7_gypc2"]
+[ext_resource type="FontFile" uid="uid://o63pwd3ka34j" path="res://assets/font/comic-relief/ComicRelief.ttf" id="8_kodi4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dn8d0"]
+size = Vector3(2, 2, 4)
+
+[node name="World" type="Node" unique_id=466431567]
+script = ExtResource("1_ksrfk")
+metadata/_custom_type_script = "uid://gn7l5qgjfwix"
+
+[node name="Env" type="Node" parent="." unique_id=1955323732]
+
+[node name="Env" parent="Env" unique_id=181444999 instance=ExtResource("2_qrudu")]
+
+[node name="Static" type="Node" parent="." unique_id=273265545]
+
+[node name="map_bliss" parent="Static" unique_id=1046744291 instance=ExtResource("3_qnxex")]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Static" unique_id=1884423798]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.36312, 11.8676195, -36.090317)
+use_collision = true
+size = Vector3(2, 1, 2)
+
+[node name="Tomorrow I\'ll" type="Label3D" parent="Static" unique_id=1739686196]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -83.30306, 13.115172, -19.881256)
+billboard = 2
+text = "Tomorrow I'll
+- [x] Make a physprop
+- [x] Build Boost Area
+- [x] Convert player to rigidbody
+- [x] Make a Prop Gun
+- [x] Build City test track
+- [ ] Fix fast physics objects clipping through walls
+- [x] Main Menu
+- [x] Map Change UI
+- [x] Make selector menu for prop gun
+- [ ] Build Prop Manipulator Gun
+- [ ] Build Shadow Moses ripper
+- [x] External maps import
+- [ ] Multiplayer
+- [ ] External maps implement env
+- [ ] Do something for spawning boost areas
+- [ ] Implement VR
+- [ ] Load PhysProps externally
+- [ ] Bleaugh
+"
+font = ExtResource("8_kodi4")
+horizontal_alignment = 0
+vertical_alignment = 2
+
+[node name="Actors" type="Node" parent="." unique_id=1709652860]
+
+[node name="InfoPlayerStart" type="Marker3D" parent="Actors" unique_id=1597273013]
+transform = Transform3D(-0.059001923, 0, 0.99825794, 0, 1, 0, -0.99825794, 0, -0.059001923, -77.413506, 11.603897, -39.294334)
+script = ExtResource("4_ksrfk")
+metadata/_custom_type_script = "uid://bc6vhd3d1hch6"
+
+[node name="FuncBoostArea" type="Area3D" parent="Actors" unique_id=921033924 node_paths=PackedStringArray("_shape")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -83.008224, 12.313513, -39.38686)
+script = ExtResource("6_qnxex")
+Force = 10000.0
+_shape = NodePath("CollisionShape3D")
+metadata/_custom_type_script = "uid://7nd7vwdt2kqg"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Actors/FuncBoostArea" unique_id=1577089546]
+shape = SubResource("BoxShape3D_dn8d0")
+debug_color = Color(0, 0.5950001, 0.7, 1)
+
+[node name="PhysProp" parent="Actors" unique_id=228601484 instance=ExtResource("6_gypc2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -79.84036, 12.789791, -39.38686)
+
+[node name="PhysProp3" parent="Actors" unique_id=524126508 instance=ExtResource("6_gypc2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -79.84036, 12.789791, -36.38686)
+
+[node name="PhysProp4" parent="Actors" unique_id=1126382314 instance=ExtResource("6_gypc2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84.84036, 12.789791, -36.38686)
+
+[node name="PhysProp2" parent="Actors" unique_id=271362198 instance=ExtResource("7_gypc2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.84036, 12.789791, -39.38686)
+
+[node name="Ui" type="Node" parent="." unique_id=1866451087]
+
+[editable path="Env/Env"]

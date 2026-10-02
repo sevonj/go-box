@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://n1i0ut62urnr"]
+
+[ext_resource type="Script" uid="uid://y1012cdgifn6" path="res://src/UiPropSelect.cs" id="1_d324d"]
+[ext_resource type="Script" uid="uid://bim8mlc7jgxx8" path="res://src/UiAutoSizeGridContainer.cs" id="2_nwv35"]
+[ext_resource type="StyleBox" uid="uid://b332kppa140jv" path="res://assets/themes/lunacy/stylebox_inspector_sidebar.tres" id="3_d324d"]
+[ext_resource type="PackedScene" uid="uid://ckxi641rha0fk" path="res://ui/ui_picture_frame.tscn" id="4_5ehd7"]
+
+[node name="UiPropSelect" type="PanelContainer" unique_id=2109946215 node_paths=PackedStringArray("_grid", "_previewNameLabel", "_previewPic")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d324d")
+_grid = NodePath("HBox/UiAutoSizeGridContainer/PropsGrid")
+_previewNameLabel = NodePath("HBox/Sidebar/VBox/NameLabel")
+_previewPic = NodePath("HBox/Sidebar/VBox/PreviewPicture")
+metadata/_custom_type_script = "uid://y1012cdgifn6"
+
+[node name="HBox" type="HBoxContainer" parent="." unique_id=816690142]
+layout_mode = 2
+
+[node name="UiAutoSizeGridContainer" type="Control" parent="HBox" unique_id=123415680 node_paths=PackedStringArray("Grid")]
+propagate_maximum_size = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+script = ExtResource("2_nwv35")
+Grid = NodePath("PropsGrid")
+metadata/_custom_type_script = "uid://bim8mlc7jgxx8"
+
+[node name="PropsGrid" type="GridContainer" parent="HBox/UiAutoSizeGridContainer" unique_id=339375782]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sidebar" type="PanelContainer" parent="HBox" unique_id=4130747]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_d324d")
+
+[node name="VBox" type="VBoxContainer" parent="HBox/Sidebar" unique_id=1571594330]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HBox/Sidebar/VBox" unique_id=137851585]
+layout_mode = 2
+text = "Selected Prop"
+
+[node name="PreviewPicture" parent="HBox/Sidebar/VBox" unique_id=1905686383 instance=ExtResource("4_5ehd7")]
+custom_minimum_size = Vector2(0, 164)
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="HBox/Sidebar/VBox" unique_id=1862232355]
+layout_mode = 2
+text = "prop_name_here"

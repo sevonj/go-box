@@ -1,0 +1,198 @@
+[gd_scene format=3 uid="uid://chd3tjue4cua1"]
+
+[ext_resource type="Script" uid="uid://ea083mcxulxy" path="res://src/UiPauseMenu.cs" id="1_w48td"]
+
+[sub_resource type="Environment" id="Environment_or4hu"]
+
+[node name="UiPauseMenu" type="Control" unique_id=1925735706 node_paths=PackedStringArray("_abilityTab", "_mapTab", "_mapCamera", "_mapVpCont", "_mapYouAreHereLabel", "_mapAreaNameLabel", "_mapAreaDescLabel", "_optionsTab", "_quitToTitleButton", "_exitGameButton", "_tabContainer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w48td")
+_abilityTab = NodePath("TabContainer/AbilitiesTab")
+_mapTab = NodePath("TabContainer/MapTab")
+_mapCamera = NodePath("TabContainer/MapTab/HBoxContainer/map_vbox/map_vp_cont/SubViewport/Camera3D")
+_mapVpCont = NodePath("TabContainer/MapTab/HBoxContainer/map_vbox/map_vp_cont")
+_mapYouAreHereLabel = NodePath("TabContainer/MapTab/HBoxContainer/map_vbox/hbox/you_are_here")
+_mapAreaNameLabel = NodePath("TabContainer/MapTab/HBoxContainer/map_vbox/Control/AreaNameLabel")
+_mapAreaDescLabel = NodePath("TabContainer/MapTab/HBoxContainer/map_vbox/Control/AreaDescLabel")
+_optionsTab = NodePath("TabContainer/OptionsTab")
+_quitToTitleButton = NodePath("TabContainer/OptionsTab/vbox/but_quit")
+_exitGameButton = NodePath("TabContainer/OptionsTab/vbox/but_exit")
+_tabContainer = NodePath("TabContainer")
+
+[node name="Background" type="ColorRect" parent="." unique_id=299680955]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.9254902, 0.9137255, 0.84705883, 1)
+
+[node name="lab_tab_change_help" type="Label" parent="." unique_id=1223673348]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 29.0
+offset_right = 325.0
+offset_bottom = 48.0
+text = "L1/R1 switch tab"
+
+[node name="TabContainer" type="TabContainer" parent="." unique_id=988643663]
+layout_mode = 0
+offset_left = 101.0
+offset_top = 60.0
+offset_right = 1500.0
+offset_bottom = 871.0
+theme_override_font_sizes/font_size = 32
+current_tab = 2
+tab_focus_mode = 0
+
+[node name="MapTab" type="MarginContainer" parent="TabContainer" unique_id=119471937]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/MapTab" unique_id=1203348297]
+layout_mode = 2
+
+[node name="map_vbox" type="VBoxContainer" parent="TabContainer/MapTab/HBoxContainer" unique_id=1377984785]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="Control" type="Control" parent="TabContainer/MapTab/HBoxContainer/map_vbox" unique_id=1429978024]
+layout_mode = 2
+
+[node name="AreaNameLabel" type="Label" parent="TabContainer/MapTab/HBoxContainer/map_vbox/Control" unique_id=946347024]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 10.0
+offset_right = 198.0
+offset_bottom = 34.0
+theme_override_font_sizes/font_size = 24
+text = "Area Name Here"
+
+[node name="AreaDescLabel" type="Label" parent="TabContainer/MapTab/HBoxContainer/map_vbox/Control" unique_id=995619043]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 41.0
+offset_right = 170.0
+offset_bottom = 61.0
+text = "Area Name Here"
+
+[node name="map_vp_cont" type="SubViewportContainer" parent="TabContainer/MapTab/HBoxContainer/map_vbox" unique_id=1234057585]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="TabContainer/MapTab/HBoxContainer/map_vbox/map_vp_cont" unique_id=1146808944]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(2, 2)
+render_target_update_mode = 0
+
+[node name="Camera3D" type="Camera3D" parent="TabContainer/MapTab/HBoxContainer/map_vbox/map_vp_cont/SubViewport" unique_id=2121266885]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 2000, 0)
+projection = 1
+size = 1000.0
+
+[node name="hbox" type="HBoxContainer" parent="TabContainer/MapTab/HBoxContainer/map_vbox" unique_id=422631144]
+layout_mode = 2
+
+[node name="you_are_here" type="Label" parent="TabContainer/MapTab/HBoxContainer/map_vbox/hbox" unique_id=1514245261]
+layout_mode = 2
+text = "You are here"
+
+[node name="missions_vbox" type="VBoxContainer" parent="TabContainer/MapTab/HBoxContainer" unique_id=1061519145]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="title" type="Label" parent="TabContainer/MapTab/HBoxContainer/missions_vbox" unique_id=1652604287]
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "Missions"
+
+[node name="job" type="Label" parent="TabContainer/MapTab/HBoxContainer/missions_vbox" unique_id=221311616]
+layout_mode = 2
+text = "Get moon dust for the king"
+
+[node name="job2" type="Label" parent="TabContainer/MapTab/HBoxContainer/missions_vbox" unique_id=1658271896]
+layout_mode = 2
+text = "Defeat Wesley Snipes"
+
+[node name="job3" type="Label" parent="TabContainer/MapTab/HBoxContainer/missions_vbox" unique_id=1851687509]
+layout_mode = 2
+text = "Go to space"
+
+[node name="job4" type="Label" parent="TabContainer/MapTab/HBoxContainer/missions_vbox" unique_id=1943791197]
+layout_mode = 2
+text = "Admire hands"
+
+[node name="AbilitiesTab" type="MarginContainer" parent="TabContainer" unique_id=61489287]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/AbilitiesTab" unique_id=1143125624]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/AbilitiesTab/HBoxContainer" unique_id=1044150307]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CheckButton" type="CheckButton" parent="TabContainer/AbilitiesTab/HBoxContainer/VBoxContainer" unique_id=350953750]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Pipegun"
+flat = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="TabContainer/AbilitiesTab/HBoxContainer" unique_id=1588990939]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="TabContainer/AbilitiesTab/HBoxContainer/SubViewportContainer" unique_id=1124208258]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(2, 2)
+render_target_update_mode = 0
+
+[node name="mdl_player" type="CSGBox3D" parent="TabContainer/AbilitiesTab/HBoxContainer/SubViewportContainer/SubViewport" unique_id=809440779]
+
+[node name="Camera3D" type="Camera3D" parent="TabContainer/AbilitiesTab/HBoxContainer/SubViewportContainer/SubViewport" unique_id=655580989]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.90000004, -3)
+projection = 1
+size = 3.031
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="TabContainer/AbilitiesTab/HBoxContainer/SubViewportContainer/SubViewport" unique_id=599658719]
+environment = SubResource("Environment_or4hu")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="TabContainer/AbilitiesTab/HBoxContainer/SubViewportContainer/SubViewport" unique_id=808562747]
+transform = Transform3D(0.7876858, -0.05008769, 0.6140377, -0.45698652, -0.71593857, 0.52782124, 0.41317594, -0.6963643, -0.5868241, 0, 0, 0)
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/AbilitiesTab/HBoxContainer" unique_id=88788711]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="OptionsTab" type="MarginContainer" parent="TabContainer" unique_id=765309799]
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="vbox" type="VBoxContainer" parent="TabContainer/OptionsTab" unique_id=1089183990]
+layout_mode = 2
+metadata/_custom_type_script = "uid://ckhmqxlsm0gn4"
+
+[node name="but_quit" type="Button" parent="TabContainer/OptionsTab/vbox" unique_id=297870098]
+layout_mode = 2
+text = "Quit to Title"
+
+[node name="but_exit" type="Button" parent="TabContainer/OptionsTab/vbox" unique_id=1771475615]
+layout_mode = 2
+text = "Exit Game"

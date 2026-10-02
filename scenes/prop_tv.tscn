@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://d0co0d2sg0t1o"]
+
+[ext_resource type="Script" uid="uid://1uymsq43tajl" path="res://src/PhysProp.cs" id="1_ddb0n"]
+[ext_resource type="PackedScene" uid="uid://c6cg81v6kbf8c" path="res://assets/models/prop_tv/Television_01_1k.glb" id="2_w3wxy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oj70k"]
+size = Vector3(0.59399414, 0.45489502, 0.45654297)
+
+[node name="PropTv" type="RigidBody3D" unique_id=228601484 node_paths=PackedStringArray("Model")]
+script = ExtResource("1_ddb0n")
+Model = NodePath("Model/Television_01")
+metadata/_custom_type_script = "uid://1uymsq43tajl"
+
+[node name="WorldColl" type="CollisionShape3D" parent="." unique_id=609439203]
+shape = SubResource("BoxShape3D_oj70k")
+
+[node name="Model" parent="." unique_id=916484729 instance=ExtResource("2_w3wxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22948837, 0.03422928)

@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://7vkfppji05is"]
+
+[ext_resource type="Texture2D" uid="uid://cnhlony6jcknk" path="res://assets/env/bliss.exr" id="1_62d2f"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ifhar"]
+panorama = ExtResource("1_62d2f")
+
+[sub_resource type="Sky" id="Sky_c3k1h"]
+sky_material = SubResource("PanoramaSkyMaterial_ifhar")
+
+[sub_resource type="Environment" id="Environment_v7m8w"]
+background_mode = 2
+sky = SubResource("Sky_c3k1h")
+sky_rotation = Vector3(0, 3.1415927, 0)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_dtu3q"]
+auto_exposure_enabled = true
+
+[node name="Env" type="Node" unique_id=181444999]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=577183850]
+environment = SubResource("Environment_v7m8w")
+camera_attributes = SubResource("CameraAttributesPractical_dtu3q")
+
+[node name="sun" type="DirectionalLight3D" parent="." unique_id=1164452728]
+transform = Transform3D(-0.35616088, -0.90612054, 0.22824317, -0.25881904, 0.33036605, 0.9076734, -0.8978654, 0.26420403, -0.35218474, 0, 0, 0)
+shadow_enabled = true

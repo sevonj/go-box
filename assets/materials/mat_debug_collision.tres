@@ -1,0 +1,18 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cew5nm8yiysju"]
+
+[ext_resource type="Texture2D" uid="uid://bb0oardg4qskt" path="res://assets/materials/tex_dev_checker_white_large.png" id="1_d6odu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0tcj4"]
+cull_mode = 1
+shading_mode = 2
+albedo_color = Color(1, 0.72, 0.72, 1)
+albedo_texture = ExtResource("1_d6odu")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+
+[resource]
+next_pass = SubResource("StandardMaterial3D_0tcj4")
+shading_mode = 2
+albedo_texture = ExtResource("1_d6odu")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true

@@ -1,0 +1,41 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://nswmyvsded5p"]
+
+[ext_resource type="Texture2D" uid="uid://fpiiv0l81fls" path="res://assets/materials/tex_dev_checker_white.png" id="1_grp24"]
+
+[sub_resource type="Shader" id="Shader_ulpwj"]
+code = "shader_type spatial;
+
+uniform sampler2D albedo : source_color, filter_nearest;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+vec3 triplanar_map(vec3 x, vec3 y, vec3 z, vec3 n) {
+	n = n*n;
+    return (x*n.x + y*n.y + z*n.z)/(n.x+n.y+n.z);
+}
+
+vec3 triplanar_tritexture(vec3 d, vec3 n) {
+    vec3 colx = texture(albedo, d.zy * .25).xyz;
+    vec3 coly = texture(albedo, d.xz * .25).xyz;
+    vec3 colz = texture(albedo, d.xy * .25).xyz;
+    return triplanar_map(colx, coly, colz, n);
+}
+
+void fragment() {
+	vec3 world_vertex = (INV_VIEW_MATRIX * vec4(VERTEX, 1.)).xyz;
+	vec3 world_normal = (INV_VIEW_MATRIX * vec4(NORMAL, 0.)).xyz;
+	ALBEDO = triplanar_tritexture(world_vertex, world_normal);
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the material.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[resource]
+render_priority = 0
+shader = SubResource("Shader_ulpwj")
+shader_parameter/albedo = ExtResource("1_grp24")

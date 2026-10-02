@@ -1,0 +1,44 @@
+[gd_resource type="Theme" format=3 uid="uid://cps17afaufoxg"]
+
+[ext_resource type="StyleBox" uid="uid://dvn2oet6j23c8" path="res://assets/themes/lunacy/stylebox_button-normal.tres" id="1_1h1xt"]
+[ext_resource type="StyleBox" uid="uid://dr3xibwl2e2ge" path="res://assets/themes/lunacy/stylebox_button-hover.tres" id="1_6ly4d"]
+[ext_resource type="StyleBox" uid="uid://v18kfq27ag0y" path="res://assets/themes/lunacy/stylebox_button-disabled.tres" id="1_ifdlg"]
+[ext_resource type="StyleBox" uid="uid://co66lej7nidd8" path="res://assets/themes/lunacy/stylebox_panel.tres" id="1_jlvhj"]
+[ext_resource type="FontFile" uid="uid://o63pwd3ka34j" path="res://assets/font/comic-relief/ComicRelief.ttf" id="1_nk8lv"]
+[ext_resource type="StyleBox" uid="uid://8khfuulaa65b" path="res://assets/themes/lunacy/stylebox_button-focus.tres" id="2_e2pef"]
+[ext_resource type="StyleBox" uid="uid://clb7quijoiet0" path="res://assets/themes/lunacy/stylebox_button-pressed.tres" id="3_beuml"]
+[ext_resource type="StyleBox" uid="uid://48pugoeyggbr" path="res://assets/themes/lunacy/stylebox_button-hover-pressed.tres" id="4_4goiy"]
+[ext_resource type="Texture2D" uid="uid://bwnffvxmurfv0" path="res://assets/themes/lunacy/unused/tex_window_close.svg" id="4_6ly4d"]
+[ext_resource type="Texture2D" uid="uid://dqlx3r8hbr4bo" path="res://assets/themes/lunacy/unused/tex_window_close_pressed.svg" id="5_beuml"]
+[ext_resource type="StyleBox" uid="uid://c32lnmtnw2chb" path="res://assets/themes/lunacy/stylebox_window_border.tres" id="5_jlvhj"]
+[ext_resource type="FontFile" uid="uid://d1sx4y16hoyia" path="res://assets/font/liera-sans/LieraSans-Light.ttf" id="5_vgtro"]
+[ext_resource type="StyleBox" uid="uid://ccucmne1u5kkf" path="res://assets/themes/lunacy/stylebox_window_border-unfocused.tres" id="12_mqwdj"]
+
+[resource]
+default_font = ExtResource("5_vgtro")
+default_font_size = 14
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_disabled_color = Color(0, 0, 0, 0.5019608)
+Button/colors/font_focus_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(0, 0, 0, 1)
+Button/colors/icon_pressed_color = Color(0, 0, 0, 1)
+Button/styles/disabled = ExtResource("1_ifdlg")
+Button/styles/focus = ExtResource("2_e2pef")
+Button/styles/hover = ExtResource("1_6ly4d")
+Button/styles/hover_pressed = ExtResource("4_4goiy")
+Button/styles/normal = ExtResource("1_1h1xt")
+Button/styles/pressed = ExtResource("3_beuml")
+Label/colors/font_color = Color(0, 0, 0, 1)
+Panel/styles/panel = ExtResource("1_jlvhj")
+PanelContainer/styles/panel = ExtResource("1_jlvhj")
+RichTextLabel/colors/default_color = Color(0, 0, 0, 1)
+Window/constants/close_h_offset = 25
+Window/constants/close_v_offset = 27
+Window/font_sizes/title_font_size = 16
+Window/fonts/title_font = ExtResource("1_nk8lv")
+Window/icons/close = ExtResource("4_6ly4d")
+Window/icons/close_pressed = ExtResource("5_beuml")
+Window/styles/embedded_border = ExtResource("5_jlvhj")
+Window/styles/embedded_unfocused_border = ExtResource("12_mqwdj")

@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://48pugoeyggbr"]
+
+[ext_resource type="Texture2D" uid="uid://belb8g7c5iyst" path="res://assets/themes/lunacy/tex_button-hover-pressed.tres" id="1_8qvg5"]
+
+[resource]
+texture = ExtResource("1_8qvg5")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0

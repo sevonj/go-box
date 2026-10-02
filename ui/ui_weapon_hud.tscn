@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://qq7nn8a18njw"]
+
+[ext_resource type="Script" uid="uid://cnwn7ap0livwa" path="res://src/UiWeaponHud.cs" id="1_6pqqn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dn8d0"]
+bg_color = Color(0, 0, 0, 0.4509804)
+
+[node name="UiWeaponHud" type="Control" unique_id=442355968 node_paths=PackedStringArray("_wpnNameLabel", "_wpnDescriptionLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6pqqn")
+_wpnNameLabel = NodePath("PanelContainer/VBoxContainer/WpnName")
+_wpnDescriptionLabel = NodePath("PanelContainer/VBoxContainer/WpnDesc")
+metadata/_custom_type_script = "uid://cnwn7ap0livwa"
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1676462864]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -125.0
+offset_top = -44.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dn8d0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1843016222]
+layout_mode = 2
+
+[node name="WpnName" type="Label" parent="PanelContainer/VBoxContainer" unique_id=946421920]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "weapon name here"
+
+[node name="WpnDesc" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1129476894]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "weapon desc here"

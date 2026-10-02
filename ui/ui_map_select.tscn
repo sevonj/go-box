@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://bna7a62a4tp2b"]
+
+[ext_resource type="Script" uid="uid://dkt30grx1mdgl" path="res://src/UiStageSelect.cs" id="1_pasnx"]
+[ext_resource type="Script" uid="uid://bim8mlc7jgxx8" path="res://src/UiAutoSizeGridContainer.cs" id="2_56wx8"]
+[ext_resource type="StyleBox" uid="uid://b332kppa140jv" path="res://assets/themes/lunacy/stylebox_inspector_sidebar.tres" id="3_l165n"]
+[ext_resource type="PackedScene" uid="uid://ckxi641rha0fk" path="res://ui/ui_picture_frame.tscn" id="4_70pha"]
+
+[node name="UiStageSelect" type="PanelContainer" unique_id=1427467537 node_paths=PackedStringArray("_grid", "_previewNameLabel", "_previewIdLabel", "_previewDescLabel", "_previewPicture", "_loadButton", "_collDebugCheckBox")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pasnx")
+_grid = NodePath("HBox/UiAutoSizeGridContainer/PropsGrid")
+_previewNameLabel = NodePath("HBox/Sidebar/VBox/NameLabel")
+_previewIdLabel = NodePath("HBox/Sidebar/VBox/IdLabel")
+_previewDescLabel = NodePath("HBox/Sidebar/VBox/DescriptionLabel")
+_previewPicture = NodePath("HBox/Sidebar/VBox/PreviewPicture")
+_loadButton = NodePath("HBox/Sidebar/VBox/LoadMapButton")
+_collDebugCheckBox = NodePath("HBox/Sidebar/VBox/CollDebugCheckBox")
+metadata/_custom_type_script = "uid://dkt30grx1mdgl"
+
+[node name="HBox" type="HBoxContainer" parent="." unique_id=816690142]
+layout_mode = 2
+
+[node name="UiAutoSizeGridContainer" type="Control" parent="HBox" unique_id=123415680 node_paths=PackedStringArray("Grid")]
+propagate_maximum_size = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+script = ExtResource("2_56wx8")
+Grid = NodePath("PropsGrid")
+metadata/_custom_type_script = "uid://bim8mlc7jgxx8"
+
+[node name="PropsGrid" type="GridContainer" parent="HBox/UiAutoSizeGridContainer" unique_id=339375782]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sidebar" type="PanelContainer" parent="HBox" unique_id=4130747]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_l165n")
+
+[node name="VBox" type="VBoxContainer" parent="HBox/Sidebar" unique_id=1571594330]
+layout_mode = 2
+
+[node name="PreviewPicture" parent="HBox/Sidebar/VBox" unique_id=1905686383 instance=ExtResource("4_70pha")]
+custom_minimum_size = Vector2(0, 164)
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="HBox/Sidebar/VBox" unique_id=1862232355]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "stage_name_here"
+autowrap_mode = 3
+
+[node name="IdLabel" type="Label" parent="HBox/Sidebar/VBox" unique_id=33197161]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0.49803922)
+text = "stage_id_here"
+autowrap_mode = 3
+
+[node name="DescriptionLabel" type="Label" parent="HBox/Sidebar/VBox" unique_id=1106384084]
+layout_mode = 2
+text = "stage_desc_here"
+autowrap_mode = 3
+
+[node name="Spacer" type="Control" parent="HBox/Sidebar/VBox" unique_id=558414578]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CollDebugCheckBox" type="CheckBox" parent="HBox/Sidebar/VBox" unique_id=1072442923]
+layout_mode = 2
+text = "Collision debug mode"
+flat = true
+
+[node name="LoadMapButton" type="Button" parent="HBox/Sidebar/VBox" unique_id=1179269262]
+layout_mode = 2
+text = "Load Stage"

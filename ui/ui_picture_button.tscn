@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://dkduwf05rx71d"]
+
+[ext_resource type="Theme" uid="uid://dmot3phm67nk5" path="res://assets/themes/common/theme_common_flat.tres" id="1_rqfdh"]
+[ext_resource type="PackedScene" uid="uid://ckxi641rha0fk" path="res://ui/ui_picture_frame.tscn" id="2_gxykg"]
+[ext_resource type="Script" uid="uid://cwahiqc1xygfq" path="res://src/UiPictureButton.cs" id="2_t3cop"]
+
+[node name="UiPictureButton" type="Button" unique_id=870333779 node_paths=PackedStringArray("_label", "_picture")]
+custom_minimum_size = Vector2(128, 128)
+offset_right = 128.0
+offset_bottom = 128.0
+theme = ExtResource("1_rqfdh")
+script = ExtResource("2_t3cop")
+_label = NodePath("margin/vbox/lab_margin/LabelLabel")
+_picture = NodePath("margin/vbox/UiPictureFrame")
+metadata/_custom_type_script = "uid://cwahiqc1xygfq"
+
+[node name="margin" type="MarginContainer" parent="." unique_id=189857570]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="vbox" type="VBoxContainer" parent="margin" unique_id=1230989711]
+layout_mode = 2
+
+[node name="UiPictureFrame" parent="margin/vbox" unique_id=2114124703 instance=ExtResource("2_gxykg")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="lab_margin" type="MarginContainer" parent="margin/vbox" unique_id=1605955976]
+layout_mode = 2
+
+[node name="LabelLabel" type="Label" parent="margin/vbox/lab_margin" unique_id=1416359022]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "item_name_here"
+clip_text = true
+text_overrun_behavior = 5
