@@ -14,6 +14,8 @@ public partial class PhysProp : RigidBody3D, IPhysActor, IPickupable {
 
     public override void _Ready() {
         Game.World.RegisterPhysProp(this);
+        ContactMonitor = true;
+        MaxContactsReported = 16;
     }
 
     public override void _Process(double delta) {
@@ -59,6 +61,10 @@ public partial class PhysProp : RigidBody3D, IPhysActor, IPickupable {
         }
         else {
             GravityScale = 1f;
+        }
+
+        foreach (var node in GetCollidingBodies()) {
+            if (node is PropStaticBrk brk) brk.Break();
         }
     }
 

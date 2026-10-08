@@ -30,8 +30,8 @@ public static class Game {
         GetTree().Quit();
     }
 
-    public static void LoadStage(content.Stage stage, bool debugColls = false) {
-        World = StageLoader.Load(stage, debugColls);
+    public static void LoadStage(content.StageDef stageDef, bool debugColls = false) {
+        World = StageLoader.Load(stageDef, debugColls);
 
         if (World == null) {
             QuitToTitle();

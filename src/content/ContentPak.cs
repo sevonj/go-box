@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Godot;
 
 namespace GoBox.content;
 
 public class ContentPak {
-    public List<string> Stages { get; init; }
+    [JsonPropertyName("stages")] public List<string> Stages { get; init; }
+    [JsonPropertyName("props_static")] public List<string> PropsStatic { get; init; }
+    [JsonPropertyName("props_static_brk")] public List<string> PropsStaticBrk { get; init; }
 
     public static ContentPak FromJson(string path) {
         GD.Print($"Loading ContentPak '{path}'");
@@ -16,14 +19,8 @@ public class ContentPak {
             return null;
         }
 
-        var options = new JsonSerializerOptions {
-            PropertyNameCaseInsensitive = true,
-            ReadCommentHandling = JsonCommentHandling.Skip,
-            AllowTrailingCommas = true
-        };
-
         var json = file.GetAsText();
-        var pak = JsonSerializer.Deserialize<ContentPak>(json, options);
+        var pak = JsonSerializer.Deserialize<ContentPak>(json);
 
         return pak;
     }

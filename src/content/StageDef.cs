@@ -7,30 +7,60 @@ using Godot;
 namespace GoBox.content;
 
 public class PropSpawn {
-    public string Res { get; init; }
-    public Vector3 Pos { get; init; }
-    public Vector3 Rot { get; init; }
+    [JsonPropertyName("id")] public string Id { get; init; }
+    [JsonPropertyName("position")] public Vector3 Position { get; init; }
+    [JsonPropertyName("rotation")] public Vector3 Rotation { get; init; }
 }
 
-public class Stage {
-    public string Id { get; init; }
-    public int Version { get; init; }
+public class StageDef {
+    [JsonPropertyName("id")] public string Id { get; init; }
+    [JsonPropertyName("version")] public int Version { get; init; }
 
     [Obsolete("Internal content is only a temporary workaround")]
+    [JsonPropertyName("external")]
     public bool External { get; init; }
 
-    public string Name { get; init; }
-    public string Description { get; init; }
-    public string ThumbnailPath { get; init; }
+    [JsonPropertyName("name")] public string Name { get; init; }
+    [JsonPropertyName("description")] public string Description { get; init; }
+    [JsonPropertyName("thumbnail_path")] public string ThumbnailPath { get; init; }
 
     [Obsolete("Internal content is only a temporary workaround")]
+    [JsonPropertyName("resource_path")]
     public string ResourcePath { get; init; }
 
-    public string ModelPath { get; init; }
-    public string CollPath { get; init; }
+    [JsonPropertyName("model_path")] public string ModelPath { get; init; }
+    [JsonPropertyName("coll_path")] public string CollPath { get; init; }
+
+    [JsonPropertyName("player_start_position")]
     public Vector3 PlayerStartPosition { get; init; }
+
+    [JsonPropertyName("player_start_rotation")]
     public Vector3 PlayerStartRotation { get; init; }
-    public List<PropSpawn> Props { get; init; }
+
+    [JsonPropertyName("props_static")] public List<PropSpawn> PropsStatic { get; init; }
+
+    
+    public static StageDef FromJson(string path) {
+        using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+
+        if (file == null) {
+            GD.PrintErr($"Couldn't access '{path}'");
+            return null;
+        }
+
+        var options = new JsonSerializerOptions();
+        options.Converters.Add(new Vector3JsonConv());
+
+        var json = file.GetAsText();
+        var stage = JsonSerializer.Deserialize<StageDef>(json, options);
+
+        if (!stage.Validate()) {
+            GD.PrintErr($"stage failed validation: {path}");
+            return null;
+        }
+
+        return stage;
+    }
 
     public bool Validate() {
         var ok = true;
@@ -63,39 +93,12 @@ public class Stage {
             ok = false;
         }
 
-        if (Props == null) {
+        if (PropsStatic == null) {
             GD.PrintErr("Stage props is null");
             ok = false;
         }
 
         return ok;
-    }
-
-    public static Stage FromJson(string path) {
-        GD.Print($"Opening stage manifest at '{path}'");
-        using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
-
-        if (file == null) {
-            GD.PrintErr($"Couldn't access '{path}'");
-            return null;
-        }
-
-        var options = new JsonSerializerOptions {
-            PropertyNameCaseInsensitive = true,
-            ReadCommentHandling = JsonCommentHandling.Skip,
-            AllowTrailingCommas = true
-        };
-        options.Converters.Add(new Vector3JsonConv());
-
-        var json = file.GetAsText();
-        var stage = JsonSerializer.Deserialize<Stage>(json, options);
-
-        if (!stage.Validate()) {
-            GD.PrintErr($"stage failed validation: {path}");
-            return null;
-        }
-
-        return stage;
     }
 }
 

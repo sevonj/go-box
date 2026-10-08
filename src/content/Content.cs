@@ -9,7 +9,32 @@ public static class Content {
 
     private static bool _contentLoaded;
 
-    public static Dictionary<string, PhysProp> PhysProps { get; private set; } = new() {
+
+    public static Dictionary<string, StageDef> Stages { get; private set; } = new() {
+        {
+            "gobox.bliss", new StageDef {
+                Id = "gobox.bliss",
+                External = false,
+                Name = "Bliss",
+                Description = "A green, hilly zone",
+                ResourcePath = "res://stages/stage_bliss.tscn",
+                ThumbnailPath = "res://stages/gobox.bliss/preview.png"
+            }
+        }, {
+            "gobox.city", new StageDef {
+                Id = "gobox.city",
+                External = false,
+                Name = "City",
+                Description = "A city of white concrete",
+                ResourcePath = "res://stages/stage_city.tscn",
+                ThumbnailPath = "res://stages/gobox.city/preview.png"
+            }
+        },
+    };
+
+    public static Dictionary<string, PropDef> PropDefs { get; private set; } = [];
+
+    public static Dictionary<string, PhysProp> PropsPhys { get; private set; } = new() {
         {
             "gobox.hogball", new PhysProp {
                 Id = "gobox.hogball",
@@ -27,29 +52,23 @@ public static class Content {
         },
     };
 
-    public static Dictionary<string, Stage> Stages { get; private set; } = new() {
-        {
-            "gobox.bliss", new Stage {
-                Id = "gobox.bliss",
-                External = false,
-                Name = "Bliss",
-                Description = "A green, hilly zone",
-                ResourcePath = "res://stages/stage_bliss.tscn",
-                ThumbnailPath = "res://stages/gobox.bliss/preview.png"
-            }
-        }, {
-            "gobox.city", new Stage {
-                Id = "gobox.city",
-                External = false,
-                Name = "City",
-                Description = "A city of white concrete",
-                ResourcePath = "res://stages/stage_city.tscn",
-                ThumbnailPath = "res://stages/gobox.city/preview.png"
-            }
-        },
-    };
-
     public static string FullPath(string relative) => ContentPath.PathJoin(relative);
+
+    public static Node3D InstantiateProp(string id) {
+        PropDefs.TryGetValue(id, out var propDef);
+        if (propDef == null) {
+            GD.PrintErr($"Prop '{id}' doesn't exist");
+            return null;
+        }
+
+        if (propDef is PropStaticDef propStaticDef)
+            return PropStatic.FromDef(propStaticDef);
+        if (propDef is PropStaticBrkDef brkDef)
+            return PropStaticBrk.FromDef(brkDef);
+
+        GD.PrintErr("UNREACHABLE");
+        return null;
+    }
 
     public static void LoadContent() {
         if (_contentLoaded) return;
@@ -65,7 +84,7 @@ public static class Content {
     }
 
     private static void LoadContentPak(string pakPath) {
-        var pakManifestPath = pakPath.PathJoin("manifest.json");
+        var pakManifestPath = pakPath.PathJoin("pak.json");
         if (!File.Exists(pakManifestPath)) {
             GD.Print($"No manifest in {pakPath}");
             return;
@@ -73,17 +92,31 @@ public static class Content {
 
         var pak = ContentPak.FromJson(pakManifestPath);
         GD.Print($"Pak contents:");
-        if (pak.Stages != null) {
-            foreach (var stageName in pak.Stages) {
-                GD.Print($" - Stage '{stageName}'");
-            }
-        }
+        GD.Print($" - {pak.Stages?.Count ?? 0} stage(s)");
+        GD.Print($" - {pak.PropsStatic?.Count ?? 0} static prop(s)");
+        GD.Print($" - {pak.PropsStaticBrk?.Count ?? 0} static brk prop(s)");
 
         if (pak.Stages != null) {
             foreach (var stageName in pak.Stages) {
-                var stagePath = pakPath.PathJoin("stages").PathJoin(stageName).PathJoin("manifest.json");
-                var stage = Stage.FromJson(stagePath);
-                Stages.Add(stage.Id, stage);
+                var path = pakPath.PathJoin("stages").PathJoin(stageName).PathJoin("stage.json");
+                var def = StageDef.FromJson(path);
+                Stages.Add(def.Id, def);
+            }
+        }
+
+        if (pak.PropsStatic != null) {
+            foreach (var id in pak.PropsStatic) {
+                var path = pakPath.PathJoin("props").PathJoin($"{id}.json");
+                var def = PropStaticDef.FromJson(path);
+                PropDefs.Add(def.Id, def);
+            }
+        }
+
+        if (pak.PropsStaticBrk != null) {
+            foreach (var id in pak.PropsStaticBrk) {
+                var path = pakPath.PathJoin("props").PathJoin($"{id}.json");
+                var def = PropStaticBrkDef.FromJson(path);
+                PropDefs.Add(def.Id, def);
             }
         }
     }

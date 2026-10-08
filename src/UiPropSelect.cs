@@ -12,14 +12,14 @@ public partial class UiPropSelect : PanelContainer {
 
     public override void _Ready() {
         ReloadGrid();
-        LocalVars.SelectPhysProp(content.Content.PhysProps.Keys.First());
+        LocalVars.SelectPhysProp(content.Content.PropsPhys.Keys.First());
         RefreshPreview();
     }
 
     private void ReloadGrid() {
         foreach (var child in _grid.GetChildren()) child.QueueFree();
 
-        foreach (var (id, prop) in content.Content.PhysProps) {
+        foreach (var (id, prop) in content.Content.PropsPhys) {
             var button = UiPictureButton.Instantiate();
             button.Text = prop.Name;
             button.Pressed += () => SelectPhysProp(id);

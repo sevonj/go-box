@@ -14,7 +14,7 @@ public static class LocalVars {
             return;
 
 
-        if (!content.Content.PhysProps.TryGetValue(id, out var prop)) {
+        if (!content.Content.PropsPhys.TryGetValue(id, out var prop)) {
             GD.PushError($"Attempted to select nonexistent prop id '{id}'");
             return;
         }

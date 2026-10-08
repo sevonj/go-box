@@ -12,7 +12,7 @@ public partial class UiStageSelect : PanelContainer {
     [Export] private Button _loadButton;
     [Export] private CheckBox _collDebugCheckBox;
 
-    private content.Stage _selected;
+    private content.StageDef _selected;
 
 
     public override void _Ready() {
@@ -66,16 +66,16 @@ public partial class UiStageSelect : PanelContainer {
     }
 
 
-    private Texture2D LoadThumbnail(content.Stage stage) {
-        if (stage?.ThumbnailPath == null) return null;
+    private Texture2D LoadThumbnail(content.StageDef stageDef) {
+        if (stageDef?.ThumbnailPath == null) return null;
 
-        if (!stage.External) {
-            var tex = GD.Load<Texture2D>(stage.ThumbnailPath);
-            if (!IsInstanceValid(tex)) GD.PrintErr(GetPath(), $" Couldn't load thumbnail for stage '{stage.Id}'");
+        if (!stageDef.External) {
+            var tex = GD.Load<Texture2D>(stageDef.ThumbnailPath);
+            if (!IsInstanceValid(tex)) GD.PrintErr(GetPath(), $" Couldn't load thumbnail for stage '{stageDef.Id}'");
             return tex;
         }
 
-        var path = content.Content.ContentPath.PathJoin(stage.ThumbnailPath);
+        var path = content.Content.ContentPath.PathJoin(stageDef.ThumbnailPath);
         var img = Image.LoadFromFile(path);
         return ImageTexture.CreateFromImage(img);
     }
