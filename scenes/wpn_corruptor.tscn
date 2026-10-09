@@ -1,12 +1,18 @@
 [gd_scene format=3 uid="uid://ccchoorqtu1hd"]
 
 [ext_resource type="Script" uid="uid://djful7vi46dm5" path="res://src/WpnCorruptor.cs" id="1_ympjx"]
+[ext_resource type="AudioStream" uid="uid://so4royy6dpc2" path="res://assets/sfx/sfx_tool_no_use.wav" id="2_1l5wv"]
+[ext_resource type="AudioStream" uid="uid://paxej8be3x8s" path="res://assets/sfx/sfx_wpn_corruptor_hit.wav" id="3_1l5wv"]
 [ext_resource type="PackedScene" uid="uid://clqegl6xksecr" path="res://assets/models/wpn_propgun/wpn_toolklobb.blend" id="3_431am"]
 [ext_resource type="Material" uid="uid://lr7f67h14kk6" path="res://assets/materials/mat_fx_gpuartifact.tres" id="4_431am"]
+[ext_resource type="AudioStream" uid="uid://c54antdana630" path="res://assets/sfx/sfx_wpn_corruptor_blast.wav" id="4_b832m"]
 
 [node name="WpnCorruptor" type="Node3D" unique_id=341058220 node_paths=PackedStringArray("_beamStartMarker")]
 script = ExtResource("1_ympjx")
 _beamStartMarker = NodePath("ViewModel/Marker3D")
+_sfxNoUse = ExtResource("2_1l5wv")
+_sfxContinuous = ExtResource("3_1l5wv")
+_sfxBlast = ExtResource("4_b832m")
 metadata/_custom_type_script = "uid://djful7vi46dm5"
 
 [node name="ViewModel" parent="." unique_id=449726162 instance=ExtResource("3_431am")]

@@ -170,6 +170,7 @@ common/max_physics_steps_per_frame=32
 common/physics_jitter_fix=1.835
 3d/physics_engine="Jolt Physics"
 jolt_physics_3d/simulation/position_steps=8
+3d/solver/solver_iterations=626
 common/physics_interpolation=true
 
 [rendering]
