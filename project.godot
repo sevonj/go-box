@@ -165,6 +165,8 @@ ui_content_menu={
 
 [physics]
 
+common/physics_ticks_per_second=240
+common/max_physics_steps_per_frame=32
 common/physics_jitter_fix=1.835
 3d/physics_engine="Jolt Physics"
 jolt_physics_3d/simulation/position_steps=8
