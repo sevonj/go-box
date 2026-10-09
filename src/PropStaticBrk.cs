@@ -5,48 +5,49 @@ using Godot;
 namespace GoBox;
 
 [GlobalClass]
-public partial class PropStaticBrk : StaticBody3D, IHealth {
-    [Export] public Node3D Model { get; private set; }
-    [Export] public Node3D ModelDestroy { get; private set; }
-    [Export] public CollisionShape3D CollisionShape;
+public partial class PropStaticBrk : StaticBody3D, IProp, IHealth {
+    [Export] public MeshInstance3D Model { get; private set; }
+    [Export] public CollisionShape3D CollisionShape { get; private set; }
+    [Export] public MeshInstance3D ModelDestroy { get; private set; }
+    [Export] public CollisionShape3D CollisionShapeDestroy { get; private set; }
 
     public bool IsBroken { get; private set; }
 
     public PropStaticBrk() {
     }
 
-    public PropStaticBrk(Node3D model, Node3D modelDestroy, CollisionShape3D collisionShape) {
-        Model = model;
+    public PropStaticBrk(ArrayMesh mesh, Shape3D coll, ArrayMesh meshDestroy, Shape3D collDestroy) {
+        Model = new MeshInstance3D { Mesh = mesh };
         Model.Name = "Model";
-        ModelDestroy = modelDestroy;
-        ModelDestroy.Name = "ModelDestroy";
-        CollisionShape = collisionShape;
+        CollisionShape = new CollisionShape3D { Shape = coll };
         CollisionShape.Name = "Coll";
+        ModelDestroy = new MeshInstance3D { Mesh = meshDestroy };
+        ModelDestroy.Name = "ModelDestroy";
+        CollisionShapeDestroy = new CollisionShape3D { Shape = collDestroy };
+        CollisionShapeDestroy.Name = "CollDestroy";
     }
 
     public static PropStaticBrk FromDef(PropStaticBrkDef def) {
-        var model = GoboxGltf.Load(Content.FullPath(def.ModelPath));
-        if (model == null) {
-            GD.PrintErr($"PropStaticBrk from def: couldn't load model at {def.ModelPath}!");
+        var mesh = Content.GetMesh(def.ModelPath);
+        var coll = Content.GetCollMesh(def.CollPath);
+        var meshDestroy = Content.GetMesh(def.ModelDestroyPath);
+        var collDestroy = Content.GetCollMesh(def.CollDestroyPath);
+
+        if (mesh == null || meshDestroy == null || coll == null || collDestroy == null) {
+            GD.PrintErr($"PropStaticBrk: load failed!\n" +
+                        $" - mesh: {mesh}\n" +
+                        $" - coll: {coll}\n" +
+                        $" - meshDestroy: {meshDestroy}\n" +
+                        $" - collDestroy: {collDestroy}\n" +
+                        $" - def: {def}");
+            mesh?.Free();
+            coll?.Free();
+            meshDestroy?.Free();
+            collDestroy?.Free();
             return null;
         }
 
-        var modelDestroy = GoboxGltf.Load(Content.FullPath(def.ModelDestroyPath));
-        if (modelDestroy == null) {
-            GD.PrintErr($"PropStaticBrk from def: couldn't load modelDestroy at {def.ModelDestroyPath}!");
-            model.Free();
-            return null;
-        }
-
-        var collisionShape = GoboxColl.Load(Content.FullPath(def.CollPath));
-        if (collisionShape == null) {
-            GD.PrintErr($"PropStaticBrk from def: couldn't load coll at {def.CollPath}!");
-            model.Free();
-            modelDestroy.Free();
-            return null;
-        }
-
-        return new PropStaticBrk(model, modelDestroy, collisionShape);
+        return new PropStaticBrk(mesh, coll, meshDestroy, collDestroy);
     }
 
     public void Break() {
@@ -54,7 +55,9 @@ public partial class PropStaticBrk : StaticBody3D, IHealth {
         IsBroken = true;
 
         Model.Hide();
+        CollisionShape.Disabled = true;
         ModelDestroy.Show();
+        CollisionShapeDestroy.Disabled = false;
 
         // if (disableCollisionOnBreak) {
         //     foreach (var child in GetChildren()) {
@@ -92,19 +95,26 @@ public partial class PropStaticBrk : StaticBody3D, IHealth {
         IsBroken = false;
         Visible = true;
         Model.Show();
+        CollisionShape.Disabled = false;
         ModelDestroy.Hide();
+        CollisionShapeDestroy.Disabled = true;
     }
 
     public override void _Ready() {
         AddChild(Model);
         AddChild(CollisionShape);
         AddChild(ModelDestroy);
-        ModelDestroy.Hide();
+        AddChild(CollisionShapeDestroy);
+        Reset();
     }
 
     public override void _Process(double delta) {
         if (Input.IsKeyPressed(Key.P)) Reset();
     }
+
+    // --- IProp
+    
+    public ArrayMesh GetMesh() => (ArrayMesh)(IsBroken ? ModelDestroy : Model)?.Mesh;
 
     // --- IHealth
 

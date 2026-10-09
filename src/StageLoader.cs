@@ -1,10 +1,6 @@
 using System.Collections.Generic;
 using GoBox.content;
 using Godot;
-using System;
-using System.Buffers.Binary;
-using System.Runtime.InteropServices;
-using System.Text;
 
 
 namespace GoBox;
@@ -31,7 +27,7 @@ public static class StageLoader {
         var collShape = GoboxColl.Load(Content.FullPath(stageDef.CollPath));
         if (collShape == null) return null;
         var coll = new StaticBody3D();
-        coll.AddChild(collShape);
+        coll.AddChild(new CollisionShape3D { Shape = collShape });
 
         var model = debugColls
             ? GenerateCollDebugModel(collShape)
@@ -85,14 +81,9 @@ public static class StageLoader {
     }
 
 
-    private static MeshInstance3D GenerateCollDebugModel(CollisionShape3D collShape) {
+    private static MeshInstance3D GenerateCollDebugModel(ConcavePolygonShape3D conk) {
         var st = new SurfaceTool();
         st.Begin(Mesh.PrimitiveType.Triangles);
-
-        if (collShape.Shape is not ConcavePolygonShape3D conk) {
-            GD.PushWarning($"Collision debug model: skipping unsupported collider of type {collShape.Shape.GetType()}");
-            return null;
-        }
 
         foreach (var v in conk.Data) {
             st.AddVertex(v);

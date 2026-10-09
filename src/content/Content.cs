@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Godot;
 
 namespace GoBox.content;
@@ -51,6 +52,38 @@ public static class Content {
             }
         },
     };
+
+    public static Dictionary<string, ArrayMesh> Meshes { get; private set; } = [];
+    public static Dictionary<string, ConcavePolygonShape3D> CollMeshes { get; private set; } = [];
+
+    public static ArrayMesh GetMesh(string path) {
+        Meshes.TryGetValue(path, out var cachced);
+        if (cachced != null) {
+            return cachced;
+        }
+
+        var scene = GoboxGltf.Load(FullPath(path));
+        var mesh = (ArrayMesh)FindMeshInst(scene)?.Mesh;
+        Meshes.Add(path, mesh);
+        scene.Free();
+        return mesh;
+
+        MeshInstance3D FindMeshInst(Node node) {
+            if (node is MeshInstance3D meshInst) return meshInst;
+            return node.GetChildren().Select(FindMeshInst).FirstOrDefault(found => found != null);
+        }
+    }
+
+    public static Shape3D GetCollMesh(string path) {
+        CollMeshes.TryGetValue(path, out var cachced);
+        if (cachced != null) {
+            return cachced;
+        }
+
+        var shape = GoboxColl.Load(FullPath(path));
+        CollMeshes.Add(path, shape);
+        return shape;
+    }
 
     public static string FullPath(string relative) => ContentPath.PathJoin(relative);
 

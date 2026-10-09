@@ -4,12 +4,16 @@ using Godot;
 namespace GoBox;
 
 [GlobalClass]
-public partial class PhysProp : RigidBody3D, IPhysActor, IPickupable {
+public partial class PhysProp : RigidBody3D, IProp, IPhysActor, IPickupable {
     private PlayerPickupMgr _holder;
     [Export] public MeshInstance3D Model { get; private set; }
 
     public PhysProp() {
         ProcessPhysicsPriority = PProcessPriorities.PhysProp;
+    }
+
+    public ArrayMesh GetMesh() {
+        return (ArrayMesh)Model.Mesh;
     }
 
     public override void _Ready() {

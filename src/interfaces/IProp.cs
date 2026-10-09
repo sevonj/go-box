@@ -1,5 +1,7 @@
+using Godot;
+
 namespace GoBox.interfaces;
 
-public class IProp {
-    
+public interface IProp {
+    public ArrayMesh GetMesh();
 }

@@ -6,7 +6,7 @@ using Godot;
 namespace GoBox.content;
 
 public static class GoboxColl {
-    public static CollisionShape3D Load(string path) {
+    public static ConcavePolygonShape3D Load(string path) {
         const int headerSize = 16 + 4 + 4;
         const int minSize = headerSize + 3 * 3 * 4; // + size of tri
         byte[] collSignature = "GoBox Collision\n"u8.ToArray();
@@ -46,8 +46,6 @@ public static class GoboxColl {
 
         var verts = MemoryMarshal.Cast<byte, Vector3>(data.Slice(headerSize)).ToArray();
 
-        var shape = new ConcavePolygonShape3D { Data = verts };
-        var body = new StaticBody3D();
-        return new CollisionShape3D { Shape = shape };
+        return new ConcavePolygonShape3D { Data = verts };
     }
 }

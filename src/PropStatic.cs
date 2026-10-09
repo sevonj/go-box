@@ -1,41 +1,47 @@
 using GoBox.content;
+using GoBox.interfaces;
 using Godot;
 
 namespace GoBox;
 
 [GlobalClass]
-public partial class PropStatic : StaticBody3D {
-    [Export] public Node3D Model { get; private set; }
+public partial class PropStatic : StaticBody3D, IProp {
+    [Export] public MeshInstance3D Model { get; private set; }
     [Export] public CollisionShape3D CollisionShape;
 
     public PropStatic() {
     }
 
-    public PropStatic(Node3D model, CollisionShape3D collisionShape) {
-        Model = model;
+    public PropStatic(ArrayMesh mesh, Shape3D coll) {
+        Model = new MeshInstance3D { Mesh = mesh };
         Model.Name = "Model";
-        CollisionShape = collisionShape;
+        CollisionShape = new CollisionShape3D { Shape = coll };
         CollisionShape.Name = "Coll";
     }
 
-    public static PropStatic FromDef(PropStaticDef staticDef) {
-        var model = GoboxGltf.Load(Content.FullPath(staticDef.ModelPath));
-        if (model == null) {
-            GD.PrintErr($"PropStatic from def: couldn't load model at {staticDef.ModelPath}!");
+    public static PropStatic FromDef(PropStaticDef def) {
+        var mesh = Content.GetMesh(def.ModelPath);
+        var coll = Content.GetCollMesh(def.CollPath);
+
+        if (mesh == null || coll == null) {
+            GD.PrintErr($"PropStaticBrk: load failed!\n" +
+                        $" - mesh: {mesh}\n" +
+                        $" - coll: {coll}\n" +
+                        $" - def: {def}");
+            mesh?.Free();
+            coll?.Free();
             return null;
         }
 
-        var collisionShape = GoboxColl.Load(Content.FullPath(staticDef.CollPath));
-        if (collisionShape == null) {
-            GD.PrintErr($"PropStatic from def: couldn't load coll at {staticDef.CollPath}!");
-            return null;
-        }
-
-        return new PropStatic(model, collisionShape);
+        return new PropStatic(mesh, coll);
     }
 
     public override void _Ready() {
         AddChild(Model);
         AddChild(CollisionShape);
     }
+
+    // --- IProp
+
+    public ArrayMesh GetMesh() => (ArrayMesh)Model.Mesh;
 }

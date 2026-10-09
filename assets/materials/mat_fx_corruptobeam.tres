@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://logx3qef55w4"]
+
+[ext_resource type="Shader" uid="uid://dvegbeje6llmu" path="res://assets/materials/shad_fx_corruptobeam.gdshader" id="1_wmshd"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_wmshd")
