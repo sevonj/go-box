@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://gn7l5qgjfwix" path="res://src/World.cs" id="1_mpa0n"]
 [ext_resource type="Texture2D" uid="uid://cnhlony6jcknk" path="res://assets/env/bliss.exr" id="2_3hqlq"]
-[ext_resource type="PackedScene" uid="uid://cbow4igwwxog2" path="res://content/go_box/maps/bliss/map_bliss.glb" id="3_7b1u1"]
 [ext_resource type="Material" uid="uid://bcb20cdv2qwje" path="res://assets/materials/mat_dev_checker_white_large_triplanar.tres" id="4_mvk6x"]
 [ext_resource type="Script" uid="uid://bc6vhd3d1hch6" path="res://src/InfoPlayerStart.cs" id="4_yqliv"]
 [ext_resource type="Material" uid="uid://bkgkvoxu0brn" path="res://assets/materials/mat_dev_checker_gray_triplanar.tres" id="5_8a42r"]
@@ -65,9 +64,6 @@ shadow_enabled = true
 use_collision = true
 size = Vector3(1000, 1, 1000)
 material = ExtResource("8_3hqlq")
-
-[node name="map_bliss" parent="Static" unique_id=1046744291 instance=ExtResource("3_7b1u1")]
-visible = false
 
 [node name="district_center" type="CSGCombiner3D" parent="Static" unique_id=41499133]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -107, 0, 4)
@@ -1546,16 +1542,16 @@ material = ExtResource("6_b0cq6")
 [node name="mall" parent="Static/district_centralnorth" unique_id=1715075981 instance=ExtResource("13_87h2m")]
 transform = Transform3D(0.86602545, 0, -0.5, 0, 1, 0, 0.5, 0, 0.86602545, 46.670776, 0.5, -161.33356)
 
-[node name="base" parent="Static/district_centralnorth/mall" index="0" unique_id=1489109144]
+[node name="base" parent="Static/district_centralnorth/mall" index="0" unique_id=2015375432]
 surface_material_override/0 = ExtResource("4_mvk6x")
 
-[node name="bldg1" parent="Static/district_centralnorth/mall" index="1" unique_id=1533157112]
+[node name="bldg1" parent="Static/district_centralnorth/mall" index="1" unique_id=341678465]
 surface_material_override/0 = ExtResource("4_mvk6x")
 
-[node name="pillars" parent="Static/district_centralnorth/mall" index="2" unique_id=394502747]
+[node name="pillars" parent="Static/district_centralnorth/mall" index="2" unique_id=1879362829]
 surface_material_override/0 = ExtResource("4_mvk6x")
 
-[node name="pillars_001" parent="Static/district_centralnorth/mall" index="3" unique_id=1615150848]
+[node name="pillars_001" parent="Static/district_centralnorth/mall" index="3" unique_id=346682533]
 surface_material_override/0 = ExtResource("4_mvk6x")
 
 [node name="district_north" type="CSGCombiner3D" parent="Static" unique_id=421042785]

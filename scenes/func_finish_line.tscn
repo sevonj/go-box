@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://chd1bexcnlvsu"]
+
+[ext_resource type="PackedScene" uid="uid://dpj4qekiwkl41" path="res://content/gobox.base/models/finishline.blend" id="1_lvj3d"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sxy6q"]
+size = Vector3(7.5, 2.5, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_dn4mu"]
+points = PackedVector3Array(-4, -0.2, -1.5, -4, -0.017776042, -1.044538, 4, -0.2, -1.5, -4, -0.2, 1.5, -4, 0, -0.9523297, 4, -0.017776042, -1.044538, 4, -0.2, 1.5, -4, -0.017776042, 1.0442443, -4, 0, 0.95203614, 4, 0, -0.9523297, 4, -0.017776042, 1.0442443, 4, 0, 0.95203614)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hbubu"]
+size = Vector3(0.1, 3.5, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nrcbi"]
+size = Vector3(7.5, 1, 0.1)
+
+[node name="FuncFinishLine" type="Area3D" unique_id=1448509651]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1461680655]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0)
+shape = SubResource("BoxShape3D_sxy6q")
+debug_color = Color(0.7, 0.50166667, 0, 0.41960785)
+
+[node name="Model" parent="." unique_id=2022993782 instance=ExtResource("1_lvj3d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1954644353]
+
+[node name="Floor" type="CollisionShape3D" parent="StaticBody3D" unique_id=967627694]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("ConvexPolygonShape3D_dn4mu")
+
+[node name="Pole" type="CollisionShape3D" parent="StaticBody3D" unique_id=1656554153]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.75, 1.85, 0)
+shape = SubResource("BoxShape3D_hbubu")
+
+[node name="Pole2" type="CollisionShape3D" parent="StaticBody3D" unique_id=1532836953]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.75, 1.85, 0)
+shape = SubResource("BoxShape3D_hbubu")
+
+[node name="Banner" type="CollisionShape3D" parent="StaticBody3D" unique_id=1547568316]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
+shape = SubResource("BoxShape3D_nrcbi")

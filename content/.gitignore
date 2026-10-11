@@ -1,4 +1,5 @@
 *
 !.gitignore
 !.gdignore
-!go_box/**
+!gobox.base
+!gobox.base/**

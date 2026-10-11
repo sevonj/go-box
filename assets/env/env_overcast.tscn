@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dr36hoa8omcd8"]
+
+[ext_resource type="Texture2D" uid="uid://bi3r5xml72wjx" path="res://content/gobox.base/env/mud_road_puresky_2k.exr" id="1_068r3"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_20ka8"]
+panorama = ExtResource("1_068r3")
+
+[sub_resource type="Sky" id="Sky_lxryd"]
+sky_material = SubResource("PanoramaSkyMaterial_20ka8")
+
+[sub_resource type="Environment" id="Environment_u1mrv"]
+background_mode = 2
+sky = SubResource("Sky_lxryd")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_dtu3q"]
+auto_exposure_enabled = true
+auto_exposure_min_sensitivity = 636.04
+
+[node name="Env" type="Node" unique_id=181444999]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=577183850]
+environment = SubResource("Environment_u1mrv")
+camera_attributes = SubResource("CameraAttributesPractical_dtu3q")
+
+[node name="sun" type="DirectionalLight3D" parent="." unique_id=1164452728]
+transform = Transform3D(0.9659258, 0.08852133, 0.24321035, -0.25881904, 0.3303661, 0.90767336, 0, -0.9396926, 0.34202015, 0, 0, 0)

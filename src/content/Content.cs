@@ -13,7 +13,7 @@ public static class Content {
 
     public static Dictionary<string, StageDef> Stages { get; private set; } = new() {
         {
-            "gobox.bliss", new StageDef {
+            "gobox.base.bliss", new StageDef {
                 Id = "gobox.bliss",
                 External = false,
                 Name = "Bliss",
@@ -22,13 +22,22 @@ public static class Content {
                 ThumbnailPath = "res://stages/gobox.bliss/preview.png"
             }
         }, {
-            "gobox.city", new StageDef {
+            "gobox.base.city", new StageDef {
                 Id = "gobox.city",
                 External = false,
                 Name = "City",
                 Description = "A city of white concrete",
                 ResourcePath = "res://stages/stage_city.tscn",
                 ThumbnailPath = "res://stages/gobox.city/preview.png"
+            }
+        },{
+            "gobox.base.downhill", new StageDef {
+                Id = "gobox.base.downhill",
+                External = false,
+                Name = "Downhill",
+                Description = "It's all downhill from here",
+                ResourcePath = "res://stages/stage_downhill.tscn",
+                ThumbnailPath = "res://stages/gobox.base.downhill/preview.png"
             }
         },
     };
