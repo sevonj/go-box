@@ -22,7 +22,7 @@ public partial class Player {
     [Export] private Marker3D _eyePosMarker;
     [Export] private CollisionShape3D _worldColl;
     private PlayerPickupMgr _pickupMgr = new();
-    private CameraRigFp _cameraRig;
+    private CameraRig _cameraRig;
     private Node3D _weaponCont = new();
 
     private bool _isOnFloor;
@@ -120,7 +120,7 @@ public partial class Player : RigidBody3D {
 
         {
             _weaponCont.Position = _eyePosMarker.Position;
-            _weaponCont.GlobalRotation = _cameraRig.Camera().GlobalRotation;
+            _weaponCont.GlobalRotation = _cameraRig.Camera.GlobalRotation;
         }
 
         {
@@ -138,7 +138,7 @@ public partial class Player : RigidBody3D {
                 var force = 1000f;
                 var desiredSpeed = sprinting ? FastFlightSpeed : FlightSpeed;
 
-                var dir = _cameraRig.Camera().GlobalBasis * new Vector3(inputVec.X, 0f, inputVec.Y);
+                var dir = _cameraRig.Camera.GlobalBasis * new Vector3(inputVec.X, 0f, inputVec.Y);
                 dir.Y += Input.GetAxis("move_down", "move_up");
                 dir = dir.Normalized();
                 var currentSpeed = LinearVelocity.Dot(dir);
@@ -190,7 +190,7 @@ public partial class Player {
 
         _cameraRig = new CameraRigFp(this, _eyePosMarker);
         Game.World.AddActor(_cameraRig);
-        _pickupMgr.FollowTarget = _cameraRig.Camera();
+        _pickupMgr.FollowTarget = _cameraRig.Camera;
     }
 
     /*

@@ -4,23 +4,10 @@ using Godot;
 namespace GoBox;
 
 [GlobalClass]
-public partial class CameraRigFp(Player player, Node3D followTarget) : Node3D {
-    [Export] public Vector2 MouseSensitivity { get; set; } = new(0.7f, 0.7f);
-    [Export] public Vector2 GamepadSensitivity { get; set; } = new(2.5f, 2.5f);
-    [Export] public bool InvertX { get; set; }
-    [Export] public bool InvertY { get; set; }
-    [Export] public float MaxTilt { get; set; } = Mathf.DegToRad(75);
-    [Export] public float MinTilt { get; set; } = Mathf.DegToRad(-75);
-    [Export] public bool InputEnabled { get; set; } = true;
-
-    private Camera3D _camera;
-
-    public Camera3D Camera() => _camera;
-
-
+public partial class CameraRigFp(Player player, Node3D followTarget) : CameraRig {
     public override void _Ready() {
-        _camera = new Camera3D();
-        AddChild(_camera);
+        Camera = new Camera3D();
+        AddChild(Camera);
 
         if (!IsInstanceValid(player)) {
             GD.PrintErr(GetPath(), " Invalid player!");
@@ -43,7 +30,7 @@ public partial class CameraRigFp(Player player, Node3D followTarget) : Node3D {
             return;
         }
 
-        if (!IsInstanceValid(_camera)) {
+        if (!IsInstanceValid(Camera)) {
             GD.PrintErr(GetPath(), " NO CAMERA");
             return;
         }
@@ -80,7 +67,7 @@ public partial class CameraRigFp(Player player, Node3D followTarget) : Node3D {
 
     private void RotateView(Vector2 inputVec) {
         RotateY(inputVec.X);
-        var rotX = Mathf.Clamp(_camera.Rotation.X + inputVec.Y, MinTilt, MaxTilt);
-        _camera.Rotation = Vector3.Right * rotX;
+        var rotX = Mathf.Clamp(Camera.Rotation.X + inputVec.Y, MinTilt, MaxTilt);
+        Camera.Rotation = Vector3.Right * rotX;
     }
 }
