@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://d0eavqgitsjdy"]
+
+[ext_resource type="Script" uid="uid://cefgcs5brbn6u" path="res://src/UiTimerDisplay.cs" id="1_4rxgv"]
+[ext_resource type="FontFile" uid="uid://d1jh1xf6yii2o" path="res://assets/font/jetbrains-mono/static/jetbrains-mono-latin-700-normal.ttf" id="2_bic4i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dn8d0"]
+bg_color = Color(0.2666, 0.50809, 0.62, 0.34509805)
+
+[node name="Control" type="Control" unique_id=647995962 node_paths=PackedStringArray("_label")]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+script = ExtResource("1_4rxgv")
+_label = NodePath("PanelContainer/Label")
+metadata/_custom_type_script = "uid://cefgcs5brbn6u"
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=2042064966]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -68.0
+offset_bottom = 23.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dn8d0")
+
+[node name="Label" type="Label" parent="PanelContainer" unique_id=1199170116]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("2_bic4i")
+theme_override_font_sizes/font_size = 28
+text = "00:00:00.000"
+horizontal_alignment = 2

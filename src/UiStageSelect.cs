@@ -1,3 +1,5 @@
+using System;
+using GoBox.gamemodes;
 using Godot;
 
 namespace GoBox;
@@ -10,13 +12,22 @@ public partial class UiStageSelect : PanelContainer {
     [Export] private Label _previewDescLabel;
     [Export] private UiPictureFrame _previewPicture;
     [Export] private Button _loadButton;
+    [Export] private OptionButton _gamemodeSelect;
     [Export] private CheckBox _collDebugCheckBox;
 
     private content.StageDef _selected;
 
+    private enum GamemodeEnum {
+        Free,
+        TimeTrial,
+    }
+
 
     public override void _Ready() {
         _loadButton.Pressed += Commit;
+
+        _gamemodeSelect.AddItem("Free Sandbox", (int)GamemodeEnum.Free);
+        _gamemodeSelect.AddItem("Time Trial", (int)GamemodeEnum.TimeTrial);
 
         ReloadGrid();
         RefreshPreview();
@@ -82,7 +93,20 @@ public partial class UiStageSelect : PanelContainer {
 
     private void Commit() {
         if (_selected == null) return;
-        var debugColls = _collDebugCheckBox.ButtonPressed;
-        Game.LoadStage(_selected, debugColls);
+        Gamemode gamemode;
+        switch ((GamemodeEnum)_gamemodeSelect.Selected) {
+            case GamemodeEnum.Free: {
+                gamemode = new Gamemode();
+                break;
+            }
+            case GamemodeEnum.TimeTrial: {
+                gamemode = new GmTimeTrial();
+                break;
+            }
+            default: throw new ArgumentOutOfRangeException();
+        }
+
+        GD.Print(gamemode);
+        Game.LoadStage(_selected, gamemode, debugColls: _collDebugCheckBox.ButtonPressed);
     }
 }

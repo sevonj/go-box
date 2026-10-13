@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://cbiqhu6h22jnu"]
+
+[ext_resource type="Script" uid="uid://c6fcefn2hj6lm" path="res://src/UiResultsScreen.cs" id="1_8f2fi"]
+[ext_resource type="FontFile" uid="uid://tybgk535staj" path="res://assets/font/orbitron-master/Orbitron Black.ttf" id="2_qngm4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2tbxh"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.34117648, 0.67058825, 0.6, 0.53333336)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 32
+corner_radius_bottom_right = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dn8d0"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_bottom_right = 16
+
+[node name="UiResultsScreen" type="Control" unique_id=1576822458 node_paths=PackedStringArray("_restartButton", "_exitButton", "_freeRoamButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8f2fi")
+_restartButton = NodePath("PanelContainer/VBoxContainer/VBoxContainer/Restart")
+_exitButton = NodePath("PanelContainer/VBoxContainer/VBoxContainer/Exit")
+_freeRoamButton = NodePath("PanelContainer/VBoxContainer/VBoxContainer/FreeRoam")
+metadata/_custom_type_script = "uid://c6fcefn2hj6lm"
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=848846782]
+custom_minimum_size = Vector2(512, 512)
+layout_mode = 0
+offset_left = 544.0
+offset_top = 194.0
+offset_right = 1056.0
+offset_bottom = 706.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_2tbxh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=772943016]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer" unique_id=1088272288]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dn8d0")
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer" unique_id=1050779403]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_qngm4")
+theme_override_font_sizes/font_size = 48
+text = "FINISH"
+
+[node name="TimeTitle" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1972829140]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "Time"
+
+[node name="TimeTitle2" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1728197157]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "01h23′45″678"
+
+[node name="Spacer" type="Control" parent="PanelContainer/VBoxContainer" unique_id=1085068660]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=375508793]
+layout_mode = 2
+alignment = 1
+
+[node name="Restart" type="Button" parent="PanelContainer/VBoxContainer/VBoxContainer" unique_id=1824606307]
+layout_mode = 2
+text = "Reload Stage"
+
+[node name="Exit" type="Button" parent="PanelContainer/VBoxContainer/VBoxContainer" unique_id=1093979675]
+layout_mode = 2
+text = "Exit Stage"
+
+[node name="FreeRoam" type="Button" parent="PanelContainer/VBoxContainer/VBoxContainer" unique_id=218275545]
+layout_mode = 2
+text = "Free Play"

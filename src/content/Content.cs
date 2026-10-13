@@ -30,14 +30,14 @@ public static class Content {
                 ResourcePath = "res://stages/stage_city.tscn",
                 ThumbnailPath = "res://stages/gobox.city/preview.png"
             }
-        },{
+        }, {
             "gobox.base.downhill", new StageDef {
                 Id = "gobox.base.downhill",
                 External = false,
                 Name = "Downhill",
                 Description = "It's all downhill from here",
                 ResourcePath = "res://stages/stage_downhill.tscn",
-                ThumbnailPath = "res://stages/gobox.base.downhill/preview.png"
+                ThumbnailPath = "res://content/gobox.base/stages/downhill/preview.png"
             }
         },
     };

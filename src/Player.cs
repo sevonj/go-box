@@ -18,7 +18,7 @@ public partial class Player {
     private const float MaxFloorAngle = 45f * (Mathf.Pi / 180f);
 
     public bool Noclip;
-
+    
     [Export] private Marker3D _eyePosMarker;
     [Export] private CollisionShape3D _worldColl;
     private PlayerPickupMgr _pickupMgr = new();
@@ -31,14 +31,13 @@ public partial class Player {
     private int _currentWeapon = -1;
 
 
-    public static Player Instantiate() =>
-        (Player)GD.Load<PackedScene>("res://scenes/player_rigid.tscn").Instantiate();
+    public static Player Instantiate() => (Player)GD.Load<PackedScene>("res://scenes/player_rigid.tscn").Instantiate();
 
     private Player() {
         ProcessPhysicsPriority = PProcessPriorities.Player;
     }
 
-    public bool HasControl() => !Game.World.IsMenuOpen();
+    public bool HasControl() => !Game.World.IsMenuOpen() && !LocalVars.DisablePlayerControl;
     public bool IsInteracting() => _pickupMgr.IsCarrying;
     public bool IsInteractionAvailable() => !IsInteracting() && _pickupMgr.CanPickup;
 

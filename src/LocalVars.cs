@@ -3,6 +3,9 @@ using Godot;
 namespace GoBox;
 
 public static class LocalVars {
+    public static bool DisablePlayerControl;
+    public static content.StageDef CurrentStageDef;
+    public static string CurrentGamemode;
     public static content.PhysProp SelectedPhysProp { get; private set; }
     public static PackedScene SelectedPhysPropPacked { get; private set; }
 

@@ -20,11 +20,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.8543625, 5.112686)
 [node name="Actors" type="Node" parent="." unique_id=1709652860]
 
 [node name="InfoPlayerStart" type="Marker3D" parent="Actors" unique_id=1597273013]
-transform = Transform3D(-0.8940177, 0, 0.44803175, 0, 1, 0, -0.44803175, 0, -0.8940177, -5.8089104, 110.56087, 233.05403)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06701031, 110.56087, 230.05403)
 script = ExtResource("18_4do0a")
 metadata/_custom_type_script = "uid://bc6vhd3d1hch6"
 
-[node name="Ui" type="Node" parent="." unique_id=1866451087]
-
-[node name="FuncFinishLine" parent="." unique_id=1448509651 instance=ExtResource("5_1d1n0")]
+[node name="FuncFinishLine" parent="Actors" unique_id=1448509651 instance=ExtResource("5_1d1n0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -23, -131)
+
+[node name="Ui" type="Node" parent="." unique_id=1866451087]

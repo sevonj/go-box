@@ -4,7 +4,7 @@ using Godot.Collections;
 namespace GoBox;
 
 [GlobalClass]
-public partial class World {
+public partial class World : Node {
     private Node _envCont;
     private Node _staticCont;
     private Node _actorCont;
@@ -13,19 +13,18 @@ public partial class World {
     private Array<InfoPlayerStart> _playerStarts = [];
 
     private UiPauseMenu _uiPauseMenu = UiPauseMenu.Instantiate();
-    private UiContentMenu _uiContentMenu = UiContentMenu.Instantiate();
+    private UiContentMenu _uiContentMenu;
 
-    private Player _player;
+    public Player Player { get; private set; }
     private System.Collections.Generic.Dictionary<ulong, PhysProp> _physProps = [];
 
     // --- State
     public bool Paused { get; private set; }
     private Vector2 _lastCursorPos;
 
-    public bool IsMenuOpen() => Paused || _uiContentMenu.IsOpen();
-}
+    public bool IsMenuOpen() => Paused || (_uiContentMenu?.IsOpen() ?? false);
 
-public partial class World {
+
     public void AddActor(Node3D node) {
         if (!IsInstanceValid(node)) {
             GD.PrintErr("World::AddActor(): Attempted to add invalid node");
@@ -47,7 +46,7 @@ public partial class World {
         }
 
         if (IsInstanceValid(control.GetParent())) {
-            GD.PushWarning("World::AddActor(): Node is already parented.");
+            GD.PushWarning("World::AddUi(): Node is already parented.");
             return;
         }
 
@@ -69,11 +68,10 @@ public partial class World {
         foreach (var (_, pp) in _physProps) pp.QueueFree();
         _physProps.Clear();
     }
-}
 
-public partial class World : Node {
-    public override void _Ready() {
-        // -- Setup
+    // --- Node
+
+    public override void _EnterTree() {
         _envCont = GetNodeOrNull("Env");
         _staticCont = GetNodeOrNull("Static");
         _actorCont = GetNodeOrNull("Actors");
@@ -108,12 +106,14 @@ public partial class World : Node {
         _staticCont.ProcessMode = ProcessModeEnum.Pausable;
         _actorCont.ProcessMode = ProcessModeEnum.Pausable;
         _uiCont.ProcessMode = ProcessModeEnum.Always;
+    }
 
+    public override void _Ready() {
         _uiCont.AddChild(_uiPauseMenu);
-        _uiCont.AddChild(_uiContentMenu);
-
-        // -- Start Game
-        SpawnPlayer();
+        if (Game.Gamemode.AllowContentMenu) {
+            _uiContentMenu = UiContentMenu.Instantiate();
+            _uiCont.AddChild(_uiContentMenu);
+        }
     }
 
     public override void _Process(double delta) {
@@ -140,7 +140,7 @@ public partial class World : Node {
                 _uiPauseMenu.Close();
         }
 
-        if (!Paused && Input.IsActionJustPressed("ui_content_menu")) {
+        if (_uiContentMenu != null && !Paused && Input.IsActionJustPressed("ui_content_menu")) {
             if (!_uiContentMenu.IsOpen())
                 _uiContentMenu.Open();
             else
@@ -149,7 +149,7 @@ public partial class World : Node {
 
 
         GetTree().Paused = Paused;
-        var captureMouse = !IsMenuOpen();
+        var captureMouse = !IsMenuOpen() && !LocalVars.DisablePlayerControl;
         var wasCaptured = Input.MouseMode == Input.MouseModeEnum.Captured;
         Input.SetMouseMode(captureMouse ? Input.MouseModeEnum.Captured : Input.MouseModeEnum.Visible);
 
@@ -159,11 +159,11 @@ public partial class World : Node {
         }
     }
 
-    private void SpawnPlayer() {
-        _player?.QueueFree();
+    public void SpawnPlayer() {
+        Player?.QueueFree();
 
         var playa = Player.Instantiate();
-        _player = playa;
+        Player = playa;
 
         AddActor(playa);
 
