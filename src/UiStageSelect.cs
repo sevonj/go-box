@@ -6,7 +6,7 @@ namespace GoBox;
 
 [GlobalClass]
 public partial class UiStageSelect : PanelContainer {
-    [Export] private GridContainer _grid;
+    [Export] private FlowContainer _grid;
     [Export] private Label _previewNameLabel;
     [Export] private Label _previewIdLabel;
     [Export] private Label _previewDescLabel;

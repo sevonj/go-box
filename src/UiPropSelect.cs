@@ -5,7 +5,7 @@ namespace GoBox;
 
 [GlobalClass]
 public partial class UiPropSelect : PanelContainer {
-    [Export] private GridContainer _grid;
+    [Export] private FlowContainer _grid;
     [Export] private Label _previewNameLabel;
     [Export] private UiPictureFrame _previewPic;
 

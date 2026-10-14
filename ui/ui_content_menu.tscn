@@ -33,7 +33,7 @@ color = Color(0, 0, 0, 0.49803922)
 oversampling_override = 1.0
 title = "Prop Browser"
 position = Vector2i(100, 100)
-size = Vector2i(640, 480)
+size = Vector2i(666, 480)
 min_size = Vector2i(384, 384)
 
 [node name="PropSelect" parent="PropWindow" unique_id=2109946215 instance=ExtResource("2_08hqp")]
@@ -42,7 +42,7 @@ min_size = Vector2i(384, 384)
 oversampling_override = 1.0
 title = "Stage Browser"
 position = Vector2i(200, 200)
-size = Vector2i(640, 480)
+size = Vector2i(666, 480)
 min_size = Vector2i(384, 384)
 
 [node name="UiMapSelect" parent="MapWindow" unique_id=1333378372 instance=ExtResource("3_ifas0")]

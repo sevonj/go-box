@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bna7a62a4tp2b"]
 
 [ext_resource type="Script" uid="uid://dkt30grx1mdgl" path="res://src/UiStageSelect.cs" id="1_pasnx"]
-[ext_resource type="Script" uid="uid://bim8mlc7jgxx8" path="res://src/UiAutoSizeGridContainer.cs" id="2_56wx8"]
 [ext_resource type="StyleBox" uid="uid://b332kppa140jv" path="res://assets/themes/lunacy/stylebox_inspector_sidebar.tres" id="3_l165n"]
 [ext_resource type="PackedScene" uid="uid://ckxi641rha0fk" path="res://ui/ui_picture_frame.tscn" id="4_70pha"]
 
@@ -12,7 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pasnx")
-_grid = NodePath("HBox/UiAutoSizeGridContainer/PropsGrid")
+_grid = NodePath("HBox/ScrollContainer/FlowContainer")
 _previewNameLabel = NodePath("HBox/Sidebar/VBox/NameLabel")
 _previewIdLabel = NodePath("HBox/Sidebar/VBox/IdLabel")
 _previewDescLabel = NodePath("HBox/Sidebar/VBox/DescriptionLabel")
@@ -25,22 +24,15 @@ metadata/_custom_type_script = "uid://dkt30grx1mdgl"
 [node name="HBox" type="HBoxContainer" parent="." unique_id=816690142]
 layout_mode = 2
 
-[node name="UiAutoSizeGridContainer" type="Control" parent="HBox" unique_id=123415680 node_paths=PackedStringArray("Grid")]
-propagate_maximum_size = true
+[node name="ScrollContainer" type="ScrollContainer" parent="HBox" unique_id=377136599]
 layout_mode = 2
 size_flags_horizontal = 3
-mouse_filter = 1
-script = ExtResource("2_56wx8")
-Grid = NodePath("PropsGrid")
-metadata/_custom_type_script = "uid://bim8mlc7jgxx8"
+horizontal_scroll_mode = 0
 
-[node name="PropsGrid" type="GridContainer" parent="HBox/UiAutoSizeGridContainer" unique_id=339375782]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="FlowContainer" type="FlowContainer" parent="HBox/ScrollContainer" unique_id=1021172421]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Sidebar" type="PanelContainer" parent="HBox" unique_id=4130747]
 custom_minimum_size = Vector2(256, 0)
