@@ -55,8 +55,7 @@ public partial class PlayerPickupMgr : Node3D, IPickupHolder {
 
         if (_carrying != null) {
             if (_carrying.Holder() != this) {
-                GD.PrintErr(
-                    $"PlayerPickupMgr: wtf — I'm holding a pickup picked up by someone else! (held by: {_carrying.Holder()})");
+                GD.PrintErr($"PlayerPickupMgr: wtf — I'm holding a pickup picked up by someone else! (held by: {_carrying.Holder()})");
                 _carrying = null;
                 return;
             }
@@ -91,9 +90,7 @@ public partial class PlayerPickupMgr : Node3D, IPickupHolder {
             )
         );
         if (result.Count == 0) return null;
-
         if ((GodotObject)result["collider"] is IPickupable pickupable) return pickupable;
-
         return null;
     }
 

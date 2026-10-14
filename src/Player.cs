@@ -18,7 +18,7 @@ public partial class Player {
     private const float MaxFloorAngle = 45f * (Mathf.Pi / 180f);
 
     public bool Noclip;
-    
+
     [Export] private Marker3D _eyePosMarker;
     [Export] private CollisionShape3D _worldColl;
     private PlayerPickupMgr _pickupMgr = new();
@@ -68,6 +68,7 @@ public partial class Player : RigidBody3D {
         Game.World.AddUi(new UiPlayerHud(this));
 
         GiveWeapon(WpnPropgun.Instantiate());
+        GiveWeapon(WpnManipulator.Instantiate());
         GiveWeapon(WpnCorruptor.Instantiate());
         SelectWeapon(0);
     }

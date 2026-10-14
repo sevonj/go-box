@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dl184obhq0gov"]
+
+[ext_resource type="Script" uid="uid://be1ey5ixvn04l" path="res://src/WpnManipulator.cs" id="1_nj2lm"]
+[ext_resource type="Material" uid="uid://b0ngypl06tqd3" path="res://assets/materials/mat_dev_checker_blue.tres" id="3_nj2lm"]
+[ext_resource type="PackedScene" uid="uid://clqegl6xksecr" path="res://assets/models/wpn_propgun/wpn_toolklobb.blend" id="5_ue6t7"]
+
+[node name="WpnManipulator" type="Node3D" unique_id=1278130609]
+script = ExtResource("1_nj2lm")
+metadata/_custom_type_script = "uid://be1ey5ixvn04l"
+
+[node name="ViewModel" parent="." unique_id=449726162 instance=ExtResource("5_ue6t7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.31961167, -0.32260394, -0.7603674)
+
+[node name="Cube" parent="ViewModel" index="0" unique_id=54702625]
+surface_material_override/0 = ExtResource("3_nj2lm")
+
+[node name="Marker3D" type="Marker3D" parent="ViewModel" unique_id=432162230]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0006633997, 0.03532812, -0.19812983)
+
+[editable path="ViewModel"]
