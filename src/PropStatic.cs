@@ -89,7 +89,10 @@ public partial class PropStatic : StaticBody3D, IProp, IPickupable, ISaveable {
 
     public void LoadState(string json) {
         var state = JsonSerializer.Deserialize<PropStaticState>(json, JsonOptions);
-        if (state == null) return;
+        if (state == null) {
+            GD.PushError("PropStatic: Couldn't parse state");
+            return;
+        }
         GlobalPosition = state.Position;
         GlobalRotation = state.Rotation;
     }

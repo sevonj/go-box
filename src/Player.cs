@@ -71,6 +71,7 @@ public partial class Player : RigidBody3D, IPhysActor {
         GiveWeapon(WpnPropgun.Instantiate());
         GiveWeapon(WpnManipulator.Instantiate());
         GiveWeapon(WpnRemover.Instantiate());
+        GiveWeapon(WpnSavestate.Instantiate());
         GiveWeapon(WpnCorruptor.Instantiate());
         SelectWeapon(0);
     }

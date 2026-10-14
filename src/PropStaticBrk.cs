@@ -171,7 +171,11 @@ public partial class PropStaticBrk : StaticBody3D, IProp, IHealth, IPickupable, 
 
     public void LoadState(string json) {
         var state = JsonSerializer.Deserialize<PropStaticBrkState>(json, JsonOptions);
-        if (state == null) return;
+        if (state == null) {
+            GD.PushError("PropStaticBrk: Couldn't parse state");
+            return;
+        }
+
         GlobalPosition = state.Position;
         GlobalRotation = state.Rotation;
         if (state.IsBroken) Break();

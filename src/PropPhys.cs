@@ -142,7 +142,11 @@ public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable, ISa
 
     public void LoadState(string json) {
         var state = JsonSerializer.Deserialize<PropPhysState>(json, JsonOptions);
-        if (state == null) return;
+        if (state == null) {
+            GD.PushError("PropPhys: Couldn't parse state");
+            return;
+        }
+
         GlobalPosition = state.Position;
         GlobalRotation = state.Rotation;
         LinearVelocity = state.LinearVelocity;

@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cnwwtvw76tl80"]
+
+[ext_resource type="Script" uid="uid://ds7vocl4nqpo8" path="res://src/WpnSavestate.cs" id="1_h0kc4"]
+[ext_resource type="AudioStream" uid="uid://so4royy6dpc2" path="res://assets/sfx/sfx_tool_no_use.wav" id="2_h0kc4"]
+[ext_resource type="AudioStream" uid="uid://c54antdana630" path="res://assets/sfx/sfx_wpn_corruptor_blast.wav" id="3_cx8us"]
+[ext_resource type="AudioStream" uid="uid://paxej8be3x8s" path="res://assets/sfx/sfx_wpn_corruptor_hit.wav" id="3_kdml4"]
+[ext_resource type="PackedScene" uid="uid://clqegl6xksecr" path="res://assets/models/wpn_propgun/wpn_toolklobb.blend" id="4_kdml4"]
+[ext_resource type="Texture2D" uid="uid://b2h44myg4ivtk" path="res://assets/icons/icon_save.svg" id="6_a3qo1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wlw2v"]
+albedo_texture = ExtResource("6_a3qo1")
+uv1_scale = Vector3(10, 10, 10)
+uv1_offset = Vector3(0.5, 0, 0)
+
+[node name="WpnSavestate" type="Node3D" unique_id=1974219917 node_paths=PackedStringArray("_beamStartMarker")]
+script = ExtResource("1_h0kc4")
+_beamStartMarker = NodePath("ViewModel/Marker3D")
+_sfxNoUse = ExtResource("2_h0kc4")
+_sfxStore = ExtResource("3_kdml4")
+_sfxApply = ExtResource("3_cx8us")
+metadata/_custom_type_script = "uid://ds7vocl4nqpo8"
+
+[node name="ViewModel" parent="." unique_id=449726162 instance=ExtResource("4_kdml4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.31961167, -0.32260394, -0.7603674)
+
+[node name="Cube" parent="ViewModel" index="0" unique_id=54702625]
+surface_material_override/0 = SubResource("StandardMaterial3D_wlw2v")
+
+[node name="Marker3D" type="Marker3D" parent="ViewModel" unique_id=432162230]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0006633997, 0.03532812, -0.19812983)
+
+[editable path="ViewModel"]
