@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using GoBox.content;
 using GoBox.interfaces;
 using Godot;
@@ -5,7 +7,8 @@ using Godot;
 namespace GoBox;
 
 [GlobalClass]
-public partial class PropStatic : StaticBody3D, IProp, IPickupable {
+public partial class PropStatic : StaticBody3D, IProp, IPickupable, ISaveable {
+    public string Id { get; init; }
     [Export] public MeshInstance3D Model { get; private set; }
     [Export] public CollisionShape3D CollisionShape;
 
@@ -14,7 +17,8 @@ public partial class PropStatic : StaticBody3D, IProp, IPickupable {
     public PropStatic() {
     }
 
-    public PropStatic(ArrayMesh mesh, Shape3D coll) {
+    public PropStatic(string id, ArrayMesh mesh, Shape3D coll) {
+        Id = id;
         Model = new MeshInstance3D { Mesh = mesh };
         Model.Name = "Model";
         CollisionShape = new CollisionShape3D { Shape = coll };
@@ -22,6 +26,7 @@ public partial class PropStatic : StaticBody3D, IProp, IPickupable {
     }
 
     public static PropStatic FromDef(PropStaticDef def) {
+        var id = def.Id;
         var mesh = Content.GetMesh(def.ModelPath);
         var coll = Content.GetCollMesh(def.CollPath);
 
@@ -35,7 +40,7 @@ public partial class PropStatic : StaticBody3D, IProp, IPickupable {
             return null;
         }
 
-        return new PropStatic(mesh, coll);
+        return new PropStatic(id, mesh, coll);
     }
 
 
@@ -46,8 +51,10 @@ public partial class PropStatic : StaticBody3D, IProp, IPickupable {
         AddChild(CollisionShape);
     }
 
+
     // --- IProp
 
+    public string GetId() => Id;
     public ArrayMesh GetMesh() => (ArrayMesh)Model.Mesh;
 
 
@@ -59,4 +66,31 @@ public partial class PropStatic : StaticBody3D, IProp, IPickupable {
     public IPickupHolder Holder() => _holder;
     public void Pickup(IPickupHolder holder) => _holder = holder;
     public void Drop() => _holder = null;
+
+
+    // --- ISaveable
+
+    private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions {
+        Converters = { new Vector3JsonConv() }
+    };
+
+    private class PropStaticState {
+        [JsonPropertyName("position")] public Vector3 Position { get; set; }
+        [JsonPropertyName("rotation")] public Vector3 Rotation { get; set; }
+    }
+
+    public string SaveState() {
+        var state = new PropStaticState {
+            Position = GlobalPosition,
+            Rotation = GlobalRotation
+        };
+        return JsonSerializer.Serialize(state, JsonOptions);
+    }
+
+    public void LoadState(string json) {
+        var state = JsonSerializer.Deserialize<PropStaticState>(json, JsonOptions);
+        if (state == null) return;
+        GlobalPosition = state.Position;
+        GlobalRotation = state.Rotation;
+    }
 }

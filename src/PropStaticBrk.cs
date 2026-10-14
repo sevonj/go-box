@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using GoBox.content;
 using GoBox.interfaces;
 using Godot;
@@ -5,7 +7,8 @@ using Godot;
 namespace GoBox;
 
 [GlobalClass]
-public partial class PropStaticBrk : StaticBody3D, IProp, IHealth, IPickupable {
+public partial class PropStaticBrk : StaticBody3D, IProp, IHealth, IPickupable, ISaveable {
+    public string Id { get; init; }
     [Export] public MeshInstance3D Model { get; private set; }
     [Export] public CollisionShape3D CollisionShape { get; private set; }
     [Export] public MeshInstance3D ModelDestroy { get; private set; }
@@ -18,7 +21,8 @@ public partial class PropStaticBrk : StaticBody3D, IProp, IHealth, IPickupable {
     public PropStaticBrk() {
     }
 
-    public PropStaticBrk(ArrayMesh mesh, Shape3D coll, ArrayMesh meshDestroy, Shape3D collDestroy) {
+    public PropStaticBrk(string id, ArrayMesh mesh, Shape3D coll, ArrayMesh meshDestroy, Shape3D collDestroy) {
+        Id = id;
         Model = new MeshInstance3D { Mesh = mesh };
         Model.Name = "Model";
         CollisionShape = new CollisionShape3D { Shape = coll };
@@ -30,6 +34,7 @@ public partial class PropStaticBrk : StaticBody3D, IProp, IHealth, IPickupable {
     }
 
     public static PropStaticBrk FromDef(PropStaticBrkDef def) {
+        var id = def.Id;
         var mesh = Content.GetMesh(def.ModelPath);
         var coll = Content.GetCollMesh(def.CollPath);
         var meshDestroy = Content.GetMesh(def.ModelDestroyPath);
@@ -49,7 +54,7 @@ public partial class PropStaticBrk : StaticBody3D, IProp, IHealth, IPickupable {
             return null;
         }
 
-        return new PropStaticBrk(mesh, coll, meshDestroy, collDestroy);
+        return new PropStaticBrk(id, mesh, coll, meshDestroy, collDestroy);
     }
 
     public void Break() {
@@ -117,9 +122,11 @@ public partial class PropStaticBrk : StaticBody3D, IProp, IHealth, IPickupable {
         if (Input.IsKeyPressed(Key.P)) Reset();
     }
 
+
     // --- IProp
 
-    public ArrayMesh GetMesh() => (ArrayMesh)(IsBroken ? ModelDestroy : Model)?.Mesh;
+    public string GetId() => Id;
+    public ArrayMesh GetMesh() => (ArrayMesh)Model.Mesh;
 
 
     // --- IPickupable
@@ -139,4 +146,34 @@ public partial class PropStaticBrk : StaticBody3D, IProp, IHealth, IPickupable {
     public bool IsDead() => IsBroken;
     public void Damage(int dmg) => Break();
     public void Kill() => Break();
+
+
+    // --- ISaveable
+
+    private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions {
+        Converters = { new Vector3JsonConv() }
+    };
+
+    private class PropStaticBrkState {
+        [JsonPropertyName("position")] public Vector3 Position { get; set; }
+        [JsonPropertyName("rotation")] public Vector3 Rotation { get; set; }
+        [JsonPropertyName("is_broken")] public bool IsBroken { get; set; }
+    }
+
+    public string SaveState() {
+        var state = new PropStaticBrkState {
+            Position = GlobalPosition,
+            Rotation = GlobalRotation,
+            IsBroken = IsBroken
+        };
+        return JsonSerializer.Serialize(state, JsonOptions);
+    }
+
+    public void LoadState(string json) {
+        var state = JsonSerializer.Deserialize<PropStaticBrkState>(json, JsonOptions);
+        if (state == null) return;
+        GlobalPosition = state.Position;
+        GlobalRotation = state.Rotation;
+        if (state.IsBroken) Break();
+    }
 }

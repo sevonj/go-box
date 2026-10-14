@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using GoBox.content;
 using GoBox.interfaces;
 using Godot;
@@ -5,7 +7,8 @@ using Godot;
 namespace GoBox;
 
 [GlobalClass]
-public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable {
+public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable, ISaveable {
+    public string Id { get; init; }
     private IPickupHolder _holder;
     [Export] public MeshInstance3D Model { get; private set; }
     [Export] public CollisionShape3D CollisionShape { get; private set; }
@@ -14,8 +17,9 @@ public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable {
         ProcessPhysicsPriority = PProcessPriorities.PhysProp;
     }
 
-    public PropPhys(ArrayMesh mesh, Shape3D coll, float mass = 1f) {
+    public PropPhys(string id, ArrayMesh mesh, Shape3D coll, float mass = 1f) {
         ProcessPhysicsPriority = PProcessPriorities.PhysProp;
+        Id = id;
 
         if (mass <= 0f) {
             GD.PushWarning("PropPhys: Mass is zero or negative. Using 1.0 instead.");
@@ -34,6 +38,7 @@ public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable {
     }
 
     public static PropPhys FromDef(PropPhysDef def) {
+        var id = def.Id;
         var mesh = Content.GetMesh(def.ModelPath);
         var coll = Content.GetCollMesh(def.CollPath);
         var mass = def.Mass;
@@ -48,13 +53,10 @@ public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable {
             return null;
         }
 
-        return new PropPhys(mesh, coll, mass);
+        return new PropPhys(id, mesh, coll, mass);
     }
 
-
-    public ArrayMesh GetMesh() {
-        return (ArrayMesh)Model.Mesh;
-    }
+    // --- Node
 
     public override void _Ready() {
         Game.World.RegisterPhysProp(this);
@@ -92,10 +94,18 @@ public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable {
         }
     }
 
+
+    // --- IProp
+
+    public string GetId() => Id;
+    public ArrayMesh GetMesh() => (ArrayMesh)Model.Mesh;
+
+
     // --- IPhysActor 
 
     public void ApplyForce(Vector3 force) => ApplyCentralForce(force);
     public void ApplyImpulse(Vector3 impulse) => ApplyCentralImpulse(impulse);
+
 
     // --- IPickupable
 
@@ -105,4 +115,37 @@ public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable {
     public IPickupHolder Holder() => _holder;
     public void Pickup(IPickupHolder holder) => _holder = holder;
     public void Drop() => _holder = null;
+
+
+    // --- ISaveable
+
+    private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions {
+        Converters = { new Vector3JsonConv() }
+    };
+
+    private class PropPhysState {
+        [JsonPropertyName("position")] public Vector3 Position { get; set; }
+        [JsonPropertyName("rotation")] public Vector3 Rotation { get; set; }
+        [JsonPropertyName("linear_velocity")] public Vector3 LinearVelocity { get; set; }
+        [JsonPropertyName("angular_velocity")] public Vector3 AngularVelocity { get; set; }
+    }
+
+    public string SaveState() {
+        var state = new PropPhysState {
+            Position = GlobalPosition,
+            Rotation = GlobalRotation,
+            LinearVelocity = LinearVelocity,
+            AngularVelocity = AngularVelocity
+        };
+        return JsonSerializer.Serialize(state, JsonOptions);
+    }
+
+    public void LoadState(string json) {
+        var state = JsonSerializer.Deserialize<PropPhysState>(json, JsonOptions);
+        if (state == null) return;
+        GlobalPosition = state.Position;
+        GlobalRotation = state.Rotation;
+        LinearVelocity = state.LinearVelocity;
+        AngularVelocity = state.AngularVelocity;
+    }
 }
