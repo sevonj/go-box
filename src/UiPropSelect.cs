@@ -7,6 +7,8 @@ namespace GoBox;
 public partial class UiPropSelect : PanelContainer {
     [Export] private FlowContainer _grid;
     [Export] private Label _previewNameLabel;
+    [Export] private Label _previewIdLabel;
+    [Export] private Label _previewDescLabel;
     [Export] private UiPictureFrame _previewPic;
 
 
@@ -43,10 +45,14 @@ public partial class UiPropSelect : PanelContainer {
     private void RefreshPreview() {
         if (LocalVars.SelectedPropDef == null) {
             _previewNameLabel.Text = "Nothing selected.";
+            _previewIdLabel.Text = "";
+            _previewDescLabel.Text = "";
             return;
         }
 
         _previewNameLabel.Text = LocalVars.SelectedPropDef.Name;
+        _previewIdLabel.Text = LocalVars.SelectedPropDef.Id;
+        _previewDescLabel.Text = LocalVars.SelectedPropDef.Description;
         _previewPic.Texture = LoadPropThumbnail(LocalVars.SelectedPropDef);
     }
 

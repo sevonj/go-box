@@ -4,7 +4,7 @@
 [ext_resource type="StyleBox" uid="uid://b332kppa140jv" path="res://assets/themes/lunacy/stylebox_inspector_sidebar.tres" id="3_d324d"]
 [ext_resource type="PackedScene" uid="uid://ckxi641rha0fk" path="res://ui/ui_picture_frame.tscn" id="4_5ehd7"]
 
-[node name="UiPropSelect" type="PanelContainer" unique_id=2109946215 node_paths=PackedStringArray("_grid", "_previewNameLabel", "_previewPic")]
+[node name="UiPropSelect" type="PanelContainer" unique_id=2109946215 node_paths=PackedStringArray("_grid", "_previewNameLabel", "_previewIdLabel", "_previewDescLabel", "_previewPic")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -13,6 +13,8 @@ grow_vertical = 2
 script = ExtResource("1_d324d")
 _grid = NodePath("HBox/ScrollContainer/FlowContainer")
 _previewNameLabel = NodePath("HBox/Sidebar/VBox/NameLabel")
+_previewIdLabel = NodePath("HBox/Sidebar/VBox/IdLabel")
+_previewDescLabel = NodePath("HBox/Sidebar/VBox/DescriptionLabel")
 _previewPic = NodePath("HBox/Sidebar/VBox/PreviewPicture")
 metadata/_custom_type_script = "uid://y1012cdgifn6"
 
@@ -47,4 +49,19 @@ layout_mode = 2
 
 [node name="NameLabel" type="Label" parent="HBox/Sidebar/VBox" unique_id=1862232355]
 layout_mode = 2
-text = "prop_name_here"
+text = "name_here"
+
+[node name="IdLabel" type="Label" parent="HBox/Sidebar/VBox" unique_id=323871434]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0.49803922)
+text = "id_here"
+autowrap_mode = 3
+
+[node name="DescriptionLabel" type="Label" parent="HBox/Sidebar/VBox" unique_id=1920779501]
+layout_mode = 2
+text = "desc_here"
+autowrap_mode = 3
+
+[node name="Spacer" type="Control" parent="HBox/Sidebar/VBox" unique_id=2078523717]
+layout_mode = 2
+size_flags_vertical = 3
