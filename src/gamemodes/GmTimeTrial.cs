@@ -45,6 +45,8 @@ public partial class GmTimeTrial : Gamemode {
     // --- Node
 
     public override void _Ready() {
+        Name = "GmTimeTrial";
+
         var finishLinesExist = false;
         foreach (var node in GetTree().GetNodesInGroup(nameof(FuncFinishLine))) {
             if (node is not FuncFinishLine finishLine) {

@@ -9,6 +9,7 @@ public partial class Gamemode : Node {
     // -- Node
 
     public override void _Ready() {
+        Name = "Gamemode";
         Game.World.SpawnPlayer();
     }
 }
