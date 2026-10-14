@@ -50,6 +50,7 @@ layout_mode = 2
 [node name="NameLabel" type="Label" parent="HBox/Sidebar/VBox" unique_id=1862232355]
 layout_mode = 2
 text = "name_here"
+autowrap_mode = 3
 
 [node name="IdLabel" type="Label" parent="HBox/Sidebar/VBox" unique_id=323871434]
 layout_mode = 2
