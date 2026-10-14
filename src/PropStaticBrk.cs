@@ -5,13 +5,15 @@ using Godot;
 namespace GoBox;
 
 [GlobalClass]
-public partial class PropStaticBrk : StaticBody3D, IProp, IHealth {
+public partial class PropStaticBrk : StaticBody3D, IProp, IHealth, IPickupable {
     [Export] public MeshInstance3D Model { get; private set; }
     [Export] public CollisionShape3D CollisionShape { get; private set; }
     [Export] public MeshInstance3D ModelDestroy { get; private set; }
     [Export] public CollisionShape3D CollisionShapeDestroy { get; private set; }
 
     public bool IsBroken { get; private set; }
+
+    private IPickupHolder _holder;
 
     public PropStaticBrk() {
     }
@@ -100,6 +102,9 @@ public partial class PropStaticBrk : StaticBody3D, IProp, IHealth {
         CollisionShapeDestroy.Disabled = true;
     }
 
+
+    // --- Node
+
     public override void _Ready() {
         AddChild(Model);
         AddChild(CollisionShape);
@@ -112,9 +117,28 @@ public partial class PropStaticBrk : StaticBody3D, IProp, IHealth {
         if (Input.IsKeyPressed(Key.P)) Reset();
     }
 
+    public override void _PhysicsProcess(double delta) {
+        if (_holder != null) {
+            GlobalPosition = _holder.DesiredHoldPosition();
+            GlobalRotation = _holder.DesiredHoldRotation();
+        }
+    }
+
+
     // --- IProp
-    
+
     public ArrayMesh GetMesh() => (ArrayMesh)(IsBroken ? ModelDestroy : Model)?.Mesh;
+
+
+    // --- IPickupable
+
+    public Node3D AsNode3D() => this;
+    public bool AllowPlayerPickup() => false;
+    public float Radius() => 0f;
+    public IPickupHolder Holder() => _holder;
+    public void Pickup(IPickupHolder holder) => _holder = holder;
+    public void Drop() => _holder = null;
+
 
     // --- IHealth
 

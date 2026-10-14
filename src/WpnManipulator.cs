@@ -61,7 +61,7 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
         }
 
         if (_pickable == null) return;
-        if (!_pickable.CanBePicked()) return;
+        if (_pickable.Holder() != null) return;
 
         Pickup(_pickable);
     }
@@ -93,7 +93,7 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
 
     private void Pickup(IPickupable pickupable) {
         Drop();
-        if (!pickupable.CanBePicked()) return;
+        if (_pickable.Holder() != null) return;
         _carrying = pickupable;
         _carrying.Pickup(this);
         _pickupTarget.GlobalRotation = _carrying.AsNode3D().GlobalRotation;

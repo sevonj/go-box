@@ -17,7 +17,7 @@ public partial class PlayerPickupMgr : Node3D, IPickupHolder {
     private bool _dropQueued;
     private bool _throwQueued;
 
-    public bool CanPickup => !IsCarrying && (_pickable?.CanBePicked() ?? false);
+    public bool CanPickup => !IsCarrying && (_pickable?.AllowPlayerPickup() ?? false) && _pickable.Holder() == null;
     public bool IsCarrying => _carrying != null;
 
     // --- Node
@@ -69,7 +69,7 @@ public partial class PlayerPickupMgr : Node3D, IPickupHolder {
         _pickable = FindPickup();
 
         if (_pickable == null) return;
-        if (!_pickable.CanBePicked()) return;
+        if (_pickable.Holder() != null) return;
 
         if (pickupQueued) Pickup(_pickable);
     }
@@ -96,7 +96,7 @@ public partial class PlayerPickupMgr : Node3D, IPickupHolder {
 
     private void Pickup(IPickupable pickupable) {
         Drop();
-        if (!pickupable.CanBePicked()) return;
+        if (_pickable.Holder() != null) return;
         _carrying = pickupable;
         _carrying.Pickup(this);
         _pickupTarget.GlobalRotation = _carrying.AsNode3D().GlobalRotation;

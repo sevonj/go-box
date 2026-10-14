@@ -123,8 +123,8 @@ public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable {
     // --- IPickupable
 
     public Node3D AsNode3D() => this;
+    public bool AllowPlayerPickup() => true;
     public float Radius() => 0.5f /* TODO */;
-    public bool CanBePicked() => _holder == null;
     public IPickupHolder Holder() => _holder;
     public void Pickup(IPickupHolder holder) => _holder = holder;
     public void Drop() => _holder = null;
