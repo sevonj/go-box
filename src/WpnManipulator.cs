@@ -13,7 +13,9 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
     private Marker3D _pickupTarget = new();
 
     private IPickupable _carrying;
+    private Vector3 _carryingGrabOffset;
     private IPickupable _pickable;
+    private Vector3 _pickableRaycastPoint;
 
     public static WpnManipulator Instantiate() => (WpnManipulator)GD.Load<PackedScene>("res://scenes/wpn_manipulator.tscn").Instantiate();
 
@@ -38,7 +40,7 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
         _pickupTarget.Position = Vector3.Forward * _holdDistance;
 
         if (_carrying == null) {
-            _pickable = FindPickup();
+            (_pickable, _pickableRaycastPoint) = FindPickup();
             return;
         }
 
@@ -52,9 +54,6 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
         var targetRot = _pickupTarget.GlobalRotation;
 
         if (_carrying is PropPhys physProp) {
-            var posDiff = targetPos - physProp.GlobalPosition;
-            physProp.LinearVelocity = posDiff * 100f;
-
             var currentRot = physProp.GlobalBasis.GetRotationQuaternion();
             var targetQuat = Quaternion.FromEuler(targetRot);
             var rotDiff = targetQuat * currentRot.Inverse();
@@ -73,12 +72,18 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
             var axis = new Vector3(rotDiff.X, rotDiff.Y, rotDiff.Z) / s;
             physProp.AngularVelocity = axis * angle * 50f;
 
+            targetPos -= physProp.GlobalTransform * _carryingGrabOffset - physProp.GlobalPosition;
+
+            var posDiff = targetPos - physProp.GlobalPosition;
+            physProp.LinearVelocity = posDiff * 100f;
+
             return;
         }
 
         var threeDee = (Node3D)_carrying;
-        threeDee.GlobalPosition = targetPos;
         threeDee.GlobalRotation = targetRot;
+        targetPos -= threeDee.GlobalTransform * _carryingGrabOffset - threeDee.GlobalPosition;
+        threeDee.GlobalPosition = targetPos;
     }
 
 
@@ -96,7 +101,7 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
         if (_pickable == null) return;
         if (_pickable.Holder() != null) return;
 
-        Pickup(_pickable);
+        Pickup(_pickable, _pickableRaycastPoint);
     }
 
     public override void FireAlt() {
@@ -111,7 +116,7 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
 
     // --- Private
 
-    private IPickupable FindPickup() {
+    private (IPickupable, Vector3) FindPickup() {
         var spaceState = GetWorld3D().DirectSpaceState;
         var result = spaceState.IntersectRay(
             PhysicsRayQueryParameters3D.Create(
@@ -119,18 +124,26 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
                 GlobalPosition - GlobalBasis.Column2 * MaxDistance
             )
         );
-        if (result.Count == 0) return null;
-        if ((GodotObject)result["collider"] is IPickupable pickupable) return pickupable;
-        return null;
+
+        if (
+            result.Count == 0 ||
+            (GodotObject)result["collider"] is not IPickupable pickupable
+        ) {
+            return (null, Vector3.Zero);
+        }
+
+        var position = (Vector3)result["position"];
+        return (pickupable, position);
     }
 
-    private void Pickup(IPickupable pickupable) {
+    private void Pickup(IPickupable pickupable, Vector3 grabPos) {
         Drop();
         if (_pickable.Holder() != null) return;
         _carrying = pickupable;
         _carrying.Pickup(this);
         _pickupTarget.GlobalRotation = _carrying.AsNode3D().GlobalRotation;
-        _holdDistance = GlobalPosition.DistanceTo(_carrying.AsNode3D().GlobalPosition);
+        _carryingGrabOffset = pickupable.AsNode3D().GlobalTransform.Inverse() * grabPos;
+        _holdDistance = GlobalPosition.DistanceTo(grabPos);
         // Update with new radius for current tick. Fixes punching yourself in the face with the prop when picking it up.
         _pickupTarget.Position = Vector3.Forward * _holdDistance;
     }
