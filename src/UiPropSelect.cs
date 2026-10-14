@@ -12,43 +12,49 @@ public partial class UiPropSelect : PanelContainer {
 
     public override void _Ready() {
         ReloadGrid();
-        LocalVars.SelectPhysProp(content.Content.PropsPhys.Keys.First());
+        if (content.Content.PropDefs.Count > 0) {
+            LocalVars.SelectPropDef(content.Content.PropDefs.Keys.First());
+        }
+        else {
+            LocalVars.SelectPropDef(null);
+        }
+
         RefreshPreview();
     }
 
     private void ReloadGrid() {
         foreach (var child in _grid.GetChildren()) child.QueueFree();
 
-        foreach (var (id, prop) in content.Content.PropsPhys) {
+        foreach (var (id, def) in content.Content.PropDefs) {
             var button = UiPictureButton.Instantiate();
-            button.Text = prop.Name;
-            button.Pressed += () => SelectPhysProp(id);
-            button.Texture = LoadPropThumbnail(prop);
+            button.Text = def.Name;
+            button.Pressed += () => SelectPropDef(id);
+            button.Texture = LoadPropThumbnail(def);
             _grid.AddChild(button);
         }
     }
 
-    private void SelectPhysProp(string id) {
-        LocalVars.SelectPhysProp(id);
+    private void SelectPropDef(string id) {
+        LocalVars.SelectPropDef(id);
         RefreshPreview();
     }
 
 
     private void RefreshPreview() {
-        if (LocalVars.SelectedPhysProp == null) {
+        if (LocalVars.SelectedPropDef == null) {
             _previewNameLabel.Text = "Nothing selected.";
             return;
         }
 
-        _previewNameLabel.Text = LocalVars.SelectedPhysProp.Name;
-        _previewPic.Texture = LoadPropThumbnail(LocalVars.SelectedPhysProp);
+        _previewNameLabel.Text = LocalVars.SelectedPropDef.Name;
+        _previewPic.Texture = LoadPropThumbnail(LocalVars.SelectedPropDef);
     }
 
 
-    private Texture2D LoadPropThumbnail(content.PhysProp prop) {
-        if (prop?.ThumbnailPath == null) return null;
-        var tex = GD.Load<Texture2D>(prop.ThumbnailPath);
-        if (!IsInstanceValid(tex)) GD.PrintErr(GetPath(), $" Couldn't load thumbnail for prop id '{prop.Id}'");
+    private Texture2D LoadPropThumbnail(content.PropDef propDef) {
+        if (propDef?.ThumbnailPath == null) return null;
+        var tex = GD.Load<Texture2D>(propDef.ThumbnailPath);
+        if (!IsInstanceValid(tex)) GD.PrintErr(GetPath(), $" Couldn't load thumbnail for prop id '{propDef.Id}'");
         return tex;
     }
 }

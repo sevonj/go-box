@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d0co0d2sg0t1o"]
 
 [ext_resource type="Script" uid="uid://1uymsq43tajl" path="res://src/PhysProp.cs" id="1_ddb0n"]
-[ext_resource type="PackedScene" uid="uid://c6cg81v6kbf8c" path="res://assets/models/prop_tv/Television_01_1k.glb" id="2_w3wxy"]
+[ext_resource type="PackedScene" uid="uid://c6cg81v6kbf8c" path="res://content/gobox.base/models/prop_tv.glb" id="2_w3wxy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oj70k"]
 size = Vector3(0.59399414, 0.45489502, 0.45654297)

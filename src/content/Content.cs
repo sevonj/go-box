@@ -42,28 +42,28 @@ public static class Content {
         },
     };
 
-    public static Dictionary<string, PropDef> PropDefs { get; private set; } = [];
-
-    public static Dictionary<string, PhysProp> PropsPhys { get; private set; } = new() {
+    public static Dictionary<string, PropDef> PropDefs { get; private set; } = new() {
         {
-            "gobox.hogball", new PhysProp {
-                Id = "gobox.hogball",
-                Name = "Hogball",
-                ResourcePath = "res://scenes/prop_hogball.tscn",
-                ThumbnailPath = "res://assets/models/prop_hog/thumbnail.png"
+            "gobox.base.pigball", new PropPhysDef {
+                Id = "gobox.base.pigball",
+                Name = "Bouncy Pigball",
+                ThumbnailPath = "res://assets/models/prop_hog/thumbnail.png",
+                ModelPath = "gobox.base/models/pigball.glb",
+                CollPath = "gobox.base/models/pigball.coll",
             }
         }, {
-            "gobox.tv", new PhysProp {
-                Id = "gobox.tv",
+            "gobox.base.tv", new PropPhysDef {
+                Id = "gobox.base.tv",
                 Name = "TV",
-                ResourcePath = "res://scenes/prop_tv.tscn",
-                ThumbnailPath = "res://assets/models/prop_tv/thumbnail.png"
+                ThumbnailPath = "res://assets/models/prop_tv/thumbnail.png",
+                ModelPath = "gobox.base/models/prop_tv.glb",
+                CollPath = "gobox.base/models/prop_tv.coll",
             }
         },
     };
 
     public static Dictionary<string, ArrayMesh> Meshes { get; private set; } = [];
-    public static Dictionary<string, ConcavePolygonShape3D> CollMeshes { get; private set; } = [];
+    public static Dictionary<string, Shape3D> CollMeshes { get; private set; } = [];
 
     public static ArrayMesh GetMesh(string path) {
         Meshes.TryGetValue(path, out var cachced);
@@ -103,10 +103,12 @@ public static class Content {
             return null;
         }
 
-        if (propDef is PropStaticDef propStaticDef)
-            return PropStatic.FromDef(propStaticDef);
-        if (propDef is PropStaticBrkDef brkDef)
-            return PropStaticBrk.FromDef(brkDef);
+        if (propDef is PropStaticDef sPropDef)
+            return PropStatic.FromDef(sPropDef);
+        if (propDef is PropStaticBrkDef sBrkDef)
+            return PropStaticBrk.FromDef(sBrkDef);
+        if (propDef is PropPhysDef pPropDef)
+            return PropPhys.FromDef(pPropDef);
 
         GD.PrintErr("UNREACHABLE");
         return null;

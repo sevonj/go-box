@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dmktntltwsrjb"]
 
-[ext_resource type="Script" uid="uid://1uymsq43tajl" path="res://src/PhysProp.cs" id="1_rjcj5"]
-[ext_resource type="PackedScene" uid="uid://clrjrktdi0j5u" path="res://assets/models/prop_hog/mdl_prop_hog.blend" id="2_nx453"]
+[ext_resource type="Script" uid="uid://1uymsq43tajl" path="res://src/PropPhys.cs" id="1_rjcj5"]
+[ext_resource type="PackedScene" uid="uid://clrjrktdi0j5u" path="res://content/gobox.base/models/prop_pigball.blend" id="2_nx453"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_dn8d0"]
 radius = 0.108342886

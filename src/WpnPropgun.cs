@@ -1,3 +1,4 @@
+using GoBox.interfaces;
 using Godot;
 
 namespace GoBox;
@@ -9,8 +10,7 @@ public partial class WpnPropgun : Weapon {
 
     [Export] private Marker3D _propSpawnMarker;
 
-    public static WpnPropgun Instantiate() =>
-        (WpnPropgun)GD.Load<PackedScene>("res://scenes/wpn_propgun.tscn").Instantiate();
+    public static WpnPropgun Instantiate() => (WpnPropgun)GD.Load<PackedScene>("res://scenes/wpn_propgun.tscn").Instantiate();
 
     private WpnPropgun() {
     }
@@ -27,7 +27,9 @@ public partial class WpnPropgun : Weapon {
 
     public override void Fire() {
         var prop = SpawnProp();
-        prop?.ApplyImpulse(-GlobalBasis.Column2.Normalized() * prop.Mass * LaunchImpulse);
+        if (prop is IPhysActor physProp) {
+            physProp.ApplyImpulse(-GlobalBasis.Column2.Normalized() * LaunchImpulse);
+        }
     }
 
     public override void FireAlt() {
@@ -36,24 +38,19 @@ public partial class WpnPropgun : Weapon {
 
     // --- Private
 
-    private PhysProp SpawnProp() {
-        var packed = LocalVars.SelectedPhysPropPacked;
-
-        if (!IsInstanceValid(packed)) {
-            GD.PushError("WpnPropGun: No prop");
+    private Node3D SpawnProp() {
+        if (LocalVars.SelectedPropDef == null) {
+            GD.PushError("WpnPropGun: No prop selected");
             return null;
         }
 
-        var inst = packed.Instantiate();
-        if (inst is not PhysProp prop) {
-            GD.PushError("WpnPropGun: Prop prefab is not a PhysProp");
-            inst.Free();
+        var prop = content.Content.InstantiateProp(LocalVars.SelectedPropDef.Id);
+        if (prop == null) {
             return null;
         }
 
         Game.World.AddActor(prop);
-        var propRadiusOffset = -_propSpawnMarker.GlobalBasis.Column2.Normalized() * prop.Radius();
-        prop.GlobalPosition = _propSpawnMarker.GlobalPosition + propRadiusOffset;
+        prop.GlobalPosition = _propSpawnMarker.GlobalPosition;
         prop.GlobalRotation = GlobalRotation;
         return prop;
     }

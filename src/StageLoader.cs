@@ -81,7 +81,9 @@ public static class StageLoader {
     }
 
 
-    private static MeshInstance3D GenerateCollDebugModel(ConcavePolygonShape3D conk) {
+    private static MeshInstance3D GenerateCollDebugModel(Shape3D shape) {
+        if (shape is not ConcavePolygonShape3D conk) return null;
+
         var st = new SurfaceTool();
         st.Begin(Mesh.PrimitiveType.Triangles);
 

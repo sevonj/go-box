@@ -1,16 +1,56 @@
+using GoBox.content;
 using GoBox.interfaces;
 using Godot;
 
 namespace GoBox;
 
 [GlobalClass]
-public partial class PhysProp : RigidBody3D, IProp, IPhysActor, IPickupable {
+public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable {
     private PlayerPickupMgr _holder;
     [Export] public MeshInstance3D Model { get; private set; }
+    [Export] public CollisionShape3D CollisionShape { get; private set; }
 
-    public PhysProp() {
+    public PropPhys() {
         ProcessPhysicsPriority = PProcessPriorities.PhysProp;
     }
+
+    public PropPhys(ArrayMesh mesh, Shape3D coll, float mass = 1f) {
+        ProcessPhysicsPriority = PProcessPriorities.PhysProp;
+
+        if (mass <= 0f) {
+            GD.PushWarning("PropPhys: Mass is zero or negative. Using 1.0 instead.");
+            mass = 1f;
+        }
+
+        if (coll is ConcavePolygonShape3D) {
+            GD.PushError("PropPhys: Concave shapes are not supported.");
+        }
+
+        Model = new MeshInstance3D { Mesh = mesh };
+        Model.Name = "Model";
+        CollisionShape = new CollisionShape3D { Shape = coll };
+        CollisionShape.Name = "Coll";
+        Mass = mass;
+    }
+
+    public static PropPhys FromDef(PropPhysDef def) {
+        var mesh = Content.GetMesh(def.ModelPath);
+        var coll = Content.GetCollMesh(def.CollPath);
+        var mass = def.Mass;
+
+        if (mesh == null || coll == null) {
+            GD.PushError($"PropStaticBrk: load failed!\n" +
+                         $" - mesh: {mesh}\n" +
+                         $" - coll: {coll}\n" +
+                         $" - def: {def}");
+            mesh?.Free();
+            coll?.Free();
+            return null;
+        }
+
+        return new PropPhys(mesh, coll, mass);
+    }
+
 
     public ArrayMesh GetMesh() {
         return (ArrayMesh)Model.Mesh;
@@ -20,6 +60,9 @@ public partial class PhysProp : RigidBody3D, IProp, IPhysActor, IPickupable {
         Game.World.RegisterPhysProp(this);
         ContactMonitor = true;
         MaxContactsReported = 16;
+
+        AddChild(Model);
+        AddChild(CollisionShape);
     }
 
     public override void _Process(double delta) {

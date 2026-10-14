@@ -8,6 +8,7 @@ public class PropDef {
     [JsonPropertyName("id")] public string Id { get; init; }
     [JsonPropertyName("name")] public string Name { get; init; }
     [JsonPropertyName("description")] public string Description { get; init; }
+    [JsonPropertyName("thumbnail_path")] public string ThumbnailPath { get; init; }
 }
 
 public class PropStaticDef : PropDef {
@@ -49,6 +50,26 @@ public class PropStaticBrkDef : PropDef {
 
         var json = file.GetAsText();
         var def = JsonSerializer.Deserialize<PropStaticBrkDef>(json);
+
+        return def;
+    }
+}
+
+public class PropPhysDef : PropDef {
+    [JsonPropertyName("model_path")] public string ModelPath { get; init; }
+    [JsonPropertyName("coll_path")] public string CollPath { get; init; }
+    [JsonPropertyName("mass")] public float Mass { get; init; }
+
+    public static PropPhysDef FromJson(string path) {
+        using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+
+        if (file == null) {
+            GD.PrintErr($"Couldn't access '{path}'");
+            return null;
+        }
+
+        var json = file.GetAsText();
+        var def = JsonSerializer.Deserialize<PropPhysDef>(json);
 
         return def;
     }

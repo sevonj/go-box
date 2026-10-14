@@ -16,7 +16,7 @@ public partial class World : Node {
     private UiContentMenu _uiContentMenu;
 
     public Player Player { get; private set; }
-    private System.Collections.Generic.Dictionary<ulong, PhysProp> _physProps = [];
+    private System.Collections.Generic.Dictionary<ulong, PropPhys> _physProps = [];
 
     // --- State
     public bool Paused { get; private set; }
@@ -57,11 +57,11 @@ public partial class World : Node {
         _playerStarts.Add(playerStart);
     }
 
-    public void RegisterPhysProp(PhysProp physProp) {
-        if (!IsInstanceValid(physProp)) return;
-        var key = physProp.GetInstanceId();
+    public void RegisterPhysProp(PropPhys propPhys) {
+        if (!IsInstanceValid(propPhys)) return;
+        var key = propPhys.GetInstanceId();
         if (_physProps.ContainsKey(key)) return;
-        _physProps.Add(key, physProp);
+        _physProps.Add(key, propPhys);
     }
 
     public void ClearPhysProps() {
