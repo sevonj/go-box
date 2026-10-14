@@ -3,7 +3,7 @@ using Godot;
 
 namespace GoBox;
 
-public partial class PlayerPickupMgr {
+public partial class PlayerPickupMgr : Node3D, IPickupHolder {
     public bool Enabled = true;
     public float PickDistance = 2f;
     public float HoldDistance = 1f;
@@ -19,11 +19,9 @@ public partial class PlayerPickupMgr {
 
     public bool CanPickup => !IsCarrying && (_pickable?.CanBePicked() ?? false);
     public bool IsCarrying => _carrying != null;
-    public Vector3 DesiredHoldPosition() => _pickupTarget.GlobalPosition;
-    public Vector3 DesiredHoldRotation() => _pickupTarget.GlobalRotation;
-}
 
-public partial class PlayerPickupMgr : Node3D {
+    // --- Node
+
     public override void _Ready() {
         AddChild(_pickupTarget);
     }
@@ -77,6 +75,13 @@ public partial class PlayerPickupMgr : Node3D {
         if (pickupQueued) Pickup(_pickable);
     }
 
+    // --- IPickupHolder
+
+    public Vector3 DesiredHoldPosition() => _pickupTarget.GlobalPosition;
+    public Vector3 DesiredHoldRotation() => _pickupTarget.GlobalRotation;
+
+    // --- Private
+
     private IPickupable FindPickup() {
         var spaceState = GetWorld3D().DirectSpaceState;
         var result = spaceState.IntersectRay(
@@ -91,9 +96,7 @@ public partial class PlayerPickupMgr : Node3D {
 
         return null;
     }
-}
 
-public partial class PlayerPickupMgr {
     private void Pickup(IPickupable pickupable) {
         Drop();
         if (!pickupable.CanBePicked()) return;

@@ -6,7 +6,7 @@ namespace GoBox;
 
 [GlobalClass]
 public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable {
-    private PlayerPickupMgr _holder;
+    private IPickupHolder _holder;
     [Export] public MeshInstance3D Model { get; private set; }
     [Export] public CollisionShape3D CollisionShape { get; private set; }
 
@@ -120,21 +120,12 @@ public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable {
     public void ApplyForce(Vector3 force) => ApplyCentralForce(force);
     public void ApplyImpulse(Vector3 impulse) => ApplyCentralImpulse(impulse);
 
-
     // --- IPickupable
 
     public Node3D AsNode3D() => this;
     public float Radius() => 0.5f /* TODO */;
     public bool CanBePicked() => _holder == null;
-    public PlayerPickupMgr Holder() => _holder;
-
-    public void Pickup(PlayerPickupMgr pickupMgr) {
-        _holder = pickupMgr;
-        // Freeze = true;
-    }
-
-    public void Drop() {
-        _holder = null;
-        // Freeze = false;
-    }
+    public IPickupHolder Holder() => _holder;
+    public void Pickup(IPickupHolder holder) => _holder = holder;
+    public void Drop() => _holder = null;
 }

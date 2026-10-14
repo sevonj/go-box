@@ -9,8 +9,8 @@ public interface IPickupable {
     public bool CanBePicked();
 
     /// <returns>The one holding me, or null.</returns>
-    public PlayerPickupMgr Holder();
+    public IPickupHolder Holder();
 
-    public void Pickup(PlayerPickupMgr pickupMgr);
+    public void Pickup(IPickupHolder holder);
     public void Drop();
 }
