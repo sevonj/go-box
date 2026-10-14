@@ -43,7 +43,7 @@ public partial class CameraRigFp(Player player, Node3D followTarget) : CameraRig
             "look_down",
             "look_up") * GamepadSensitivity * (float)delta;
 
-        if (!player.HasControl()) inputVec *= 0f;
+        if (!player.HasCameraControl()) inputVec *= 0f;
         if (InvertX) inputVec.X *= -1;
         if (InvertY) inputVec.Y *= -1;
 
@@ -55,7 +55,7 @@ public partial class CameraRigFp(Player player, Node3D followTarget) : CameraRig
             case InputEventMouseMotion motion: {
                 var inputVec = -motion.Relative / 100f * MouseSensitivity;
 
-                if (!player.HasControl()) inputVec *= 0f;
+                if (!player.HasCameraControl()) inputVec *= 0f;
                 if (InvertX) inputVec.X *= -1;
                 if (InvertY) inputVec.Y *= -1;
 

@@ -38,6 +38,7 @@ public partial class Player : RigidBody3D, IPhysActor {
     }
 
     public bool HasControl() => !Game.World.IsMenuOpen() && !LocalVars.DisablePlayerControl;
+    public bool HasCameraControl() => HasControl() && (!CurrentWeapon()?.OverrideCamera() ?? true);
     public bool IsInteracting() => _pickupMgr.IsCarrying;
     public bool IsInteractionAvailable() => !IsInteracting() && _pickupMgr.CanPickup;
 

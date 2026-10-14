@@ -12,4 +12,6 @@ public partial class Weapon : Node3D {
 
     public virtual void FireAlt() {
     }
+
+    public virtual bool OverrideCamera() => false;
 }

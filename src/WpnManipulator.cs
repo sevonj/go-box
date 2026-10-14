@@ -31,6 +31,22 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
             GD.PushError("WpnManipulator: No _pickupTarget");
     }
 
+    public override void _Input(InputEvent @event) {
+        switch (@event) {
+            case InputEventMouseMotion motion: {
+                if (!Input.IsActionPressed("pickup")) {
+                    return;
+                }
+
+                var inputVec = -motion.Relative * 0.005f;
+                _pickupTarget.Rotate(GlobalBasis.Column1, -inputVec.X);
+                _pickupTarget.Rotate(GlobalBasis.Column0, inputVec.Y);
+
+                break;
+            }
+        }
+    }
+
     public override void _PhysicsProcess(double delta) {
         if (!Visible) {
             Drop();
@@ -49,6 +65,17 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
             _carrying = null;
             return;
         }
+
+        if (Input.IsActionPressed("pickup")) {
+            var inputVec = Input.GetVector(
+                "look_right",
+                "look_left",
+                "look_down",
+                "look_up") * 4f * (float)delta;
+            _pickupTarget.Rotate(GlobalBasis.Column1, -inputVec.X);
+            _pickupTarget.Rotate(GlobalBasis.Column0, inputVec.Y);
+        }
+
 
         var targetPos = _pickupTarget.GlobalPosition;
         var targetRot = _pickupTarget.GlobalRotation;
@@ -88,7 +115,7 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
     // --- Weapon
 
     public override string WpnName() => "Manipulator";
-    public override string WpnDescription() => "Fire: Pick up or drop object";
+    public override string WpnDescription() => "Fire: Pick up or drop object.";
 
     public override void Fire() {
         if (_carrying != null) {
@@ -103,6 +130,10 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
     }
 
     public override void FireAlt() {
+    }
+
+    public override bool OverrideCamera() {
+        return _carrying != null && Input.IsActionPressed("pickup");
     }
 
 
