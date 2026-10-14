@@ -11,56 +11,8 @@ public static class Content {
     private static bool _contentLoaded;
 
 
-    public static Dictionary<string, StageDef> Stages { get; private set; } = new() {
-        {
-            "gobox.base.bliss", new StageDef {
-                Id = "gobox.bliss",
-                External = false,
-                Name = "Bliss",
-                Description = "A green, hilly zone",
-                ResourcePath = "res://stages/stage_bliss.tscn",
-                ThumbnailPath = "res://stages/gobox.bliss/preview.png"
-            }
-        }, {
-            "gobox.base.city", new StageDef {
-                Id = "gobox.city",
-                External = false,
-                Name = "City",
-                Description = "A city of white concrete",
-                ResourcePath = "res://stages/stage_city.tscn",
-                ThumbnailPath = "res://stages/gobox.city/preview.png"
-            }
-        }, {
-            "gobox.base.downhill", new StageDef {
-                Id = "gobox.base.downhill",
-                External = false,
-                Name = "Downhill",
-                Description = "It's all downhill from here",
-                ResourcePath = "res://stages/stage_downhill.tscn",
-                ThumbnailPath = "res://content/gobox.base/stages/downhill/preview.png"
-            }
-        },
-    };
-
-    public static Dictionary<string, PropDef> PropDefs { get; private set; } = new() {
-        {
-            "gobox.base.pigball", new PropPhysDef {
-                Id = "gobox.base.pigball",
-                Name = "Bouncy Pigball",
-                ThumbnailPath = "res://assets/models/prop_hog/thumbnail.png",
-                ModelPath = "gobox.base/models/pigball.glb",
-                CollPath = "gobox.base/models/pigball.coll",
-            }
-        }, {
-            "gobox.base.tv", new PropPhysDef {
-                Id = "gobox.base.tv",
-                Name = "TV",
-                ThumbnailPath = "res://assets/models/prop_tv/thumbnail.png",
-                ModelPath = "gobox.base/models/prop_tv.glb",
-                CollPath = "gobox.base/models/prop_tv.coll",
-            }
-        },
-    };
+    public static Dictionary<string, StageDef> StageDefs { get; private set; } = [];
+    public static Dictionary<string, PropDef> PropDefs { get; private set; } = [];
 
     public static Dictionary<string, ArrayMesh> Meshes { get; private set; } = [];
     public static Dictionary<string, Shape3D> CollMeshes { get; private set; } = [];
@@ -118,11 +70,14 @@ public static class Content {
         if (_contentLoaded) return;
         _contentLoaded = true;
 
+        LoadContentPak(ContentPath.PathJoin("gobox.base"));
+
         var dirInfo = new DirectoryInfo(ContentPath);
         var dirs = dirInfo.EnumerateDirectories("*");
 
         foreach (var pakDirInfo in dirs) {
             GD.Print($"Found content dir '{pakDirInfo}'");
+            if (pakDirInfo.Name == "gobox.base") continue;
             LoadContentPak(pakDirInfo.ToString());
         }
     }
@@ -139,12 +94,13 @@ public static class Content {
         GD.Print($" - {pak.Stages?.Count ?? 0} stage(s)");
         GD.Print($" - {pak.PropsStatic?.Count ?? 0} static prop(s)");
         GD.Print($" - {pak.PropsStaticBrk?.Count ?? 0} static brk prop(s)");
+        GD.Print($" - {pak.PropsPhys?.Count ?? 0} phys prop(s)");
 
         if (pak.Stages != null) {
             foreach (var stageName in pak.Stages) {
                 var path = pakPath.PathJoin("stages").PathJoin(stageName).PathJoin("stage.json");
                 var def = StageDef.FromJson(path);
-                Stages.Add(def.Id, def);
+                StageDefs.Add(def.Id, def);
             }
         }
 
@@ -160,6 +116,14 @@ public static class Content {
             foreach (var id in pak.PropsStaticBrk) {
                 var path = pakPath.PathJoin("props").PathJoin($"{id}.json");
                 var def = PropStaticBrkDef.FromJson(path);
+                PropDefs.Add(def.Id, def);
+            }
+        }
+
+        if (pak.PropsPhys != null) {
+            foreach (var id in pak.PropsPhys) {
+                var path = pakPath.PathJoin("props").PathJoin($"{id}.json");
+                var def = PropPhysDef.FromJson(path);
                 PropDefs.Add(def.Id, def);
             }
         }

@@ -1,0 +1,22 @@
+{
+  "id": "gobox.base.downhill",
+  "version": 1,
+  "external": false,
+  "name": "Downhill",
+  "description": "It's all downhill from here",
+  "thumbnail_path": "res://content/gobox.base/stages/downhill/preview.png",
+  "resource_path": "res://stages/stage_downhill.tscn",
+  "model_path": "",
+  "coll_path": "",
+  "player_start_position": [
+    0,
+    0,
+    0
+  ],
+  "player_start_rotation": [
+    0,
+    0,
+    0
+  ],
+  "props_static": []
+}

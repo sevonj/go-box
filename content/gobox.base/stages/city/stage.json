@@ -1,0 +1,22 @@
+{
+  "id": "gobox.base.city",
+  "version": 1,
+  "external": false,
+  "name": "City",
+  "description": "A city of white concrete",
+  "thumbnail_path": "res://stages/gobox.city/preview.png",
+  "resource_path": "res://stages/stage_city.tscn",
+  "model_path": "",
+  "coll_path": "",
+  "player_start_position": [
+    0,
+    0,
+    0
+  ],
+  "player_start_rotation": [
+    0,
+    0,
+    0
+  ],
+  "props_static": []
+}

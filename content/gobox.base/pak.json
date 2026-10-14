@@ -1,0 +1,13 @@
+{
+  "stages": [
+    "bliss",
+    "city",
+    "downhill"
+  ],
+  "props_static": [],
+  "props_static_brk": [],
+  "props_phys": [
+    "gobox.base.pigball",
+    "gobox.base.tv"
+  ]
+}

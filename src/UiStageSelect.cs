@@ -36,7 +36,7 @@ public partial class UiStageSelect : PanelContainer {
     private void ReloadGrid() {
         foreach (var child in _grid.GetChildren()) child.QueueFree();
 
-        foreach (var (id, stage) in content.Content.Stages) {
+        foreach (var (id, stage) in content.Content.StageDefs) {
             var button = UiPictureButton.Instantiate();
             button.Text = stage.Name;
             button.Pressed += () => SelectStage(id);
@@ -51,7 +51,7 @@ public partial class UiStageSelect : PanelContainer {
         if (string.IsNullOrEmpty(id))
             return;
 
-        if (!content.Content.Stages.TryGetValue(id, out var stage)) {
+        if (!content.Content.StageDefs.TryGetValue(id, out var stage)) {
             GD.PushError($"Attempted to select nonexistent stage '{id}'");
             return;
         }
