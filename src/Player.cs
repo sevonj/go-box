@@ -6,7 +6,7 @@ using Godot.Collections;
 namespace GoBox;
 
 [GlobalClass]
-public partial class Player {
+public partial class Player : RigidBody3D, IPhysActor {
     private const float WalkSpeed = 4f;
     private const float WalkForce = 50f;
     private const float SprintSpeed = 8.0f;
@@ -51,9 +51,10 @@ public partial class Player {
         _weaponCont.AddChild(weapon);
         SelectWeapon(weapon);
     }
-}
 
-public partial class Player : RigidBody3D {
+
+    // --- Node
+
     public override void _Ready() {
         SetContactMonitor(true);
         SetMaxContactsReported(4);
@@ -69,6 +70,7 @@ public partial class Player : RigidBody3D {
 
         GiveWeapon(WpnPropgun.Instantiate());
         GiveWeapon(WpnManipulator.Instantiate());
+        GiveWeapon(WpnRemover.Instantiate());
         GiveWeapon(WpnCorruptor.Instantiate());
         SelectWeapon(0);
     }
@@ -172,14 +174,20 @@ public partial class Player : RigidBody3D {
 
         LinearVelocity = velocity;
     }
-}
 
-public partial class Player : IPhysActor {
+
+    // --- IPhysActor
+
     public void ApplyForce(Vector3 force) => ApplyCentralForce(force);
     public void ApplyImpulse(Vector3 impulse) => ApplyCentralImpulse(impulse);
-}
 
-public partial class Player {
+
+    // --- IActor
+    public Node3D AsNode3D() => this;
+
+
+    // --- Private
+
     private void EnsureCameraRig() {
         if (!IsInstanceValid(_cameraRig)) SpawnCameraRig();
     }

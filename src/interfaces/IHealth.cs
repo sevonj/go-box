@@ -2,7 +2,7 @@ using Godot;
 
 namespace GoBox.interfaces;
 
-public interface IHealth {
+public interface IHealth: IActor {
     [Signal]
     public delegate void DiedEventHandler();
 

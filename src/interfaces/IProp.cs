@@ -2,6 +2,6 @@ using Godot;
 
 namespace GoBox.interfaces;
 
-public interface IProp {
+public interface IProp : IActor {
     public ArrayMesh GetMesh();
 }

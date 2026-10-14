@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://c0q5big4aqbhy"]
+
+[ext_resource type="Script" uid="uid://c42f3m51d8q1w" path="res://src/WpnRemover.cs" id="1_wlw2v"]
+[ext_resource type="AudioStream" uid="uid://so4royy6dpc2" path="res://assets/sfx/sfx_tool_no_use.wav" id="2_wm6nc"]
+[ext_resource type="AudioStream" uid="uid://c54antdana630" path="res://assets/sfx/sfx_wpn_corruptor_blast.wav" id="4_82lou"]
+[ext_resource type="PackedScene" uid="uid://clqegl6xksecr" path="res://assets/models/wpn_propgun/wpn_toolklobb.blend" id="5_milah"]
+[ext_resource type="Texture2D" uid="uid://d6h10846mdlf" path="res://assets/icons/icon_stahp.svg" id="5_wlw2v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wlw2v"]
+albedo_texture = ExtResource("5_wlw2v")
+uv1_scale = Vector3(10, 10, 10)
+uv1_offset = Vector3(0.5, 0, 0)
+
+[node name="WpnRemover" type="Node3D" unique_id=982096531 node_paths=PackedStringArray("_beamStartMarker")]
+script = ExtResource("1_wlw2v")
+_beamStartMarker = NodePath("ViewModel/Marker3D")
+_sfxNoUse = ExtResource("2_wm6nc")
+_sfxRemove = ExtResource("4_82lou")
+metadata/_custom_type_script = "uid://c42f3m51d8q1w"
+
+[node name="ViewModel" parent="." unique_id=449726162 instance=ExtResource("5_milah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.31961167, -0.32260394, -0.7603674)
+
+[node name="Cube" parent="ViewModel" index="0" unique_id=54702625]
+surface_material_override/0 = SubResource("StandardMaterial3D_wlw2v")
+
+[node name="Marker3D" type="Marker3D" parent="ViewModel" unique_id=432162230]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0006633997, 0.03532812, -0.19812983)
+
+[editable path="ViewModel"]

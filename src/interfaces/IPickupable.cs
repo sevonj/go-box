@@ -1,9 +1,6 @@
-using Godot;
-
 namespace GoBox.interfaces;
 
-public interface IPickupable {
-    public Node3D AsNode3D();
+public interface IPickupable : IActor {
     public bool AllowPlayerPickup();
     public float Radius();
 

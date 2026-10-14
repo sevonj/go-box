@@ -64,13 +64,11 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
             var s = Mathf.Sqrt(1f - w * w);
 
             var alreadyAligned = Mathf.IsZeroApprox(s * angle);
-            if (alreadyAligned) {
-                physProp.AngularVelocity = Vector3.Zero;
-                return;
+            if (alreadyAligned) physProp.AngularVelocity = Vector3.Zero;
+            else {
+                var axis = new Vector3(rotDiff.X, rotDiff.Y, rotDiff.Z) / s;
+                physProp.AngularVelocity = axis * angle * 50f;
             }
-
-            var axis = new Vector3(rotDiff.X, rotDiff.Y, rotDiff.Z) / s;
-            physProp.AngularVelocity = axis * angle * 50f;
 
             targetPos -= physProp.GlobalTransform * _carryingGrabOffset - physProp.GlobalPosition;
 
