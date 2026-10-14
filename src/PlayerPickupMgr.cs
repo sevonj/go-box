@@ -60,6 +60,8 @@ public partial class PlayerPickupMgr : Node3D, IPickupHolder {
                 return;
             }
 
+            PProcessCarry();
+
             if (dropQueued) Drop();
             else if (throwQueued) Throw();
 
@@ -116,5 +118,39 @@ public partial class PlayerPickupMgr : Node3D, IPickupHolder {
         }
 
         _carrying = null;
+    }
+
+    private void PProcessCarry() {
+        var targetPos = _pickupTarget.GlobalPosition;
+        var targetRot = _pickupTarget.GlobalRotation;
+
+        if (_carrying is PropPhys physProp) {
+            var posDiff = targetPos - physProp.GlobalPosition;
+            physProp.LinearVelocity = posDiff * 100f;
+
+            var currentRot = physProp.GlobalBasis.GetRotationQuaternion();
+            var targetQuat = Quaternion.FromEuler(targetRot);
+            var rotDiff = targetQuat * currentRot.Inverse();
+            if (rotDiff.W < 0f) rotDiff *= -1f;
+
+            var w = Mathf.Clamp(rotDiff.W, -1f, 1f);
+            var angle = 2f * Mathf.Acos(w);
+            var s = Mathf.Sqrt(1f - w * w);
+
+            var alreadyAligned = Mathf.IsZeroApprox(s * angle);
+            if (alreadyAligned) {
+                physProp.AngularVelocity = Vector3.Zero;
+                return;
+            }
+
+            var axis = new Vector3(rotDiff.X, rotDiff.Y, rotDiff.Z) / s;
+            physProp.AngularVelocity = axis * angle * 50f;
+
+            return;
+        }
+
+        var threeDee = (Node3D)_carrying;
+        threeDee.GlobalPosition = targetPos;
+        threeDee.GlobalRotation = targetRot;
     }
 }

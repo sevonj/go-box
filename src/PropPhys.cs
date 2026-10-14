@@ -84,31 +84,8 @@ public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable {
     }
 
     public override void _PhysicsProcess(double delta) {
-        if (_holder != null) {
-            GravityScale = 0f;
-
-            var posDiff = _holder.DesiredHoldPosition() - GlobalPosition;
-            LinearVelocity = posDiff * 100f;
-
-            var currentRot = GlobalBasis.GetRotationQuaternion();
-            var targetRot = Quaternion.FromEuler(_holder.DesiredHoldRotation());
-            var rotDiff = targetRot * currentRot.Inverse();
-            if (rotDiff.W < 0f) rotDiff *= -1f;
-
-            var w = Mathf.Clamp(rotDiff.W, -1f, 1f);
-            var angle = 2f * Mathf.Acos(w);
-            var s = Mathf.Sqrt(1f - w * w);
-
-            var alreadyAligned = Mathf.IsZeroApprox(s * angle);
-            if (!alreadyAligned) {
-                var axis = new Vector3(rotDiff.X, rotDiff.Y, rotDiff.Z) / s;
-                AngularVelocity = axis * angle * 50f;
-            }
-            else AngularVelocity = Vector3.Zero;
-        }
-        else {
-            GravityScale = 1f;
-        }
+        if (_holder != null) GravityScale = 0f;
+        else GravityScale = 1f;
 
         foreach (var node in GetCollidingBodies()) {
             if (node is PropStaticBrk brk) brk.Break();

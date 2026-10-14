@@ -46,14 +46,6 @@ public partial class PropStatic : StaticBody3D, IProp, IPickupable {
         AddChild(CollisionShape);
     }
 
-    public override void _PhysicsProcess(double delta) {
-        if (_holder != null) {
-            GlobalPosition = _holder.DesiredHoldPosition();
-            GlobalRotation = _holder.DesiredHoldRotation();
-        }
-    }
-
-
     // --- IProp
 
     public ArrayMesh GetMesh() => (ArrayMesh)Model.Mesh;

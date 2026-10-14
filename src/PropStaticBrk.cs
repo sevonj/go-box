@@ -117,14 +117,6 @@ public partial class PropStaticBrk : StaticBody3D, IProp, IHealth, IPickupable {
         if (Input.IsKeyPressed(Key.P)) Reset();
     }
 
-    public override void _PhysicsProcess(double delta) {
-        if (_holder != null) {
-            GlobalPosition = _holder.DesiredHoldPosition();
-            GlobalRotation = _holder.DesiredHoldRotation();
-        }
-    }
-
-
     // --- IProp
 
     public ArrayMesh GetMesh() => (ArrayMesh)(IsBroken ? ModelDestroy : Model)?.Mesh;
