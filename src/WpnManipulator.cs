@@ -147,12 +147,12 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
 
     private (IPickupable, Vector3) FindPickup() {
         var spaceState = GetWorld3D().DirectSpaceState;
-        var result = spaceState.IntersectRay(
-            PhysicsRayQueryParameters3D.Create(
-                GlobalPosition,
-                GlobalPosition - GlobalBasis.Column2 * MaxDistance
-            )
+        var raycastParams = PhysicsRayQueryParameters3D.Create(
+            GlobalPosition,
+            GlobalPosition - GlobalBasis.Column2 * MaxDistance
         );
+        raycastParams.CollideWithAreas = true;
+        var result = spaceState.IntersectRay(raycastParams);
 
         if (
             result.Count == 0 ||

@@ -44,8 +44,12 @@ public partial class WpnRemover : Weapon {
 
         var origin = cam.ProjectRayOrigin(mousePos);
         var end = origin + cam.ProjectRayNormal(mousePos) * 100f;
-        var query = PhysicsRayQueryParameters3D.Create(origin, end);
-        var result = spaceState.IntersectRay(query);
+        var raycastParams = PhysicsRayQueryParameters3D.Create(
+            origin,
+            end
+        );
+        raycastParams.CollideWithAreas = true;
+        var result = spaceState.IntersectRay(raycastParams);
 
         if (result.Count == 0 || (GodotObject)result["collider"] is not IActor actor || actor is Player) {
             PlaySfx(_sfxNoUse);
@@ -62,7 +66,7 @@ public partial class WpnRemover : Weapon {
 
 
     // --- Private
-    
+
     // TODO: Make one beamfx generator
     private void CreateBeamFx(Vector3 target) {
         var start = _beamStartMarker.GlobalPosition;

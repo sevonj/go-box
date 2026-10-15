@@ -4,7 +4,7 @@ using Godot;
 namespace GoBox;
 
 [GlobalClass]
-public partial class FuncBoostArea : Area3D {
+public partial class FuncBoostArea : Area3D, IPickupable {
     private const string MatPath = "res://assets/materials/mat_fx_trackbarrier.tres";
 
     [Export] public float Force = 1f;
@@ -14,9 +14,13 @@ public partial class FuncBoostArea : Area3D {
     [Export] private CollisionShape3D _shape;
     private MeshInstance3D _meshInst = new();
 
+    private IPickupHolder _holder;
+
+    
+    // --- Node
+
     public override void _Ready() {
         AddChild(_meshInst);
-
         RebuildMesh();
     }
 
@@ -29,6 +33,19 @@ public partial class FuncBoostArea : Area3D {
             }
         }
     }
+
+
+    // --- IPickupable
+
+    public Node3D AsNode3D() => this;
+    public bool AllowPlayerPickup() => false;
+    public float Radius() => 0f;
+    public IPickupHolder Holder() => _holder;
+    public void Pickup(IPickupHolder holder) => _holder = holder;
+    public void Drop() => _holder = null;
+
+
+    // --- Private
 
     private void RebuildMesh() {
         if (_shape.Shape is not BoxShape3D box) return;
