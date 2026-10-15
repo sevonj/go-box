@@ -35,18 +35,23 @@ text = "Tomorrow I'll
 - [x] Convert player to rigidbody
 - [x] Make a Prop Gun
 - [x] Build City test track
-- [ ] Fix fast physics objects clipping through walls
+- [-] Fix fast physics objects clipping through walls
 - [x] Main Menu
 - [x] Map Change UI
+- [ ] Despawn out of bounds props
+- [ ] Prop Limits
 - [x] Make selector menu for prop gun
-- [ ] Build Prop Manipulator Gun
-- [ ] Build Shadow Moses ripper
+- [x] Build Prop Manipulator Gun
+- [-] Build Shadow Moses ripper
 - [x] External maps import
 - [ ] Multiplayer
 - [ ] External maps implement env
 - [ ] Do something for spawning boost areas
 - [ ] Implement VR
-- [ ] Load PhysProps externally
+- [x] Load PhysProps externally
+- [ ] Undo prop spawning
+- [ ] Make a spawnable and editable 3d text entity just like this one
+- [ ] Save/Load game
 - [ ] Bleaugh
 "
 font = ExtResource("8_kodi4")
