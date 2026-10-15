@@ -4,9 +4,11 @@ using Godot;
 namespace GoBox;
 
 [GlobalClass]
-public partial class FuncFinishLine : Area3D, IPickupable {
+public partial class FuncFinishLine : StaticBody3D, IPickupable {
     [Signal]
     public delegate void PlayerEnteredEventHandler(Player player);
+
+    [Export] private Area3D _area;
 
     private IPickupHolder _holder;
 
@@ -20,9 +22,11 @@ public partial class FuncFinishLine : Area3D, IPickupable {
 
     public override void _Ready() {
         CollisionLayer = (uint)(ColLayer.Toolgunnable | ColLayer.World);
-        CollisionMask = (uint)ColLayer.PhysActors;
-        
-        BodyEntered += OnBodyEntered;
+        CollisionMask = (uint)ColLayer.None;
+        _area.CollisionLayer = (uint)ColLayer.None;
+        _area.CollisionMask = (uint)ColLayer.PhysActors;
+
+        _area.BodyEntered += OnBodyEntered;
     }
 
 
