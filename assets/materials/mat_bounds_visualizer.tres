@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://n8o4bw3mvh13"]
+
+[ext_resource type="Texture2D" uid="uid://ceh0wrc8sb6s5" path="res://assets/materials/tex_bounds_visualizer.svg" id="1_16osb"]
+[ext_resource type="Material" uid="uid://ceu2ffx8xyqtq" path="res://assets/materials/mat_bounds_visualizer_out.tres" id="2_k5djx"]
+
+[resource]
+next_pass = ExtResource("2_k5djx")
+transparency = 1
+cull_mode = 1
+shading_mode = 0
+albedo_texture = ExtResource("1_16osb")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+proximity_fade_enabled = true
+distance_fade_mode = 2
+distance_fade_min_distance = 50.0

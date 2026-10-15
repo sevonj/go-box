@@ -5,6 +5,8 @@ namespace GoBox;
 
 [GlobalClass]
 public partial class World : Node {
+    public Aabb Bounds { get; init; }
+
     private Node _envCont;
     private Node _staticCont;
     private Node _actorCont;
@@ -18,7 +20,12 @@ public partial class World : Node {
     public Player Player { get; private set; }
     private System.Collections.Generic.Dictionary<ulong, PropPhys> _physProps = [];
 
+    public World() {
+        Bounds = new Aabb(Vector3.One * -512f, Vector3.One * 1024f);
+    }
+
     // --- State
+
     public bool Paused { get; private set; }
     private Vector2 _lastCursorPos;
 
@@ -109,6 +116,7 @@ public partial class World : Node {
     }
 
     public override void _Ready() {
+        _staticCont.AddChild(new FuncBoundsVisualizer { Bounds = Bounds });
         _uiCont.AddChild(_uiPauseMenu);
         if (Game.Gamemode.AllowContentMenu) {
             _uiContentMenu = UiContentMenu.Instantiate();

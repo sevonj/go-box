@@ -38,7 +38,7 @@ text = "Tomorrow I'll
 - [-] Fix fast physics objects clipping through walls
 - [x] Main Menu
 - [x] Map Change UI
-- [ ] Despawn out of bounds props
+- [x] Despawn out of bounds props
 - [ ] Prop Limits
 - [x] Make selector menu for prop gun
 - [x] Build Prop Manipulator Gun

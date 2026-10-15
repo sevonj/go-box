@@ -89,6 +89,10 @@ public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable, ISa
     }
 
     public override void _PhysicsProcess(double delta) {
+        if (!Game.World.Bounds.HasPoint(GlobalPosition)) {
+            QueueFree();
+        }
+
         if (_holder != null) GravityScale = 0f;
         else GravityScale = 1f;
 
