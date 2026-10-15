@@ -57,6 +57,9 @@ public partial class Player : RigidBody3D, IPhysActor {
     // --- Node
 
     public override void _Ready() {
+        CollisionLayer = (uint)ColLayer.Player;
+        CollisionMask = (uint)(ColLayer.World | ColLayer.Props);
+
         SetContactMonitor(true);
         SetMaxContactsReported(4);
 

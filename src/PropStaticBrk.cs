@@ -111,6 +111,9 @@ public partial class PropStaticBrk : StaticBody3D, IProp, IHealth, IPickupable, 
     // --- Node
 
     public override void _Ready() {
+        CollisionLayer = (uint)(ColLayer.Props | ColLayer.Toolgunnable);
+        CollisionMask = 0;
+
         AddChild(Model);
         AddChild(CollisionShape);
         AddChild(ModelDestroy);

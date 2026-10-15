@@ -26,7 +26,7 @@ public static class StageLoader {
 
         var collShape = GoboxColl.Load(Content.FullPath(stageDef.CollPath));
         if (collShape == null) return null;
-        var coll = new StaticBody3D();
+        var coll = new StaticBody3D { CollisionMask = 0, CollisionLayer = (uint)ColLayer.World };
         coll.AddChild(new CollisionShape3D { Shape = collShape });
 
         var model = debugColls

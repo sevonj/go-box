@@ -85,12 +85,13 @@ public partial class PlayerPickupMgr : Node3D, IPickupHolder {
 
     private IPickupable FindPickup() {
         var spaceState = GetWorld3D().DirectSpaceState;
-        var result = spaceState.IntersectRay(
-            PhysicsRayQueryParameters3D.Create(
-                GlobalPosition,
-                GlobalPosition - GlobalBasis.Column2 * PickDistance
-            )
+        var raycastParams = PhysicsRayQueryParameters3D.Create(
+            GlobalPosition,
+            GlobalPosition - GlobalBasis.Column2 * PickDistance
         );
+        raycastParams.CollisionMask = (uint)ColLayer.Props;
+        raycastParams.CollideWithAreas = true;
+        var result = spaceState.IntersectRay(raycastParams);
         if (result.Count == 0) return null;
         if ((GodotObject)result["collider"] is IPickupable pickupable) return pickupable;
         return null;

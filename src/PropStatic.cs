@@ -47,6 +47,9 @@ public partial class PropStatic : StaticBody3D, IProp, IPickupable, ISaveable {
     // --- Node
 
     public override void _Ready() {
+        CollisionLayer = (uint)(ColLayer.Props | ColLayer.Toolgunnable);
+        CollisionMask = 0;
+
         AddChild(Model);
         AddChild(CollisionShape);
     }

@@ -16,10 +16,13 @@ public partial class FuncBoostArea : Area3D, IPickupable {
 
     private IPickupHolder _holder;
 
-    
+
     // --- Node
 
     public override void _Ready() {
+        CollisionLayer = (uint)ColLayer.Toolgunnable;
+        CollisionMask = (uint)ColLayer.PhysActors;
+
         AddChild(_meshInst);
         RebuildMesh();
     }

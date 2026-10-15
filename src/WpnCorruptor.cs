@@ -113,8 +113,10 @@ public partial class WpnCorruptor : Weapon {
 
         var origin = cam.ProjectRayOrigin(mousePos);
         var end = origin + cam.ProjectRayNormal(mousePos) * 100f;
-        var query = PhysicsRayQueryParameters3D.Create(origin, end);
-        var result = spaceState.IntersectRay(query);
+        var raycastParams = PhysicsRayQueryParameters3D.Create(origin, end);
+        raycastParams.CollisionMask = (uint)ColLayer.Toolgunnable;
+        raycastParams.CollideWithAreas = true;
+        var result = spaceState.IntersectRay(raycastParams);
 
         if (result.Count == 0 || (GodotObject)result["collider"] is not IProp prop) {
             PlaySfx(_sfxNoUse);

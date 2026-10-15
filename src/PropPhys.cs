@@ -59,6 +59,9 @@ public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable, ISa
     // --- Node
 
     public override void _Ready() {
+        CollisionLayer = (uint)(ColLayer.Props | ColLayer.Toolgunnable);
+        CollisionMask = (uint)(ColLayer.World | ColLayer.PhysActors);
+
         Game.World.RegisterPhysProp(this);
         ContactMonitor = true;
         MaxContactsReported = 16;

@@ -44,10 +44,8 @@ public partial class WpnRemover : Weapon {
 
         var origin = cam.ProjectRayOrigin(mousePos);
         var end = origin + cam.ProjectRayNormal(mousePos) * 100f;
-        var raycastParams = PhysicsRayQueryParameters3D.Create(
-            origin,
-            end
-        );
+        var raycastParams = PhysicsRayQueryParameters3D.Create(origin, end);
+        raycastParams.CollisionMask = (uint)ColLayer.Toolgunnable;
         raycastParams.CollideWithAreas = true;
         var result = spaceState.IntersectRay(raycastParams);
 

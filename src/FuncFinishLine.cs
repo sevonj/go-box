@@ -19,6 +19,9 @@ public partial class FuncFinishLine : Area3D, IPickupable {
     // --- Node
 
     public override void _Ready() {
+        CollisionLayer = (uint)(ColLayer.Toolgunnable | ColLayer.World);
+        CollisionMask = (uint)ColLayer.PhysActors;
+        
         BodyEntered += OnBodyEntered;
     }
 

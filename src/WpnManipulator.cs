@@ -151,6 +151,7 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
             GlobalPosition,
             GlobalPosition - GlobalBasis.Column2 * MaxDistance
         );
+        raycastParams.CollisionMask = (uint)ColLayer.Toolgunnable;
         raycastParams.CollideWithAreas = true;
         var result = spaceState.IntersectRay(raycastParams);
 
