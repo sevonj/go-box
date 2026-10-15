@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b04fsa5g32xcc"]
 
 [ext_resource type="Script" uid="uid://cbb3mt06pfeuc" path="res://src/UiContentMenu.cs" id="1_nhe6i"]
-[ext_resource type="PackedScene" uid="uid://n1i0ut62urnr" path="res://ui/ui_prop_select.tscn" id="2_08hqp"]
+[ext_resource type="PackedScene" uid="uid://n1i0ut62urnr" path="res://ui/ui_spawn_menu.tscn" id="2_08hqp"]
 [ext_resource type="PackedScene" uid="uid://bna7a62a4tp2b" path="res://ui/ui_map_select.tscn" id="3_ifas0"]
 [ext_resource type="StyleBox" uid="uid://betr5gibgr6qt" path="res://assets/themes/lunacy/stylebox_taskbar.tres" id="4_ifas0"]
 
@@ -13,7 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nhe6i")
-_propWindow = NodePath("PropWindow")
+_propWindow = NodePath("SpawnWindow")
 _mapWindow = NodePath("MapWindow")
 _propWindowToggle = NodePath("Taskbar/HBoxContainer/PropWindowToggle")
 _mapWindowToggle = NodePath("Taskbar/HBoxContainer/MapWindowToggle")
@@ -29,14 +29,14 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.49803922)
 
-[node name="PropWindow" type="Window" parent="." unique_id=1800254660]
+[node name="SpawnWindow" type="Window" parent="." unique_id=1800254660]
 oversampling_override = 1.0
 title = "Prop Browser"
-position = Vector2i(100, 100)
-size = Vector2i(666, 480)
+position = Vector2i(28, 65)
+size = Vector2i(1366, 768)
 min_size = Vector2i(384, 384)
 
-[node name="PropSelect" parent="PropWindow" unique_id=2109946215 instance=ExtResource("2_08hqp")]
+[node name="SpawnMenu" parent="SpawnWindow" unique_id=2109946215 instance=ExtResource("2_08hqp")]
 
 [node name="MapWindow" type="Window" parent="." unique_id=1504573876]
 oversampling_override = 1.0

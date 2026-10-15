@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://dovmuuf6pdw3p"]
+
+[ext_resource type="Script" uid="uid://dqnts2xd5iq2w" path="res://src/UiContentSourceSeparator.cs" id="1_63hx5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dn8d0"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+corner_radius_bottom_right = 13
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_27lbd"]
+draw_center = false
+border_width_top = 3
+border_color = Color(0.6, 0.6, 0.6, 1)
+corner_radius_bottom_right = 16
+
+[node name="UiContentSourceSeparator" type="MarginContainer" unique_id=498549489 node_paths=PackedStringArray("Label")]
+custom_maximum_size = Vector2(-1, 16)
+offset_right = 800.0
+offset_bottom = 16.0
+script = ExtResource("1_63hx5")
+Label = NodePath("HBoxContainer/PanelContainer/Label")
+metadata/_custom_type_script = "uid://dqnts2xd5iq2w"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=851278161]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer" unique_id=84330146]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dn8d0")
+
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer" unique_id=1414192792]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "Content Source"
+
+[node name="Line" type="PanelContainer" parent="HBoxContainer" unique_id=1277032569]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_27lbd")

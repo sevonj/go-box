@@ -4,16 +4,28 @@ using Godot;
 
 namespace GoBox.content;
 
-public class PropDef {
+public class SpawnableDef {
     [JsonPropertyName("id")] public string Id { get; init; }
     [JsonPropertyName("name")] public string Name { get; init; }
     [JsonPropertyName("description")] public string Description { get; init; }
     [JsonPropertyName("thumbnail_path")] public string ThumbnailPath { get; init; }
+
+    public virtual string GetSpawnTypeName() => "PLACEHOLDER";
+}
+
+public class SpecialDef : SpawnableDef {
+    public string ResPath { get; init; }
+    public override string GetSpawnTypeName() => "Special";
+}
+
+public class PropDef : SpawnableDef {
 }
 
 public class PropStaticDef : PropDef {
     [JsonPropertyName("model_path")] public string ModelPath { get; init; }
     [JsonPropertyName("coll_path")] public string CollPath { get; init; }
+
+    public override string GetSpawnTypeName() => "Static Prop";
 
     public static PropStaticDef FromJson(string path) {
         using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
@@ -40,6 +52,8 @@ public class PropStaticBrkDef : PropDef {
     [JsonPropertyName("coll_destroy_path")]
     public string CollDestroyPath { get; init; }
 
+    public override string GetSpawnTypeName() => "Breakable Static Prop";
+
     public static PropStaticBrkDef FromJson(string path) {
         using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
 
@@ -59,6 +73,8 @@ public class PropPhysDef : PropDef {
     [JsonPropertyName("model_path")] public string ModelPath { get; init; }
     [JsonPropertyName("coll_path")] public string CollPath { get; init; }
     [JsonPropertyName("mass")] public float Mass { get; init; }
+
+    public override string GetSpawnTypeName() => "Physics Prop";
 
     public static PropPhysDef FromJson(string path) {
         using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);

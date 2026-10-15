@@ -12,7 +12,7 @@ public static class Content {
 
 
     public static Dictionary<string, StageDef> StageDefs { get; private set; } = [];
-    public static Dictionary<string, PropDef> PropDefs { get; private set; } = [];
+    public static Dictionary<string, SpawnableDef> SpawnableDefs { get; private set; } = [];
 
     public static Dictionary<string, ArrayMesh> Meshes { get; private set; } = [];
     public static Dictionary<string, Shape3D> CollMeshes { get; private set; } = [];
@@ -49,17 +49,20 @@ public static class Content {
     public static string FullPath(string relative) => ContentPath.PathJoin(relative);
 
     public static Node3D InstantiateProp(string id) {
-        PropDefs.TryGetValue(id, out var propDef);
-        if (propDef == null) {
+        SpawnableDefs.TryGetValue(id, out var def);
+        if (def == null) {
             GD.PrintErr($"Prop '{id}' doesn't exist");
             return null;
         }
 
-        if (propDef is PropStaticDef sPropDef)
+        if (def is SpecialDef specialDef)
+            return (Node3D)GD.Load<PackedScene>(specialDef.ResPath).Instantiate();
+
+        if (def is PropStaticDef sPropDef)
             return PropStatic.FromDef(sPropDef);
-        if (propDef is PropStaticBrkDef sBrkDef)
+        if (def is PropStaticBrkDef sBrkDef)
             return PropStaticBrk.FromDef(sBrkDef);
-        if (propDef is PropPhysDef pPropDef)
+        if (def is PropPhysDef pPropDef)
             return PropPhys.FromDef(pPropDef);
 
         GD.PrintErr("UNREACHABLE");
@@ -71,6 +74,21 @@ public static class Content {
         _contentLoaded = true;
 
         LoadContentPak(ContentPath.PathJoin("gobox.base"));
+
+        SpawnableDefs.Add("gobox.base.func_boost_area", new SpecialDef {
+            Id = "gobox.base.func_boost_area",
+            Name = "Boost Area",
+            Description = "Pushes physics objects in a direction",
+            ThumbnailPath = null,
+            ResPath = "res://scenes/func_boost_area.tscn"
+        });
+        SpawnableDefs.Add("gobox.base.func_finish_line", new SpecialDef {
+            Id = "gobox.base.func_finish_line",
+            Name = "Finish Line",
+            Description = "Finish line with a trigger",
+            ThumbnailPath = null,
+            ResPath = "res://scenes/func_finish_line.tscn"
+        });
 
         var dirInfo = new DirectoryInfo(ContentPath);
         var dirs = dirInfo.EnumerateDirectories("*");
@@ -108,7 +126,7 @@ public static class Content {
             foreach (var id in pak.PropsStatic) {
                 var path = pakPath.PathJoin("props").PathJoin($"{id}.json");
                 var def = PropStaticDef.FromJson(path);
-                PropDefs.Add(def.Id, def);
+                SpawnableDefs.Add(def.Id, def);
             }
         }
 
@@ -116,7 +134,7 @@ public static class Content {
             foreach (var id in pak.PropsStaticBrk) {
                 var path = pakPath.PathJoin("props").PathJoin($"{id}.json");
                 var def = PropStaticBrkDef.FromJson(path);
-                PropDefs.Add(def.Id, def);
+                SpawnableDefs.Add(def.Id, def);
             }
         }
 
@@ -124,7 +142,7 @@ public static class Content {
             foreach (var id in pak.PropsPhys) {
                 var path = pakPath.PathJoin("props").PathJoin($"{id}.json");
                 var def = PropPhysDef.FromJson(path);
-                PropDefs.Add(def.Id, def);
+                SpawnableDefs.Add(def.Id, def);
             }
         }
     }

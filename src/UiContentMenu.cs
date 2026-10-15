@@ -18,8 +18,7 @@ public partial class UiContentMenu : Control {
 
     private bool _isOpen;
 
-    public static UiContentMenu Instantiate() =>
-        (UiContentMenu)GD.Load<PackedScene>("res://ui/ui_content_menu.tscn").Instantiate();
+    public static UiContentMenu Instantiate() => (UiContentMenu)GD.Load<PackedScene>("res://ui/ui_content_menu.tscn").Instantiate();
 
     private UiContentMenu() {
     }

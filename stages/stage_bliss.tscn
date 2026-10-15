@@ -5,12 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://cbow4igwwxog2" path="res://content/go_box/maps/bliss/map_bliss.glb" id="3_qnxex"]
 [ext_resource type="Script" uid="uid://bc6vhd3d1hch6" path="res://src/InfoPlayerStart.cs" id="4_ksrfk"]
 [ext_resource type="PackedScene" uid="uid://d0co0d2sg0t1o" path="res://scenes/prop_tv.tscn" id="6_gypc2"]
-[ext_resource type="Script" uid="uid://7nd7vwdt2kqg" path="res://src/FuncBoostArea.cs" id="6_qnxex"]
+[ext_resource type="PackedScene" uid="uid://dtoxt7sj84h33" path="res://scenes/func_boost_area.tscn" id="6_kodi4"]
 [ext_resource type="PackedScene" uid="uid://dmktntltwsrjb" path="res://scenes/prop_hogball.tscn" id="7_gypc2"]
 [ext_resource type="FontFile" uid="uid://o63pwd3ka34j" path="res://assets/font/comic-relief/ComicRelief.ttf" id="8_kodi4"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_dn8d0"]
-size = Vector3(2, 2, 4)
 
 [node name="World" type="Node" unique_id=466431567]
 script = ExtResource("1_ksrfk")
@@ -63,16 +60,8 @@ transform = Transform3D(-0.059001923, 0, 0.99825794, 0, 1, 0, -0.99825794, 0, -0
 script = ExtResource("4_ksrfk")
 metadata/_custom_type_script = "uid://bc6vhd3d1hch6"
 
-[node name="FuncBoostArea" type="Area3D" parent="Actors" unique_id=921033924 node_paths=PackedStringArray("_shape")]
+[node name="FuncBoostArea" parent="Actors" unique_id=1038035838 instance=ExtResource("6_kodi4")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -83.008224, 12.313513, -39.38686)
-script = ExtResource("6_qnxex")
-Force = 10000.0
-_shape = NodePath("CollisionShape3D")
-metadata/_custom_type_script = "uid://7nd7vwdt2kqg"
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Actors/FuncBoostArea" unique_id=1577089546]
-shape = SubResource("BoxShape3D_dn8d0")
-debug_color = Color(0, 0.5950001, 0.7, 1)
 
 [node name="PhysProp" parent="Actors" unique_id=228601484 instance=ExtResource("6_gypc2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -79.84036, 12.789791, -39.38686)

@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://n1i0ut62urnr"]
+
+[ext_resource type="Script" uid="uid://y1012cdgifn6" path="res://src/UiSpawnMenu.cs" id="1_wqtcb"]
+[ext_resource type="Texture2D" uid="uid://c2iwyvrotk5ce" path="res://assets/ui/tex_ui_chonker_bluebar.png" id="2_emc2p"]
+[ext_resource type="StyleBox" uid="uid://b332kppa140jv" path="res://assets/themes/lunacy/stylebox_inspector_sidebar.tres" id="2_wqtcb"]
+[ext_resource type="PackedScene" uid="uid://ckxi641rha0fk" path="res://ui/ui_picture_frame.tscn" id="3_emc2p"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dn8d0"]
+texture = ExtResource("2_emc2p")
+modulate_color = Color(1, 1, 1, 0.49803922)
+
+[node name="UiSpawnMenu" type="PanelContainer" unique_id=775656499 node_paths=PackedStringArray("_tabBar", "_grid", "_contentVbox", "_previewNameLabel", "_previewTypeLabel", "_previewIdLabel", "_previewDescLabel", "_previewPic")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wqtcb")
+_tabBar = NodePath("HBox/VBoxContainer/PanelContainer/TabBar")
+_grid = NodePath("")
+_contentVbox = NodePath("HBox/VBoxContainer/ScrollContainer/ContentVbox")
+_previewNameLabel = NodePath("HBox/Sidebar/VBox/NameLabel")
+_previewTypeLabel = NodePath("HBox/Sidebar/VBox/TypeLabel")
+_previewIdLabel = NodePath("HBox/Sidebar/VBox/IdLabel")
+_previewDescLabel = NodePath("HBox/Sidebar/VBox/DescriptionLabel")
+_previewPic = NodePath("HBox/Sidebar/VBox/PreviewPicture")
+metadata/_custom_type_script = "uid://y1012cdgifn6"
+
+[node name="HBox" type="HBoxContainer" parent="." unique_id=816690142]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBox" unique_id=2103120460]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="HBox/VBoxContainer" unique_id=1789480115]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_dn8d0")
+
+[node name="TabBar" type="TabBar" parent="HBox/VBoxContainer/PanelContainer" unique_id=959467643]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBox/VBoxContainer" unique_id=748175579]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ContentVbox" type="VBoxContainer" parent="HBox/VBoxContainer/ScrollContainer" unique_id=1267815145]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Sidebar" type="PanelContainer" parent="HBox" unique_id=4130747]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_wqtcb")
+
+[node name="VBox" type="VBoxContainer" parent="HBox/Sidebar" unique_id=1571594330]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HBox/Sidebar/VBox" unique_id=137851585]
+layout_mode = 2
+text = "Selected Spawnable"
+
+[node name="PreviewPicture" parent="HBox/Sidebar/VBox" unique_id=1905686383 instance=ExtResource("3_emc2p")]
+custom_minimum_size = Vector2(0, 164)
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="HBox/Sidebar/VBox" unique_id=1862232355]
+layout_mode = 2
+text = "name_here"
+autowrap_mode = 3
+
+[node name="TypeLabel" type="Label" parent="HBox/Sidebar/VBox" unique_id=1074450562]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0.49803922)
+text = "type_here"
+autowrap_mode = 3
+
+[node name="IdLabel" type="Label" parent="HBox/Sidebar/VBox" unique_id=323871434]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0.49803922)
+text = "id_here"
+autowrap_mode = 3
+
+[node name="DescriptionLabel" type="Label" parent="HBox/Sidebar/VBox" unique_id=1920779501]
+layout_mode = 2
+text = "desc_here"
+autowrap_mode = 3
+
+[node name="Spacer" type="Control" parent="HBox/Sidebar/VBox" unique_id=2078523717]
+layout_mode = 2
+size_flags_vertical = 3

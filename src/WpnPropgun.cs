@@ -39,12 +39,12 @@ public partial class WpnPropgun : Weapon {
     // --- Private
 
     private Node3D SpawnProp() {
-        if (LocalVars.SelectedPropDef == null) {
-            GD.PushError("WpnPropGun: No prop selected");
+        if (LocalVars.SelectedSpawnableDef == null) {
+            GD.PushError("WpnPropGun: No spawnable selected");
             return null;
         }
 
-        var prop = content.Content.InstantiateProp(LocalVars.SelectedPropDef.Id);
+        var prop = content.Content.InstantiateProp(LocalVars.SelectedSpawnableDef.Id);
         if (prop == null) {
             return null;
         }

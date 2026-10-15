@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dtoxt7sj84h33"]
+
+[ext_resource type="Script" uid="uid://7nd7vwdt2kqg" path="res://src/FuncBoostArea.cs" id="1_5b6wp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dn8d0"]
+size = Vector3(2, 2, 4)
+
+[node name="FuncBoostArea" type="Area3D" unique_id=1038035838 node_paths=PackedStringArray("_shape")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("1_5b6wp")
+Force = 10000.0
+_shape = NodePath("CollisionShape3D")
+metadata/_custom_type_script = "uid://7nd7vwdt2kqg"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=430139508]
+shape = SubResource("BoxShape3D_dn8d0")
+debug_color = Color(0, 0.5950001, 0.7, 1)
