@@ -80,8 +80,8 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
         var targetPos = _pickupTarget.GlobalPosition;
         var targetRot = _pickupTarget.GlobalRotation;
 
-        if (_carrying is PropPhys physProp) {
-            var currentRot = physProp.GlobalBasis.GetRotationQuaternion();
+        if (_carrying is RigidBody3D rb) {
+            var currentRot = rb.GlobalBasis.GetRotationQuaternion();
             var targetQuat = Quaternion.FromEuler(targetRot);
             var rotDiff = targetQuat * currentRot.Inverse();
             if (rotDiff.W < 0f) rotDiff *= -1f;
@@ -91,16 +91,16 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
             var s = Mathf.Sqrt(1f - w * w);
 
             var alreadyAligned = Mathf.IsZeroApprox(s * angle);
-            if (alreadyAligned) physProp.AngularVelocity = Vector3.Zero;
+            if (alreadyAligned) rb.AngularVelocity = Vector3.Zero;
             else {
                 var axis = new Vector3(rotDiff.X, rotDiff.Y, rotDiff.Z) / s;
-                physProp.AngularVelocity = axis * angle * 50f;
+                rb.AngularVelocity = axis * angle * 50f;
             }
 
-            targetPos -= physProp.GlobalTransform * _carryingGrabOffset - physProp.GlobalPosition;
+            targetPos -= rb.GlobalTransform * _carryingGrabOffset - rb.GlobalPosition;
 
-            var posDiff = targetPos - physProp.GlobalPosition;
-            physProp.LinearVelocity = posDiff * 100f;
+            var posDiff = targetPos - rb.GlobalPosition;
+            rb.LinearVelocity = posDiff * 100f;
 
             return;
         }

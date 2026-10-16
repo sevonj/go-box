@@ -2,7 +2,7 @@
   "id": "gobox.base.pigball",
   "name": "Bouncy Pigball",
   "description": "Test model",
-  "thumbnail_path": "res://assets/models/prop_hog/thumbnail.png",
+  "thumbnail_path": "gobox.base/thumbnails/pigball.png",
   "model_path": "gobox.base/models/pigball.glb",
   "coll_path": "gobox.base/models/pigball.coll",
   "mass": 1.0

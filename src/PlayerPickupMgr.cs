@@ -125,11 +125,11 @@ public partial class PlayerPickupMgr : Node3D, IPickupHolder {
         var targetPos = _pickupTarget.GlobalPosition;
         var targetRot = _pickupTarget.GlobalRotation;
 
-        if (_carrying is PropPhys physProp) {
-            var posDiff = targetPos - physProp.GlobalPosition;
-            physProp.LinearVelocity = posDiff * 100f;
+        if (_carrying is RigidBody3D rb) {
+            var posDiff = targetPos - rb.GlobalPosition;
+            rb.LinearVelocity = posDiff * 100f;
 
-            var currentRot = physProp.GlobalBasis.GetRotationQuaternion();
+            var currentRot = rb.GlobalBasis.GetRotationQuaternion();
             var targetQuat = Quaternion.FromEuler(targetRot);
             var rotDiff = targetQuat * currentRot.Inverse();
             if (rotDiff.W < 0f) rotDiff *= -1f;
@@ -140,12 +140,12 @@ public partial class PlayerPickupMgr : Node3D, IPickupHolder {
 
             var alreadyAligned = Mathf.IsZeroApprox(s * angle);
             if (alreadyAligned) {
-                physProp.AngularVelocity = Vector3.Zero;
+                rb.AngularVelocity = Vector3.Zero;
                 return;
             }
 
             var axis = new Vector3(rotDiff.X, rotDiff.Y, rotDiff.Z) / s;
-            physProp.AngularVelocity = axis * angle * 50f;
+            rb.AngularVelocity = axis * angle * 50f;
 
             return;
         }

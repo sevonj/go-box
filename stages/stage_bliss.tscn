@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dtoxt7sj84h33" path="res://scenes/func_boost_area.tscn" id="6_kodi4"]
 [ext_resource type="PackedScene" uid="uid://dmktntltwsrjb" path="res://scenes/prop_hogball.tscn" id="7_gypc2"]
 [ext_resource type="FontFile" uid="uid://o63pwd3ka34j" path="res://assets/font/comic-relief/ComicRelief.ttf" id="8_kodi4"]
+[ext_resource type="PackedScene" uid="uid://7ytdy5ifd8as" path="res://scenes/launcher.tscn" id="9_v8v0x"]
 
 [node name="World" type="Node" unique_id=466431567]
 script = ExtResource("1_ksrfk")
@@ -75,10 +76,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -79.84036, 12.789791, -39.386
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -79.84036, 12.789791, -36.38686)
 
 [node name="PhysProp4" parent="Actors" unique_id=1126382314 instance=ExtResource("6_gypc2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84.84036, 12.789791, -36.38686)
+transform = Transform3D(0.95376813, 0, 0.30054343, 0, 1, 0, -0.30054343, 0, 0.95376813, -88.60515, 11.795935, -37.49263)
 
 [node name="PhysProp2" parent="Actors" unique_id=271362198 instance=ExtResource("7_gypc2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.84036, 12.789791, -39.38686)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.84036, 12.789791, -36.87392)
+
+[node name="Launcher" parent="Actors" unique_id=1234774970 instance=ExtResource("9_v8v0x")]
+transform = Transform3D(-0.9659258, 0, 0.25881913, 0, 1, 0, -0.25881913, 0, -0.9659258, -88.21381, 11.58394, -35.355316)
 
 [node name="Ui" type="Node" parent="." unique_id=1866451087]
 

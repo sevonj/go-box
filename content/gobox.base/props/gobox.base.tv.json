@@ -2,7 +2,7 @@
   "id": "gobox.base.tv",
   "name": "TV",
   "description": "Get Your Free TVs",
-  "thumbnail_path": "res://assets/models/prop_tv/thumbnail.png",
+  "thumbnail_path": "gobox.base/thumbnails/tv.png",
   "model_path": "gobox.base/models/prop_tv.glb",
   "coll_path": "gobox.base/models/prop_tv.coll",
   "mass": 20.0

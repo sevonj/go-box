@@ -41,7 +41,7 @@ public partial class UiSpawnMenu : PanelContainer {
 
     private void ReloadPage() {
         foreach (var child in _contentVbox.GetChildren()) child.QueueFree();
-        
+
         // TODO: Maybe design better sections
         switch (_currentTab) {
             case Tabs.Props: {
@@ -101,11 +101,15 @@ public partial class UiSpawnMenu : PanelContainer {
     }
 
 
-    private Texture2D LoadThumbnail(SpawnableDef spawnableDef) {
-        if (string.IsNullOrEmpty(spawnableDef?.ThumbnailPath)) return null;
-        var tex = GD.Load<Texture2D>(spawnableDef.ThumbnailPath);
-        if (!IsInstanceValid(tex)) GD.PrintErr(GetPath(), $" Couldn't load thumbnail for prop id '{spawnableDef.Id}'");
-        return tex;
+    private Texture2D LoadThumbnail(SpawnableDef def) {
+        if (string.IsNullOrEmpty(def?.ThumbnailPath)) return null;
+        var img = Image.LoadFromFile(Content.FullPath(def.ThumbnailPath));
+        if (!IsInstanceValid(img)) {
+            GD.PrintErr(GetPath(), $" Couldn't load thumbnail for prop id '{def.Id}'");
+            return null;
+        }
+
+        return ImageTexture.CreateFromImage(img);
     }
 
     private void OnTabSelected(long index) {

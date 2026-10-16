@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://7ytdy5ifd8as"]
+
+[ext_resource type="Script" uid="uid://dw2tprgb203an" path="res://src/Seat.cs" id="1_cm6pl"]
+[ext_resource type="PackedScene" uid="uid://or3cwio4cic6" path="res://content/gobox.base/models/prop_launcher.glb" id="2_wr5gk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dn8d0"]
+size = Vector3(0.56225586, 0.74401855, 0.54003906)
+
+[node name="Launcher" type="RigidBody3D" unique_id=1234774970 node_paths=PackedStringArray("_cameraMarker")]
+script = ExtResource("1_cm6pl")
+_cameraMarker = NodePath("CameraMark")
+metadata/_custom_type_script = "uid://dw2tprgb203an"
+
+[node name="model" parent="." unique_id=1656875040 instance=ExtResource("2_wr5gk")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=721132719]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37200928, 0)
+shape = SubResource("BoxShape3D_dn8d0")
+
+[node name="CameraMark" type="Marker3D" parent="." unique_id=1171045920]
+transform = Transform3D(-0.25881916, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, -0.25881916, 0, 1.1, -0.2)

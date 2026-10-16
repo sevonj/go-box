@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://by7dbsf16ptc7"
-path="res://.godot/imported/thumbnail.png-689fda826e80fb106d285a16cfffda01.ctex"
+uid="uid://dr16ugnufxum7"
+path="res://.godot/imported/launcher.png-76c9dfcc4803c9c0f2a04014df9dc1f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/models/prop_hog/thumbnail.png"
-dest_files=["res://.godot/imported/thumbnail.png-689fda826e80fb106d285a16cfffda01.ctex"]
+source_file="res://content/gobox.base/thumbnails/launcher.png"
+dest_files=["res://.godot/imported/launcher.png-76c9dfcc4803c9c0f2a04014df9dc1f5.ctex"]
 
 [params]
 

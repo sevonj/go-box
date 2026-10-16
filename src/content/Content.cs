@@ -79,15 +79,22 @@ public static class Content {
             Id = "gobox.base.func_boost_area",
             Name = "Boost Area",
             Description = "Pushes physics objects in a direction",
-            ThumbnailPath = null,
+            ThumbnailPath = "gobox.base/thumbnails/func_boost_area.png",
             ResPath = "res://scenes/func_boost_area.tscn"
         });
         SpawnableDefs.Add("gobox.base.func_finish_line", new SpecialDef {
             Id = "gobox.base.func_finish_line",
             Name = "Finish Line",
             Description = "Finish line with a trigger",
-            ThumbnailPath = null,
+            ThumbnailPath = "gobox.base/thumbnails/func_finish_line.png",
             ResPath = "res://scenes/func_finish_line.tscn"
+        });
+        SpawnableDefs.Add("gobox.base.launcher", new SpecialDef {
+            Id = "gobox.base.launcher",
+            Name = "Launcher",
+            Description = "Plastic lawnchair",
+            ThumbnailPath = "gobox.base/thumbnails/launcher.png",
+            ResPath = "res://scenes/launcher.tscn"
         });
 
         var dirInfo = new DirectoryInfo(ContentPath);

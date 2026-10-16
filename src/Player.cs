@@ -18,29 +18,37 @@ public partial class Player : RigidBody3D, IPhysActor {
     private const float MaxFloorAngle = 45f * (Mathf.Pi / 180f);
 
     public bool Noclip;
+    public bool ExternalControl => ExternalController != null;
+    public Node ExternalController { get; private set; }
 
     [Export] private Marker3D _eyePosMarker;
     [Export] private CollisionShape3D _worldColl;
+    private PlayerInteractMgr _interactMgr;
     private PlayerPickupMgr _pickupMgr = new();
-    private CameraRig _cameraRig;
+    public CameraRig CameraRig { get; private set; }
+
     private Node3D _weaponCont = new();
+    private Array<Weapon> _weapons = [];
+    private int _currentWeapon = -1;
 
     private bool _isOnFloor;
     private Vector3 _floorNormal = Vector3.Up;
-    private Array<Weapon> _weapons = [];
-    private int _currentWeapon = -1;
 
 
     public static Player Instantiate() => (Player)GD.Load<PackedScene>("res://scenes/player_rigid.tscn").Instantiate();
 
     private Player() {
         ProcessPhysicsPriority = PProcessPriorities.Player;
+
+        _interactMgr = new PlayerInteractMgr(this);
     }
 
-    public bool HasControl() => !Game.World.IsMenuOpen() && !LocalVars.DisablePlayerControl;
-    public bool HasCameraControl() => HasControl() && (!CurrentWeapon()?.OverrideCamera() ?? true);
+    public bool InputEnabled() => !Game.World.IsMenuOpen() && !LocalVars.DisablePlayerControl;
+    public bool HasControl() => InputEnabled() && !ExternalControl;
+    public bool HasCameraControl() => InputEnabled() && (!CurrentWeapon()?.OverrideCamera() ?? true);
     public bool IsInteracting() => _pickupMgr.IsCarrying;
     public bool IsInteractionAvailable() => !IsInteracting() && _pickupMgr.CanPickup;
+
 
     public void GiveWeapon(Weapon weapon) {
         foreach (var existing in _weapons) {
@@ -52,6 +60,9 @@ public partial class Player : RigidBody3D, IPhysActor {
         _weaponCont.AddChild(weapon);
         SelectWeapon(weapon);
     }
+
+    public void AssumeControl(Node who) => ExternalController = who;
+    public void UnassumeControl() => ExternalController = null;
 
 
     // --- Node
@@ -67,6 +78,7 @@ public partial class Player : RigidBody3D, IPhysActor {
             GD.PrintErr(GetPath(), " EyePosMarker invalid");
         if (!IsInstanceValid(_worldColl))
             GD.PrintErr(GetPath(), " _worldColl invalid");
+        AddChild(_interactMgr);
         AddChild(_pickupMgr);
         AddChild(_weaponCont);
 
@@ -95,6 +107,7 @@ public partial class Player : RigidBody3D, IPhysActor {
 
         var hasControl = HasControl();
         var handsAreFree = !_pickupMgr.IsCarrying;
+        _interactMgr.Enabled = hasControl && handsAreFree;
         _pickupMgr.Enabled = hasControl;
 
         if (!hasControl) return;
@@ -120,6 +133,10 @@ public partial class Player : RigidBody3D, IPhysActor {
 
         if (!HasControl()) return;
 
+        Freeze = false;
+        CollisionLayer = (uint)ColLayer.Player;
+        CameraRig.FollowTarget = _eyePosMarker;
+
         LockRotation = true;
 
         GravityScale = Noclip ? 0f : 1f;
@@ -127,7 +144,7 @@ public partial class Player : RigidBody3D, IPhysActor {
 
         {
             _weaponCont.Position = _eyePosMarker.Position;
-            _weaponCont.GlobalRotation = _cameraRig.Camera.GlobalRotation;
+            _weaponCont.GlobalRotation = CameraRig.Camera.GlobalRotation;
         }
 
         {
@@ -145,7 +162,7 @@ public partial class Player : RigidBody3D, IPhysActor {
                 var force = 1000f;
                 var desiredSpeed = sprinting ? FastFlightSpeed : FlightSpeed;
 
-                var dir = _cameraRig.Camera.GlobalBasis * new Vector3(inputVec.X, 0f, inputVec.Y);
+                var dir = CameraRig.Camera.GlobalBasis * new Vector3(inputVec.X, 0f, inputVec.Y);
                 dir.Y += Input.GetAxis("move_down", "move_up");
                 dir = dir.Normalized();
                 var currentSpeed = LinearVelocity.Dot(dir);
@@ -159,7 +176,7 @@ public partial class Player : RigidBody3D, IPhysActor {
                 var force = sprinting ? SprintForce : WalkForce;
                 var desiredSpeed = sprinting ? SprintSpeed : WalkSpeed;
 
-                var dir = (_cameraRig.GlobalBasis * new Vector3(inputVec.X, 0, inputVec.Y)).Normalized();
+                var dir = (CameraRig.GlobalBasis * new Vector3(inputVec.X, 0, inputVec.Y)).Normalized();
                 var currentSpeed = GroundVelocity().Dot(dir);
                 var remainingSpeed = Mathf.Max(0f, desiredSpeed - currentSpeed);
                 var limitedForce = Mathf.Min(force, remainingSpeed / (float)delta * Mass);
@@ -194,16 +211,16 @@ public partial class Player : RigidBody3D, IPhysActor {
     // --- Private
 
     private void EnsureCameraRig() {
-        if (!IsInstanceValid(_cameraRig)) SpawnCameraRig();
+        if (!IsInstanceValid(CameraRig)) SpawnCameraRig();
     }
 
     private void SpawnCameraRig() {
         GD.Print("Spawning CameraRig");
-        if (IsInstanceValid(_cameraRig)) _cameraRig.QueueFree();
+        if (IsInstanceValid(CameraRig)) CameraRig.QueueFree();
 
-        _cameraRig = new CameraRigFp(this, _eyePosMarker);
-        Game.World.AddActor(_cameraRig);
-        _pickupMgr.FollowTarget = _cameraRig.Camera;
+        CameraRig = new CameraRigFp(this, _eyePosMarker);
+        Game.World.AddActor(CameraRig);
+        _pickupMgr.FollowTarget = CameraRig.Camera;
     }
 
     /*

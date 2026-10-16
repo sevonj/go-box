@@ -4,8 +4,7 @@ using Godot;
 namespace GoBox;
 
 [GlobalClass]
-public partial class CameraRig : Node3D
-{
+public abstract partial class CameraRig : Node3D {
     [Export] public Vector2 MouseSensitivity { get; set; } = new(0.7f, 0.7f);
     [Export] public Vector2 GamepadSensitivity { get; set; } = new(2.5f, 2.5f);
     [Export] public bool InvertX { get; set; }
@@ -15,4 +14,8 @@ public partial class CameraRig : Node3D
     [Export] public bool InputEnabled { get; set; } = true;
 
     public Camera3D Camera { get; protected set; }
+    public Node3D FollowTarget;
+
+
+    public abstract void Reset();
 }

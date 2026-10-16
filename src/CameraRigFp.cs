@@ -1,11 +1,28 @@
-using System;
 using Godot;
 
 namespace GoBox;
 
 [GlobalClass]
 public partial class CameraRigFp(Player player, Node3D followTarget) : CameraRig {
+    private float _angle;
+
+    public override void Reset() {
+        if (!IsInstanceValid(FollowTarget) || !IsInstanceValid(player)) {
+            QueueFree();
+            return;
+        }
+
+        GlobalPosition = FollowTarget.GlobalPosition;
+        GlobalRotation = FollowTarget.GlobalRotation;
+        _angle = FollowTarget.Rotation.Y;
+        Camera.Rotation = Vector3.Zero;
+    }
+
+    // --- Node
+
     public override void _Ready() {
+        FollowTarget = followTarget;
+
         Camera = new Camera3D();
         AddChild(Camera);
 
@@ -15,17 +32,17 @@ public partial class CameraRigFp(Player player, Node3D followTarget) : CameraRig
             return;
         }
 
-        if (!IsInstanceValid(followTarget)) {
+        if (!IsInstanceValid(FollowTarget)) {
             GD.PrintErr(GetPath(), " Invalid followTarget!");
             QueueFree();
             return;
         }
 
-        GlobalRotation = followTarget.GlobalRotation;
+        GlobalRotation = FollowTarget.GlobalRotation;
     }
 
     public override void _PhysicsProcess(double delta) {
-        if (!IsInstanceValid(followTarget) || !IsInstanceValid(player)) {
+        if (!IsInstanceValid(FollowTarget) || !IsInstanceValid(player)) {
             QueueFree();
             return;
         }
@@ -35,7 +52,9 @@ public partial class CameraRigFp(Player player, Node3D followTarget) : CameraRig
             return;
         }
 
-        GlobalPosition = followTarget.GlobalPosition;
+        GlobalPosition = FollowTarget.GlobalPosition;
+        GlobalRotation = FollowTarget.GlobalRotation;
+        Rotate(GlobalTransform.Basis.Column1.Normalized(), _angle);
 
         var inputVec = Input.GetVector(
             "look_right",
@@ -65,8 +84,10 @@ public partial class CameraRigFp(Player player, Node3D followTarget) : CameraRig
         }
     }
 
+    // --- Private
+
     private void RotateView(Vector2 inputVec) {
-        RotateY(inputVec.X);
+        _angle += inputVec.X; // RotateY(inputVec.X);
         var rotX = Mathf.Clamp(Camera.Rotation.X + inputVec.Y, MinTilt, MaxTilt);
         Camera.Rotation = Vector3.Right * rotX;
     }
