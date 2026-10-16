@@ -30,9 +30,9 @@ public partial class FuncBoostArea : Area3D, IPickupable {
     public override void _PhysicsProcess(double delta) {
         foreach (var body in GetOverlappingBodies()) {
             if (body is not IPhysActor physActor) continue;
-
+            
             if (physActor.GetLinearVelocity().Length() < MaxSpeed || !LimitMaxSpeed) {
-                physActor.ApplyForce(GlobalBasis.Column2.Normalized() * Force * (float)delta);
+                physActor.ApplyForce(GlobalBasis.Column2.Normalized() * Force * physActor.GetMass() * (float)delta) ;
             }
         }
     }
