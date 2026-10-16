@@ -1,0 +1,14 @@
+{
+  "id": "gobox.base.wheel.rusted_wheel_rim",
+  "name": "Rusted Wheel Rim Wheel",
+  "description": "wheel wheel",
+  "thumbnail_path": "gobox.base/thumbnails/rusted_wheel_rim.png",
+  "model_path": "gobox.base/models/prop_rusted_wheel_rim_02_1k.glb",
+  "coll_path": "gobox.base/models/rusted_wheel_rim.coll",
+  "mass": 10.0,
+  "offset": [
+    0,
+    0,
+    0.06
+  ]
+}

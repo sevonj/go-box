@@ -10,5 +10,8 @@
     "gobox.base.pigball",
     "gobox.base.tv",
     "gobox.base.rusted_wheel_rim"
+  ],
+  "wheels": [
+    "gobox.base.wheel.rusted_wheel_rim"
   ]
 }

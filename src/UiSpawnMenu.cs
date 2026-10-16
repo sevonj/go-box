@@ -51,7 +51,8 @@ public partial class UiSpawnMenu : PanelContainer {
                 break;
             }
             case Tabs.Special: {
-                AddSection("Special", Content.SpawnableDefs.Where(p => p.Value is SpecialDef));
+                AddSection("Miscellaneous", Content.SpawnableDefs.Where(p => p.Value is SpecialDef));
+                AddSection("Wheels", Content.SpawnableDefs.Where(p => p.Value is PropWheelDef));
                 break;
             }
         }

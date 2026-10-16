@@ -90,3 +90,29 @@ public class PropPhysDef : PropDef {
         return def;
     }
 }
+
+public class PropWheelDef : PropDef {
+    [JsonPropertyName("model_path")] public string ModelPath { get; init; }
+    [JsonPropertyName("coll_path")] public string CollPath { get; init; }
+    [JsonPropertyName("mass")] public float Mass { get; init; }
+    [JsonPropertyName("offset")] public Vector3 Offset { get; init; }
+
+    public override string GetSpawnTypeName() => "Prop Wheel";
+
+    public static PropWheelDef FromJson(string path) {
+        using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+
+        if (file == null) {
+            GD.PrintErr($"Couldn't access '{path}'");
+            return null;
+        }
+
+        var options = new JsonSerializerOptions();
+        options.Converters.Add(new Vector3JsonConv());
+        
+        var json = file.GetAsText();
+        var def = JsonSerializer.Deserialize<PropWheelDef>(json, options);
+
+        return def;
+    }
+}

@@ -50,22 +50,24 @@ public static class Content {
 
     public static Node3D InstantiateProp(string id) {
         SpawnableDefs.TryGetValue(id, out var def);
-        if (def == null) {
-            GD.PrintErr($"Prop '{id}' doesn't exist");
-            return null;
+
+        switch (def) {
+            case SpecialDef specialDef:
+                return (Node3D)GD.Load<PackedScene>(specialDef.ResPath).Instantiate();
+            case PropStaticDef sPropDef:
+                return PropStatic.FromDef(sPropDef);
+            case PropStaticBrkDef sBrkDef:
+                return PropStaticBrk.FromDef(sBrkDef);
+            case PropPhysDef pPropDef:
+                return PropPhys.FromDef(pPropDef);
+            case PropWheelDef wheelDef:
+                return PropWheel.FromDef(wheelDef);
+            case null:
+                GD.PushError($"Prop '{id}' doesn't exist"); break;
+            default:
+                GD.PushError("UNREACHABLE"); break;
         }
 
-        if (def is SpecialDef specialDef)
-            return (Node3D)GD.Load<PackedScene>(specialDef.ResPath).Instantiate();
-
-        if (def is PropStaticDef sPropDef)
-            return PropStatic.FromDef(sPropDef);
-        if (def is PropStaticBrkDef sBrkDef)
-            return PropStaticBrk.FromDef(sBrkDef);
-        if (def is PropPhysDef pPropDef)
-            return PropPhys.FromDef(pPropDef);
-
-        GD.PrintErr("UNREACHABLE");
         return null;
     }
 
@@ -120,6 +122,7 @@ public static class Content {
         GD.Print($" - {pak.PropsStatic?.Count ?? 0} static prop(s)");
         GD.Print($" - {pak.PropsStaticBrk?.Count ?? 0} static brk prop(s)");
         GD.Print($" - {pak.PropsPhys?.Count ?? 0} phys prop(s)");
+        GD.Print($" - {pak.Wheels?.Count ?? 0} wheel(s)");
 
         if (pak.Stages != null) {
             foreach (var stageName in pak.Stages) {
@@ -149,6 +152,14 @@ public static class Content {
             foreach (var id in pak.PropsPhys) {
                 var path = pakPath.PathJoin("props").PathJoin($"{id}.json");
                 var def = PropPhysDef.FromJson(path);
+                SpawnableDefs.Add(def.Id, def);
+            }
+        }
+
+        if (pak.Wheels != null) {
+            foreach (var id in pak.Wheels) {
+                var path = pakPath.PathJoin("props").PathJoin($"{id}.json");
+                var def = PropWheelDef.FromJson(path);
                 SpawnableDefs.Add(def.Id, def);
             }
         }

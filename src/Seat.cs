@@ -12,6 +12,7 @@ public partial class Seat : RigidBody3D, IPhysActor, IInteractable, IPickupable 
 
 
     private IPickupHolder _holder;
+    private bool _previouslyOccupied;
 
 
     // --- Node
@@ -21,13 +22,26 @@ public partial class Seat : RigidBody3D, IPhysActor, IInteractable, IPickupable 
         CollisionMask = (uint)(ColLayer.World | ColLayer.PhysActors);
     }
 
+    public override void _Notification(int what) {
+        if (what == NotificationPredelete) {
+            Exit();
+        }
+    }
+
+
     public override void _Process(double delta) {
+        if (!Game.World.Bounds.HasPoint(GlobalPosition)) {
+            QueueFree();
+        }
+
         if (!Occupied) return;
 
         // TODO: Remove all input code from here and make player responsible for this instead.
-        if (Input.IsActionJustPressed("interact")) {
-            Exit(Occupant);
+        if (Input.IsActionJustPressed("interact") && _previouslyOccupied) {
+            Exit();
         }
+
+        _previouslyOccupied = Occupied;
     }
 
     // --- IInteractable
@@ -35,7 +49,7 @@ public partial class Seat : RigidBody3D, IPhysActor, IInteractable, IPickupable 
     public bool Available() => Occupied;
 
     public void Interact(Player whosThere) {
-        if (whosThere == Occupant) Exit(whosThere);
+        if (whosThere == Occupant) Exit();
         else Enter(whosThere);
     }
 
@@ -75,8 +89,8 @@ public partial class Seat : RigidBody3D, IPhysActor, IInteractable, IPickupable 
         Occupant.Rotation = Vector3.Zero;
     }
 
-    private void Exit(Player player) {
-        if (player != Occupant) return;
+    private void Exit() {
+        if (Occupant == null) return;
         Occupant.GetParent()?.RemoveChild(Occupant);
         Game.World.AddActor(Occupant);
         Occupant.UnassumeControl();

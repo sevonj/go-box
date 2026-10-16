@@ -10,6 +10,7 @@ public class ContentPak {
     [JsonPropertyName("props_static")] public List<string> PropsStatic { get; init; }
     [JsonPropertyName("props_static_brk")] public List<string> PropsStaticBrk { get; init; }
     [JsonPropertyName("props_phys")] public List<string> PropsPhys { get; init; }
+    [JsonPropertyName("wheels")] public List<string> Wheels { get; init; }
 
     public static ContentPak FromJson(string path) {
         GD.Print($"Loading ContentPak '{path}'");
