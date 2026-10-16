@@ -80,7 +80,7 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
         var targetPos = _pickupTarget.GlobalPosition;
         var targetRot = _pickupTarget.GlobalRotation;
 
-        if (_carrying is RigidBody3D rb) {
+        if (_carrying is RigidBody3D { Freeze: false } rb) {
             var currentRot = rb.GlobalBasis.GetRotationQuaternion();
             var targetQuat = Quaternion.FromEuler(targetRot);
             var rotDiff = targetQuat * currentRot.Inverse();
@@ -115,7 +115,9 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
     // --- Weapon
 
     public override string WpnName() => "Manipulator";
-    public override string WpnDescription() => "Fire: Pick up or drop object.";
+
+    public override string WpnDescription() => "Fire: Pick up or drop object.\n" +
+                                               "Alt fire: Freeze/Unfreeze";
 
     public override void Fire() {
         if (_carrying != null) {
@@ -130,6 +132,18 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
     }
 
     public override void FireAlt() {
+        if (_carrying != null) {
+            if (_carrying is RigidBody3D rb) {
+                rb.Freeze = true;
+            }
+
+            Drop();
+            return;
+        }
+
+        if (_pickable is RigidBody3D pickable) {
+            pickable.Freeze = !pickable.Freeze;
+        }
     }
 
     public override bool OverrideCamera() {

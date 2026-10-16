@@ -17,7 +17,11 @@ public partial class PlayerPickupMgr : Node3D, IPickupHolder {
     private bool _dropQueued;
     private bool _throwQueued;
 
-    public bool CanPickup => !IsCarrying && (_pickable?.AllowPlayerPickup() ?? false) && _pickable.Holder() == null;
+    public bool CanPickup => !IsCarrying
+                             && (_pickable?.AllowPlayerPickup() ?? false)
+                             && _pickable.Holder() == null
+                             && _pickable is not RigidBody3D { Freeze: true };
+
     public bool IsCarrying => _carrying != null;
 
     // --- Node
