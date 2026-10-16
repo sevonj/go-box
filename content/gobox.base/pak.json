@@ -8,6 +8,7 @@
   "props_static_brk": [],
   "props_phys": [
     "gobox.base.pigball",
-    "gobox.base.tv"
+    "gobox.base.tv",
+    "gobox.base.rusted_wheel_rim"
   ]
 }
