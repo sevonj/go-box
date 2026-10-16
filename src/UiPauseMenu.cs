@@ -1,9 +1,10 @@
+using GoBox.debug;
 using Godot;
 
 namespace GoBox;
 
 [GlobalClass]
-public partial class UiPauseMenu {
+public partial class UiPauseMenu : Control {
     [Export] private Control _abilityTab;
     private double _animT = double.MaxValue;
 
@@ -32,14 +33,14 @@ public partial class UiPauseMenu {
         _animT = 0d;
     }
 
-    public static UiPauseMenu Instantiate() =>
-        (UiPauseMenu)GD.Load<PackedScene>("res://ui/ui_pause_menu.tscn").Instantiate();
+    public static UiPauseMenu Instantiate() => (UiPauseMenu)GD.Load<PackedScene>("res://ui/ui_pause_menu.tscn").Instantiate();
 
     private UiPauseMenu() {
     }
-}
 
-public partial class UiPauseMenu : Control {
+
+    // --- Node
+
     public override void _Ready() {
         if (!IsInstanceValid(_tabContainer))
             GD.PrintErr(GetPath(), " tabcont missing");
@@ -71,9 +72,9 @@ public partial class UiPauseMenu : Control {
         _tabContainer.CurrentTab = 0;
         ProcessMode = ProcessModeEnum.Always;
 
-
         _quitToTitleButton.Pressed += Game.QuitToTitle;
         _exitGameButton.Pressed += Game.ExitGame;
+        _mapCamera.Size = Mathf.Max(Game.World.Bounds.Size.X, Game.World.Bounds.Size.Z);
     }
 
     public override void _Process(double delta) {
@@ -92,9 +93,10 @@ public partial class UiPauseMenu : Control {
 
         if (_mapTab.Visible) ProcessMapTab(delta);
     }
-}
 
-public partial class UiPauseMenu {
+
+    // --- Private
+
     private void AnimateInOut() {
         PivotOffset = Size / 2f;
 
@@ -119,23 +121,18 @@ public partial class UiPauseMenu {
     }
 
     private void ProcessMapTab(double _) {
-        /*
-        var stage = Game.Stage;
+        _mapAreaNameLabel.Text = LocalVars.CurrentStageDef?.Name ?? "null";
+        _mapAreaDescLabel.Text = LocalVars.CurrentStageDef?.Description ?? "null";
 
-        mapAreaNameLabel.Text = stage.StageName;
-        mapAreaDescLabel.Text = stage.StageDesc;
-
-        var player = stage.GetPlayer();
+        var player = Game.World.Player;
         if (!IsInstanceValid(player)) return;
-        mapYouAreHereLabel.Text = $"You are here {player.GlobalPosition}";
+        _mapYouAreHereLabel.Text = $"You are here {player.GlobalPosition}";
 
-
-        var a = mapYouAreHereLabel.GlobalPosition + mapYouAreHereLabel.Size * Vector2.Right;
-        var b = mapCamera.UnprojectPosition(player.GlobalPosition) + mapVpCont.GlobalPosition;
+        var a = _mapYouAreHereLabel.GlobalPosition + _mapYouAreHereLabel.Size * Vector2.Right;
+        var b = _mapCamera.UnprojectPosition(player.GlobalPosition) + _mapVpCont.GlobalPosition;
 
         DebugDraw.DrawLine2D(a, b, new Color(1f, 0f, 0f));
         DebugDraw.DrawPoint2D(b, new Color(1f, 0f, 0f));
-        */
     }
 
     private static Vector2 AnimatedScale(float t) {
