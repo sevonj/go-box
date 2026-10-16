@@ -38,9 +38,9 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
                     return;
                 }
 
-                var inputVec = -motion.Relative * 0.005f;
-                _pickupTarget.Rotate(GlobalBasis.Column1, -inputVec.X);
-                _pickupTarget.Rotate(GlobalBasis.Column0, inputVec.Y);
+                var inputVec = motion.Relative * 0.005f;
+                _pickupTarget.Rotate(GlobalBasis.Column1, inputVec.X);
+                _pickupTarget.Rotate(Basis.Column0, inputVec.Y);
 
                 break;
             }
@@ -68,12 +68,12 @@ public partial class WpnManipulator : Weapon, IPickupHolder {
 
         if (Input.IsActionPressed("pickup")) {
             var inputVec = Input.GetVector(
-                "look_right",
                 "look_left",
-                "look_down",
-                "look_up") * 4f * (float)delta;
-            _pickupTarget.Rotate(GlobalBasis.Column1, -inputVec.X);
-            _pickupTarget.Rotate(GlobalBasis.Column0, inputVec.Y);
+                "look_right",
+                "look_up",
+                "look_down") * 4f * (float)delta;
+            _pickupTarget.Rotate(GlobalBasis.Column1, inputVec.X);
+            _pickupTarget.Rotate(Basis.Column0, inputVec.Y);
         }
 
 
