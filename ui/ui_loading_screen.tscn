@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://cnnpcbuar8mr6"]
+
+[ext_resource type="Script" uid="uid://b0xt54kj3cgr2" path="res://src/UiLoadingScreen.cs" id="1_3blxl"]
+[ext_resource type="PackedScene" uid="uid://bqge2u62jf8cr" path="res://scenes/vcol_cube.tscn" id="1_gwkkc"]
+[ext_resource type="FontFile" uid="uid://d1jh1xf6yii2o" path="res://assets/font/jetbrains-mono/static/jetbrains-mono-latin-700-normal.ttf" id="2_4oquk"]
+
+[sub_resource type="Environment" id="Environment_dn8d0"]
+ambient_light_source = 2
+ambient_light_color = Color(0.61339027, 0.61339027, 0.6133901, 1)
+
+[node name="UiLoadingScreen" type="Control" unique_id=939080969 node_paths=PackedStringArray("_rotatingCube")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3blxl")
+_rotatingCube = NodePath("HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/vcol_cube")
+metadata/_custom_type_script = "uid://b0xt54kj3cgr2"
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1419900959]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2142781914]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -680.0
+offset_top = -137.0
+offset_right = -61.0
+offset_bottom = -73.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=724805319]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.32544088, 0.3254409, 0.32544088, 1)
+theme_override_fonts/font = ExtResource("2_4oquk")
+theme_override_font_sizes/font_size = 30
+text = "Loading..."
+horizontal_alignment = 2
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="HBoxContainer" unique_id=459502394]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer/AspectRatioContainer" unique_id=919752973]
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="HBoxContainer/AspectRatioContainer/SubViewportContainer" unique_id=1276450273]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(64, 64)
+render_target_update_mode = 4
+
+[node name="vcol_cube" parent="HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport" unique_id=2044475162 instance=ExtResource("1_gwkkc")]
+transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport" unique_id=768169770]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.5333633)
+current = true
+fov = 26.375261
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport" unique_id=1939329714]
+environment = SubResource("Environment_dn8d0")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport" unique_id=1979798363]
+transform = Transform3D(0.87976646, -6.55477e-08, 0.47540617, -0.28774133, 0.7960326, 0.53248197, -0.37843886, -0.60525376, 0.70032275, 0.8253006, 1.8483455, 1.9832726)
+light_energy = 4.064

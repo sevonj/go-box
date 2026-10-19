@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dmktntltwsrjb" path="res://scenes/prop_hogball.tscn" id="7_gypc2"]
 [ext_resource type="FontFile" uid="uid://o63pwd3ka34j" path="res://assets/font/comic-relief/ComicRelief.ttf" id="8_kodi4"]
 [ext_resource type="PackedScene" uid="uid://7ytdy5ifd8as" path="res://scenes/launcher.tscn" id="9_v8v0x"]
+[ext_resource type="PackedScene" uid="uid://bqge2u62jf8cr" path="res://scenes/vcol_cube.tscn" id="10_qnmt8"]
 
 [node name="World" type="Node" unique_id=466431567]
 script = ExtResource("1_ksrfk")
@@ -86,5 +87,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.84036, 12.789791, -36.873
 transform = Transform3D(-0.9659258, 0, 0.25881913, 0, 1, 0, -0.25881913, 0, -0.9659258, -88.21381, 11.58394, -35.355316)
 
 [node name="Ui" type="Node" parent="." unique_id=1866451087]
+
+[node name="vcol_cube" type="Node3D" parent="." unique_id=764778490]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -87.95359, 15.644926, -9.08942)
+
+[node name="vcol_cube" parent="vcol_cube" unique_id=2044475162 instance=ExtResource("10_qnmt8")]
+transform = Transform3D(-0.861361, 0, -0.5079933, 0, 1, 0, 0.5079933, 0, -0.861361, 5.197937, -2.1573792, -28.678566)
 
 [editable path="Env/Env"]

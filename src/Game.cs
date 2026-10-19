@@ -86,6 +86,8 @@ public static class Game {
         World.AddChild(Gamemode);
     }
 
+    // --- Private
+
     private static SceneTree GetTree() {
         return (SceneTree)Engine.GetMainLoop();
     }

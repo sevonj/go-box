@@ -1,0 +1,27 @@
+[gd_scene format=4 uid="uid://bqge2u62jf8cr"]
+
+[ext_resource type="Shader" uid="uid://cdy2s47yev3r5" path="res://assets/materials/shad_vcol_refraction_cube.gdshader" id="1_tfl2q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6ivru"]
+render_priority = 0
+shader = ExtResource("1_tfl2q")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_k6pac"]
+resource_name = "vcol_cube_Cube_001"
+_surfaces = [{
+"aabb": AABB(-0.5, -0.5, -0.5, 1, 1, 1),
+"attribute_data": PackedByteArray("AAD///9f/////////5//vwD/////n////wD///9f/7//AP///1//v///AP//n/9///////+f/7//AAD//1//f/8AAP//X/9/AP8A//+f/z///wD//5//fwAAAP//X/8/AAAA//9f/z8A/////58AAAD/AP//n/8/AAD///9fAAD/AP///x//fwAAAP//X/8//wAA//9f/38AAP///x//P///AP//n/9/AP/////f/z///////9//fwD/AP//n/8/"),
+"format": 34896613407,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("ShaderMaterial_6ivru"),
+"name": "Material.001",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAAAAP//VNUAAP//AABU1QAA/////1TVAAAAAAAAVNUAAAAAAAD///////8AAP//AAD//wAA/////wAAAAD/////AAAAAFTV////////VNX/////AABU1f//AAD//1TV//8AAP///78AAP//////v/////////+/AAAAAP///78AAAAAAAD/v///AAD///+///8AAAAA/78AAAAA////v/////8AAP//AAD///////8AAP//AAD/////////////VNVU1VTVVNVU1VTVVNVU1f+//7//v/+//7//v/+//7+qKqoqqiqqKqoqqiqqKqoq/////////////////////wAA/38AAP9/AAD/fwAA/3//f/+//3//v/9//7//f/+/")
+}]
+blend_shape_mode = 0
+
+[node name="vcol_cube" type="MeshInstance3D" unique_id=2044475162]
+mesh = SubResource("ArrayMesh_k6pac")
