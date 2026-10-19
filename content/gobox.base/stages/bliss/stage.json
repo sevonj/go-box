@@ -4,19 +4,19 @@
   "external": false,
   "name": "Bliss",
   "description": "A green, hilly zone",
-  "thumbnail_path": "res://stages/gobox.bliss/preview.png",
+  "thumbnail_path": "res://content/gobox.base/stages/bliss/preview.png",
   "resource_path": "res://stages/stage_bliss.tscn",
   "model_path": "",
   "coll_path": "",
   "player_start_position": [
-    0,
-    0,
-    0
+	0,
+	0,
+	0
   ],
   "player_start_rotation": [
-    0,
-    0,
-    0
+	0,
+	0,
+	0
   ],
   "props_static": []
 }

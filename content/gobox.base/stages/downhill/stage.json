@@ -9,14 +9,14 @@
   "model_path": "",
   "coll_path": "",
   "player_start_position": [
-    0,
-    0,
-    0
+	0,
+	0,
+	0
   ],
   "player_start_rotation": [
-    0,
-    0,
-    0
+	0,
+	0,
+	0
   ],
   "props_static": []
 }
