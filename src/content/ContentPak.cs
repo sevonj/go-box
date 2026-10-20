@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using GoBox.types;
 using Godot;
 
 namespace GoBox.content;
@@ -22,7 +23,7 @@ public class ContentPak {
         }
 
         var json = file.GetAsText();
-        var pak = JsonSerializer.Deserialize<ContentPak>(json);
+        var pak = JsonSerializer.Deserialize<ContentPak>(json, GoboxJson.JsonOptions);
 
         return pak;
     }

@@ -3,9 +3,9 @@ using System.Buffers.Binary;
 using System.Runtime.InteropServices;
 using Godot;
 
-namespace GoBox.content;
+namespace GoBox.types;
 
-public static class GoboxColl {
+public static class Coll {
     public static Shape3D Load(string path) {
         var headerSize = 16 + 4 + 4;
         int minSize = headerSize + 3 * 3 * 4; // + size of tri

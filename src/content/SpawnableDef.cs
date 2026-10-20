@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using GoBox.types;
 using Godot;
 
 namespace GoBox.content;
@@ -36,7 +37,7 @@ public class PropStaticDef : PropDef {
         }
 
         var json = file.GetAsText();
-        var def = JsonSerializer.Deserialize<PropStaticDef>(json);
+        var def = JsonSerializer.Deserialize<PropStaticDef>(json, GoboxJson.JsonOptions);
 
         return def;
     }
@@ -63,7 +64,7 @@ public class PropStaticBrkDef : PropDef {
         }
 
         var json = file.GetAsText();
-        var def = JsonSerializer.Deserialize<PropStaticBrkDef>(json);
+        var def = JsonSerializer.Deserialize<PropStaticBrkDef>(json, GoboxJson.JsonOptions);
 
         return def;
     }
@@ -85,7 +86,7 @@ public class PropPhysDef : PropDef {
         }
 
         var json = file.GetAsText();
-        var def = JsonSerializer.Deserialize<PropPhysDef>(json);
+        var def = JsonSerializer.Deserialize<PropPhysDef>(json, GoboxJson.JsonOptions);
 
         return def;
     }
@@ -107,11 +108,9 @@ public class PropWheelDef : PropDef {
             return null;
         }
 
-        var options = new JsonSerializerOptions();
-        options.Converters.Add(new Vector3JsonConv());
-        
+
         var json = file.GetAsText();
-        var def = JsonSerializer.Deserialize<PropWheelDef>(json, options);
+        var def = JsonSerializer.Deserialize<PropWheelDef>(json, GoboxJson.JsonOptions);
 
         return def;
     }

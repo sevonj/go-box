@@ -1,3 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
+using GoBox.content;
+using GoBox.interfaces;
+using GoBox.types;
 using Godot;
 using Godot.Collections;
 
@@ -6,6 +11,7 @@ namespace GoBox;
 [GlobalClass]
 public partial class World : Node {
     public Aabb Bounds { get; init; }
+    public SaveState SaveState { get; set; }
 
     private Node _envCont;
     private Node _staticCont;
@@ -31,6 +37,9 @@ public partial class World : Node {
 
     public bool IsMenuOpen() => Paused || (_uiContentMenu?.IsOpen() ?? false);
 
+    public IEnumerable<Node> GetActors() {
+        return _actorCont.GetChildren().Where(node => node is IActor);
+    }
 
     public void AddActor(Node3D node) {
         if (!IsInstanceValid(node)) {
@@ -122,6 +131,24 @@ public partial class World : Node {
             _uiContentMenu = UiContentMenu.Instantiate();
             _uiCont.AddChild(_uiContentMenu);
         }
+
+        if (SaveState != null) {
+            for (var i = 0; i < SaveState.ActorIds.Count; i++) {
+                var id = SaveState.ActorIds[i];
+                GD.Print($"spawn: {id}");
+                var state = SaveState.ActorStates[i];
+                var actor = Content.InstantiateProp(id);
+                if (actor == null) {
+                    GD.Print($"Couldn't load {id}");
+                    continue;
+                }
+
+                AddActor(actor);
+                ((ISaveable)actor).LoadState(state);
+            }
+        }
+
+        SaveState = null;
     }
 
     public override void _Process(double delta) {

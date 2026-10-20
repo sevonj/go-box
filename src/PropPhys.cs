@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using GoBox.content;
 using GoBox.interfaces;
+using GoBox.types;
 using Godot;
 
 namespace GoBox;
@@ -126,10 +127,6 @@ public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable, ISa
 
     // --- ISaveable
 
-    private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions {
-        Converters = { new Vector3JsonConv() }
-    };
-
     private class PropPhysState {
         [JsonPropertyName("position")] public Vector3 Position { get; set; }
         [JsonPropertyName("rotation")] public Vector3 Rotation { get; set; }
@@ -144,11 +141,11 @@ public partial class PropPhys : RigidBody3D, IProp, IPhysActor, IPickupable, ISa
             LinearVelocity = LinearVelocity,
             AngularVelocity = AngularVelocity
         };
-        return JsonSerializer.Serialize(state, JsonOptions);
+        return JsonSerializer.Serialize(state, GoboxJson.JsonOptions);
     }
 
     public void LoadState(string json) {
-        var state = JsonSerializer.Deserialize<PropPhysState>(json, JsonOptions);
+        var state = JsonSerializer.Deserialize<PropPhysState>(json, GoboxJson.JsonOptions);
         if (state == null) {
             GD.PushError("PropPhys: Couldn't parse state");
             return;

@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using GoBox.content;
 using GoBox.interfaces;
+using GoBox.types;
 using Godot;
 
 namespace GoBox;
@@ -153,10 +154,6 @@ public partial class PropStaticBrk : StaticBody3D, IProp, IHealth, IPickupable, 
 
     // --- ISaveable
 
-    private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions {
-        Converters = { new Vector3JsonConv() }
-    };
-
     private class PropStaticBrkState {
         [JsonPropertyName("position")] public Vector3 Position { get; set; }
         [JsonPropertyName("rotation")] public Vector3 Rotation { get; set; }
@@ -169,11 +166,11 @@ public partial class PropStaticBrk : StaticBody3D, IProp, IHealth, IPickupable, 
             Rotation = GlobalRotation,
             IsBroken = IsBroken
         };
-        return JsonSerializer.Serialize(state, JsonOptions);
+        return JsonSerializer.Serialize(state, GoboxJson.JsonOptions);
     }
 
     public void LoadState(string json) {
-        var state = JsonSerializer.Deserialize<PropStaticBrkState>(json, JsonOptions);
+        var state = JsonSerializer.Deserialize<PropStaticBrkState>(json, GoboxJson.JsonOptions);
         if (state == null) {
             GD.PushError("PropStaticBrk: Couldn't parse state");
             return;

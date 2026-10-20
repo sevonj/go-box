@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using GoBox.content;
 using GoBox.gamemodes;
+using GoBox.interfaces;
+using GoBox.types;
 using Godot;
 
 namespace GoBox;
@@ -70,7 +73,7 @@ public static class Game {
         GetTree().Paused = false;
     }
 
-    public static void LoadStage(content.StageDef stageDef, Gamemode gamemode, bool debugColls = false) {
+    public static void LoadStage(StageDef stageDef, Gamemode gamemode, bool debugColls = false) {
         StageExitCleanup();
         World = StageLoader.Load(stageDef, debugColls);
 
@@ -84,6 +87,40 @@ public static class Game {
         Gamemode = gamemode;
         GetTree().ChangeSceneToNode(World);
         World.AddChild(Gamemode);
+    }
+
+    public static string CreateSaveState() {
+        if (World == null) {
+            GD.PushError("Attempted to save state when World is null");
+            return null;
+        }
+
+        var saveState = new SaveState {
+            StageId = LocalVars.CurrentStageDef.Id
+        };
+
+        foreach (var actor in World.GetActors()) {
+            if (actor is ISaveable saveable) {
+                var id = saveable.GetId();
+                if (string.IsNullOrEmpty(id)) continue;
+                saveState.ActorIds.Add(id);
+                saveState.ActorStates.Add(saveable.SaveState());
+            }
+        }
+
+        return saveState.ToJson();
+    }
+
+    public static void LoadSaveState(SaveState saveState) {
+        GD.Print("loading savestate");
+        if (!Content.StageDefs.TryGetValue(saveState.StageId, out var stageDef)) {
+            GD.PushError("Load save state: Stage not found");
+            return;
+        }
+
+        var gamemode = new Gamemode();
+        LoadStage(stageDef, gamemode);
+        World.SaveState = saveState;
     }
 
     // --- Private

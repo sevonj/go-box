@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using GoBox.types;
 using Godot;
 
 namespace GoBox.content;
@@ -13,7 +14,6 @@ public static class Content {
 
     public static Dictionary<string, StageDef> StageDefs { get; private set; } = [];
     public static Dictionary<string, SpawnableDef> SpawnableDefs { get; private set; } = [];
-
     public static Dictionary<string, ArrayMesh> Meshes { get; private set; } = [];
     public static Dictionary<string, Shape3D> CollMeshes { get; private set; } = [];
 
@@ -23,7 +23,7 @@ public static class Content {
             return cachced;
         }
 
-        var scene = GoboxGltf.Load(FullPath(path));
+        var scene = Gltf.Load(FullPath(path));
         var mesh = (ArrayMesh)FindMeshInst(scene)?.Mesh;
         Meshes.Add(path, mesh);
         scene.Free();
@@ -41,7 +41,7 @@ public static class Content {
             return cachced;
         }
 
-        var shape = GoboxColl.Load(FullPath(path));
+        var shape = Coll.Load(FullPath(path));
         CollMeshes.Add(path, shape);
         return shape;
     }

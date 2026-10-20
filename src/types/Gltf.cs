@@ -1,8 +1,12 @@
 using Godot;
 
-namespace GoBox.content;
+namespace GoBox.types;
 
-public static class GoboxGltf {
+/// <summary>
+/// All models are transported via gltf.
+/// This will probably be replaced by a custom format.
+/// </summary>
+public static class Gltf {
     public static Node3D Load(string path) {
         var gltfDoc = new GltfDocument();
         var gltfSt = new GltfState();

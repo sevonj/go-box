@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using GoBox.types;
 using Godot;
 
 namespace GoBox.content;
@@ -39,7 +40,7 @@ public class StageDef {
 
     [JsonPropertyName("props_static")] public List<PropSpawn> PropsStatic { get; init; }
 
-    
+
     public static StageDef FromJson(string path) {
         using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
 
@@ -48,11 +49,8 @@ public class StageDef {
             return null;
         }
 
-        var options = new JsonSerializerOptions();
-        options.Converters.Add(new Vector3JsonConv());
-
         var json = file.GetAsText();
-        var stage = JsonSerializer.Deserialize<StageDef>(json, options);
+        var stage = JsonSerializer.Deserialize<StageDef>(json, GoboxJson.JsonOptions);
 
         if (!stage.Validate()) {
             GD.PrintErr($"stage failed validation: {path}");
@@ -99,35 +97,5 @@ public class StageDef {
         }
 
         return ok;
-    }
-}
-
-public class Vector3JsonConv : JsonConverter<Vector3> {
-    public override Vector3 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {
-        if (reader.TokenType != JsonTokenType.StartArray) {
-            throw new JsonException("Invalid Vector3 format.");
-        }
-
-        reader.Read();
-        var x = reader.GetSingle();
-        reader.Read();
-        var y = reader.GetSingle();
-        reader.Read();
-        var z = reader.GetSingle();
-        reader.Read();
-
-        if (reader.TokenType != JsonTokenType.EndArray) {
-            throw new JsonException("Vector3 has too many elements");
-        }
-
-        return new Vector3(x, y, z);
-    }
-
-    public override void Write(Utf8JsonWriter writer, Vector3 value, JsonSerializerOptions options) {
-        writer.WriteStartArray();
-        writer.WriteNumberValue(value.X);
-        writer.WriteNumberValue(value.Y);
-        writer.WriteNumberValue(value.Z);
-        writer.WriteEndArray();
     }
 }

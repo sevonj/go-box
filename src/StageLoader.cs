@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GoBox.content;
+using GoBox.types;
 using Godot;
 
 
@@ -24,14 +25,14 @@ public static class StageLoader {
             return null;
         }
 
-        var collShape = GoboxColl.Load(Content.FullPath(stageDef.CollPath));
+        var collShape = Coll.Load(Content.FullPath(stageDef.CollPath));
         if (collShape == null) return null;
         var coll = new StaticBody3D { CollisionMask = 0, CollisionLayer = (uint)ColLayer.World };
         coll.AddChild(new CollisionShape3D { Shape = collShape });
 
         var model = debugColls
             ? GenerateCollDebugModel(collShape)
-            : GoboxGltf.Load(Content.FullPath(stageDef.ModelPath));
+            : Gltf.Load(Content.FullPath(stageDef.ModelPath));
         if (model == null) return null;
 
         var modelStack = new Stack<Node>();

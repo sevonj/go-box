@@ -1,17 +1,28 @@
 [gd_scene format=3 uid="uid://bna7a62a4tp2b"]
 
 [ext_resource type="Script" uid="uid://dkt30grx1mdgl" path="res://src/UiStageSelect.cs" id="1_pasnx"]
+[ext_resource type="Texture2D" uid="uid://c2iwyvrotk5ce" path="res://assets/ui/tex_ui_chonker_bluebar.png" id="2_pasnx"]
+[ext_resource type="Texture2D" uid="uid://b2h44myg4ivtk" path="res://assets/icons/icon_save.svg" id="3_56wx8"]
 [ext_resource type="StyleBox" uid="uid://b332kppa140jv" path="res://assets/themes/lunacy/stylebox_inspector_sidebar.tres" id="3_l165n"]
 [ext_resource type="PackedScene" uid="uid://ckxi641rha0fk" path="res://ui/ui_picture_frame.tscn" id="4_70pha"]
 
-[node name="UiStageSelect" type="PanelContainer" unique_id=1427467537 node_paths=PackedStringArray("_grid", "_previewNameLabel", "_previewIdLabel", "_previewDescLabel", "_previewPicture", "_loadButton", "_gamemodeSelect", "_collDebugCheckBox")]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_56wx8"]
+texture = ExtResource("2_pasnx")
+modulate_color = Color(1, 1, 1, 0.49803922)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pasnx"]
+bg_color = Color(0.98, 0.98, 0.98, 1)
+border_width_top = 1
+
+[node name="UiStageSelect" type="PanelContainer" unique_id=1427467537 node_paths=PackedStringArray("_tabBar", "_contentVbox", "_previewNameLabel", "_previewIdLabel", "_previewDescLabel", "_previewPicture", "_loadButton", "_gamemodeSelect", "_collDebugCheckBox", "_savesToolbar", "_saveButton", "_saveFileBrowseButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pasnx")
-_grid = NodePath("HBox/ScrollContainer/FlowContainer")
+_tabBar = NodePath("HBox/VBoxContainer/PanelContainer/TabBar")
+_contentVbox = NodePath("HBox/VBoxContainer/ScrollContainer/ContentVbox")
 _previewNameLabel = NodePath("HBox/Sidebar/VBox/NameLabel")
 _previewIdLabel = NodePath("HBox/Sidebar/VBox/IdLabel")
 _previewDescLabel = NodePath("HBox/Sidebar/VBox/DescriptionLabel")
@@ -19,20 +30,61 @@ _previewPicture = NodePath("HBox/Sidebar/VBox/PreviewPicture")
 _loadButton = NodePath("HBox/Sidebar/VBox/LoadMapButton")
 _gamemodeSelect = NodePath("HBox/Sidebar/VBox/GamemodeSelect")
 _collDebugCheckBox = NodePath("HBox/Sidebar/VBox/CollDebugCheckBox")
+_savesToolbar = NodePath("HBox/VBoxContainer/SavesToolbar")
+_saveButton = NodePath("HBox/VBoxContainer/SavesToolbar/HBoxContainer/SaveStateButton")
+_saveFileBrowseButton = NodePath("HBox/VBoxContainer/SavesToolbar/HBoxContainer/SaveFileBrowseButton")
 metadata/_custom_type_script = "uid://dkt30grx1mdgl"
 
 [node name="HBox" type="HBoxContainer" parent="." unique_id=816690142]
 layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HBox" unique_id=377136599]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBox" unique_id=1826645394]
 layout_mode = 2
 size_flags_horizontal = 3
-horizontal_scroll_mode = 0
+theme_override_constants/separation = 0
 
-[node name="FlowContainer" type="FlowContainer" parent="HBox/ScrollContainer" unique_id=1021172421]
+[node name="PanelContainer" type="PanelContainer" parent="HBox/VBoxContainer" unique_id=2075278783]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_56wx8")
+
+[node name="TabBar" type="TabBar" parent="HBox/VBoxContainer/PanelContainer" unique_id=339403083]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBox/VBoxContainer" unique_id=2050836440]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ContentVbox" type="VBoxContainer" parent="HBox/VBoxContainer/ScrollContainer" unique_id=234735499]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="SavesToolbar" type="PanelContainer" parent="HBox/VBoxContainer" unique_id=2139309190]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pasnx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBox/VBoxContainer/SavesToolbar" unique_id=274050699]
+layout_mode = 2
+alignment = 2
+
+[node name="SaveStateButton" type="Button" parent="HBox/VBoxContainer/SavesToolbar/HBoxContainer" unique_id=502819700]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "Create Save"
+icon = ExtResource("3_56wx8")
+expand_icon = true
+
+[node name="SaveFileBrowseButton" type="Button" parent="HBox/VBoxContainer/SavesToolbar/HBoxContainer" unique_id=583078786]
+layout_mode = 2
+text = "Show in file browser"
 
 [node name="Sidebar" type="PanelContainer" parent="HBox" unique_id=4130747]
 custom_minimum_size = Vector2(256, 0)
