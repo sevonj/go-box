@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://c3mhgrmjf8rb4"]
+
+[ext_resource type="Shader" uid="uid://cdy2s47yev3r5" path="res://assets/materials/shad_vcol_refraction_cube.gdshader" id="1_sg8q5"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_sg8q5")

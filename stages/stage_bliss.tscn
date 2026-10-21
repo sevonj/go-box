@@ -70,6 +70,6 @@ metadata/_custom_type_script = "uid://bc6vhd3d1hch6"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -87.95359, 15.644926, -9.08942)
 
 [node name="vcol_cube" parent="vcol_cube" unique_id=2044475162 instance=ExtResource("10_qnmt8")]
-transform = Transform3D(-0.861361, 0, -0.5079933, 0, 1, 0, 0.5079933, 0, -0.861361, 5.197937, -2.1573792, -28.678566)
+transform = Transform3D(-0.861361, 0, -0.5079933, 0, 1, 0, 0.5079933, 0, -0.861361, 5.197937, -0.70033455, -28.678566)
 
 [editable path="Env/Env"]

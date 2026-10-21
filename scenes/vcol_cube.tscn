@@ -1,10 +1,6 @@
 [gd_scene format=4 uid="uid://bqge2u62jf8cr"]
 
-[ext_resource type="Shader" uid="uid://cdy2s47yev3r5" path="res://assets/materials/shad_vcol_refraction_cube.gdshader" id="1_tfl2q"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6ivru"]
-render_priority = 0
-shader = ExtResource("1_tfl2q")
+[ext_resource type="Material" uid="uid://c3mhgrmjf8rb4" path="res://assets/materials/mat_vcol_refraction_cube.tres" id="1_tfl2q"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_k6pac"]
 resource_name = "vcol_cube_Cube_001"
@@ -14,7 +10,7 @@ _surfaces = [{
 "format": 34896613407,
 "index_count": 36,
 "index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
-"material": SubResource("ShaderMaterial_6ivru"),
+"material": ExtResource("1_tfl2q"),
 "name": "Material.001",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
